@@ -1,8 +1,8 @@
 import "./App.css"
+import axios from "axios"
 import { Outlet } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { useQuery } from "react-query"
-import axios from "axios"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 
@@ -14,7 +14,7 @@ function App() {
     const navigate = useNavigate()
     const accessToken = JSON.parse(localStorage.getItem("accessToken"))
 
-    const { data, isLoading, isError, error } = useQuery(
+    const { data, isLoading, isError } = useQuery(
         "authData",
         async () => {
             if (!accessToken) {

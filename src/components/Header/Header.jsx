@@ -8,8 +8,6 @@ import { Container, Logo } from "../index"
 function Header() {
     const authStatus = useSelector((state) => state.auth.status)
     const key = useSelector((state) => state.auth.accessKey)
-    console.log(`Auth Status is ${authStatus}`)
-    console.log(`Access Key is ${key}`)
     const navigate = useNavigate()
 
     const navItems = [
@@ -22,14 +20,14 @@ function Header() {
         {
             name: "Login",
             slug: "/login",
-            active: true,
+            active: !authStatus,
         },
 
         {
             name: "Signup",
             slug: "/signup",
-            active: true,
-        },
+            active: !authStatus,
+        }
     ]
 
     return (
@@ -54,11 +52,12 @@ function Header() {
                                 </li>
                             ) : null
                         )}
-                        {/* {authStatus && (
+                        {authStatus && (
                             <li>
-                                <LogoutBtn />
+                                {/* <LogoutBtn /> */}
+                                <button>Logout</button>
                             </li>
-                        )} */}
+                        )}
                     </ul>
                 </nav>
             </Container>
