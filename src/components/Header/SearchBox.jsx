@@ -1,20 +1,34 @@
-import React from "react"
+import React from "react";
+import { useQuery } from "react-query";
+import axios from "axios";
+
+const retrieveCollections = async () => {
+    const response = await axios.get("http://127.0.0.1:8000/auction/collections/");
+    return response.data;
+};
 
 function SearchBox() {
+    const { data, error, isLoading } = useQuery("collections", retrieveCollections);
+
     return (
-        <div className="w-auto md:w-full max-w-xs xl:max-w-lg 2xl:max-w-2xl bg-gray-200 rounded-lg hidden xl:flex items-center mx-auto">
-            <select
-                className="bg-transparent uppercase text-sm p-4 mr-4"
-                name=""
-                id=""
-            >
-                <option>categories</option>
+        <div className="w-1/3 md:w-6/12 flex bg-gray-200 rounded-lg items-center mx-auto md:mr-auto">
+            <select className="bg-transparent uppercase text-sm px-4 mr-4 hidden sm:block outline-none">
+                {isLoading && <option key="loading">Loading..</option>}
+                {error && <option key="error">Error fetching data</option>}
+                {data &&
+                    data.results.map((item) => (
+                        <option key={item.id}>
+                            {item.title} 
+                        </option>
+                    ))}
             </select>
+
             <input
-                className="border-l border-gray-300 bg-transparent font-semibold text-sm pl-4 outline-none"
+                className="sm:border-l border-gray-300 bg-transparent font-semibold text-sm sm:text-lg pl-2 outline-none sm:pl-4 sm:pr-2 py-2 sm:py-2 w-auto overflow-hidden"
                 type="text"
-                placeholder="I'm searching for ..."
+                placeholder="Search.."
             />
+
             <svg
                 aria-hidden="true"
                 focusable="false"
@@ -23,7 +37,7 @@ function SearchBox() {
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
-                className="ml-auto h-5 px-4 text-gray-500 svg-inline--fa fa-search fa-w-16 fa-9x"
+                className="ml-auto h-5 px-4 text-gray-500 svg-inline--fa fa-search fa-w-16"
             >
                 <path
                     fill="currentColor"
@@ -31,7 +45,7 @@ function SearchBox() {
                 ></path>
             </svg>
         </div>
-    )
+    );
 }
 
-export default SearchBox
+export default SearchBox;

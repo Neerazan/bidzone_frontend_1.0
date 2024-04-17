@@ -4,13 +4,12 @@ function Notification() {
     return (
         <li className="ml-2 lg:ml-4 relative inline-block">
             <a className="" href="">
-                <div className="absolute -top-3 left-3 z-10 text-white bg-red-600 text-xs font-bold px-1 py-0.5 rounded-sm">
+                <div className="absolute -top-1 right-0 z-10 text-white bg-red-600 text-xs font-bold px-1 py-0.5 rounded-sm">
                     22
                 </div>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="25px"
-                    class="cursor-pointer fill-[#333]"
+                    className="h-9 lg:h-10 cursor-pointer p-2 fill-[#333]"
                     viewBox="0 0 371.263 371.263"
                 >
                     <path

@@ -1,26 +1,60 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 
 function LoginOrRegister() {
+    const [dropdown, setDropdown] = useState(false)
+
+    const toggleDropdown = () => {
+        setDropdown(!dropdown)
+    }
+
     return (
         <li className="ml-2 lg:ml-4 relative inline-block">
-            <Link className="" href="">
-                <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="far"
-                    data-icon="user"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 448 512"
-                    className="h-9 lg:h-10 p-2 text-gray-500 svg-inline--fa fa-user fa-w-14 fa-9x"
+            <div className="relative">
+                <button
+                    type="button"
+                    onClick={toggleDropdown}
+                    className="flex items-center border border-slate-600 p-2 rounded-full"
                 >
-                    <path
-                        fill="currentColor"
-                        d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
-                    ></path>
-                </svg>
-            </Link>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20px"
+                        className="cursor-pointer fill-[#333]"
+                        viewBox="0 0 512 512"
+                    >
+                        <path
+                            d="M337.711 241.3a16 16 0 0 0-11.461 3.988c-18.739 16.561-43.688 25.682-70.25 25.682s-51.511-9.121-70.25-25.683a16.007 16.007 0 0 0-11.461-3.988c-78.926 4.274-140.752 63.672-140.752 135.224v107.152C33.537 499.293 46.9 512 63.332 512h385.336c16.429 0 29.8-12.707 29.8-28.325V376.523c-.005-71.552-61.831-130.95-140.757-135.223zM446.463 480H65.537V376.523c0-52.739 45.359-96.888 104.351-102.8C193.75 292.63 224.055 302.97 256 302.97s62.25-10.34 86.112-29.245c58.992 5.91 104.351 50.059 104.351 102.8zM256 234.375a117.188 117.188 0 1 0-117.188-117.187A117.32 117.32 0 0 0 256 234.375zM256 32a85.188 85.188 0 1 1-85.188 85.188A85.284 85.284 0 0 1 256 32z"
+                            data-original="#000000"
+                        />
+                    </svg>
+                </button>
+
+                {/* Dropdown List */}
+                {dropdown && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
+                        <ul className="py-1">
+                            <li className=" hover:bg-gray-800">
+                                <Link
+                                    to="/login"
+                                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200"
+                                    onClick={toggleDropdown}
+                                >
+                                    Login
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/signup"
+                                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200"
+                                    onClick={toggleDropdown}
+                                >
+                                    Signup
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                )}
+            </div>
         </li>
     )
 }

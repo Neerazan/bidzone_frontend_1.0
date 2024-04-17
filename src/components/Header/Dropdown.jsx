@@ -1,17 +1,25 @@
-import React from "react"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Dropdown() {
+    const [dropdown, setDropdown] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdown(!dropdown);
+    };
+
     return (
-        <>
+        <div className="relative">
             <button
                 type="button"
-                data-dropdown-toggle="language-dropdown-menu"
-                class="inline-flex items-center font-medium justify-center px-3 py-2 text-sm text-gray-900 rounded-full cursor-pointer border hover:border-slate-900 border-slate-600"
+                data-dropdown-toggle="profile-dropdown-menu"
+                className="inline-flex items-center font-medium justify-center px-2 py-2 text-sm text-gray-900 rounded-full cursor-pointer border hover:border-slate-900 border-slate-600 ml-auto"
+                onClick={toggleDropdown}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20px"
-                    class="cursor-pointer fill-[#333] mr-3"
+                    className="cursor-pointer fill-[#333] md:mr-3"
                     viewBox="0 0 512 512"
                 >
                     <path
@@ -19,10 +27,70 @@ function Dropdown() {
                         data-original="#000000"
                     />
                 </svg>
-                NEERAJAN
+                <span className="hidden md:block">NEERAJAN</span>
             </button>
-        </>
-    )
+
+            {/* Dropdown List */}
+            {dropdown && (
+                <div
+                    className="absolute z-50 mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+                    id="profile-dropdown-menu"
+                    style={{ left: 0 }}
+                >
+                    <ul className="py-2 font-medium" role="none">
+                        <li>
+                            <Link
+                                to="/login"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                role="menuitem"
+                                onClick={toggleDropdown}
+                            >
+                                <div className="inline-flex items-center">
+                                    Profile
+                                </div>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="#"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                role="menuitem"
+                                onClick={toggleDropdown}
+                            >
+                                <div className="inline-flex items-center">
+                                    My Auction
+                                </div>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="#"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                role="menuitem"
+                                onClick={toggleDropdown}
+                            >
+                                <div className="inline-flex items-center">
+                                    My Products
+                                </div>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to="#"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                                role="menuitem"
+                                onClick={toggleDropdown}
+                            >
+                                <div className="inline-flex items-center">
+                                    LogOut
+                                </div>
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            )}
+        </div>
+    );
 }
 
-export default Dropdown
+export default Dropdown;

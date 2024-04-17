@@ -15,7 +15,7 @@ function Wishlist() {
                     role="img"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
-                    className="h-9 lg:h-10 p-2 text-gray-500 svg-inline--fa fa-heart fa-w-16 fa-9x"
+                    className="h-9 lg:h-10 p-2 text-gray-500 svg-inline--fa fa-heart"
                 >
                     <path
                         fill="currentColor"
