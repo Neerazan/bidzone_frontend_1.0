@@ -2,16 +2,16 @@ import React from "react"
 
 function SearchBox() {
     return (
-        <div className="w-full max-w-xs xl:max-w-lg 2xl:max-w-2xl bg-gray-100 rounded-md hidden xl:flex items-center">
+        <div className="w-auto md:w-full max-w-xs xl:max-w-lg 2xl:max-w-2xl bg-gray-200 rounded-lg hidden xl:flex items-center mx-auto">
             <select
-                className="bg-transparent uppercase font-bold text-sm p-4 mr-4"
+                className="bg-transparent uppercase text-sm p-4 mr-4"
                 name=""
                 id=""
             >
-                <option>all categories</option>
+                <option>categories</option>
             </select>
             <input
-                className="border-l border-gray-300 bg-transparent font-semibold text-sm pl-4"
+                className="border-l border-gray-300 bg-transparent font-semibold text-sm pl-4 outline-none"
                 type="text"
                 placeholder="I'm searching for ..."
             />

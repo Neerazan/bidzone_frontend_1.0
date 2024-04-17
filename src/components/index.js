@@ -8,7 +8,9 @@ import Balance from "./Header/Balance";
 import SearchBox from "./Header/SearchBox";
 import Wishlist from "./Header/Wishlist";
 import LoginOrRegister from "./Header/LoginOrRegister";
-
+import Navbar from "./Header/Navbar";
+import Dropdown from "./Header/Dropdown";
+import Notification from "./Header/Notification";
 
 export {
     Header,
@@ -20,5 +22,8 @@ export {
     Balance,
     SearchBox,
     Wishlist,
-    LoginOrRegister
+    LoginOrRegister,
+    Dropdown,
+    Navbar,
+    Notification,
 }

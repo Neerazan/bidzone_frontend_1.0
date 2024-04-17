@@ -1,5 +1,5 @@
 import React from "react";
-import {Login as LoginComponent, TestHeader} from "../components/index"
+import {Login as LoginComponent, TestHeader, Navbar} from "../components/index"
 
 function Login() {
     return (
