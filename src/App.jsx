@@ -13,6 +13,7 @@ function App() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const accessToken = JSON.parse(localStorage.getItem("accessToken"))
+    
 
     const { data, isLoading, isError } = useQuery(
         "authData",
@@ -31,7 +32,6 @@ function App() {
                 )
 
                 if (response.data) {
-                    console.log("Inside response data")
                     dispatch(
                         login({
                             userData: response.data,

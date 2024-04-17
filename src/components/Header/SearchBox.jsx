@@ -3,8 +3,12 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 const retrieveCollections = async () => {
-    const response = await axios.get("http://127.0.0.1:8000/auction/collections/");
-    return response.data;
+    try {
+        const response = await axios.get("http://127.0.0.1:8000/auction/collections/");
+        return response.data;
+    } catch (error) {
+        throw error
+    }
 };
 
 function SearchBox() {
@@ -15,6 +19,7 @@ function SearchBox() {
             <select className="bg-transparent uppercase text-sm px-4 mr-4 hidden sm:block outline-none">
                 {isLoading && <option key="loading">Loading..</option>}
                 {error && <option key="error">Error fetching data</option>}
+                <option value="select">select</option>
                 {data &&
                     data.results.map((item) => (
                         <option key={item.id}>
