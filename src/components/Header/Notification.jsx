@@ -1,9 +1,10 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 function Notification() {
     return (
         <li className="ml-2 lg:ml-4 relative inline-block">
-            <a className="" href="">
+            <Link className="" href="">
                 <div className="absolute -top-1 right-0 z-10 text-white bg-red-600 text-xs font-bold px-1 py-0.5 rounded-sm">
                     22
                 </div>
@@ -17,7 +18,7 @@ function Notification() {
                         data-original="#000000"
                     />
                 </svg>
-            </a>
+            </Link>
         </li>
     )
 }

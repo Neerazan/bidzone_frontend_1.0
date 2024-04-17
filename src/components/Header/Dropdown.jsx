@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Dropdown() {
     const [dropdown, setDropdown] = useState(false);
+    const name = useSelector((state) => state.auth.userData.first_name);
 
     const toggleDropdown = () => {
         setDropdown(!dropdown);
@@ -27,7 +29,7 @@ function Dropdown() {
                         data-original="#000000"
                     />
                 </svg>
-                <span className="hidden md:block">NEERAJAN</span>
+                <span className="hidden md:block uppercase">{name}</span>
             </button>
 
             {/* Dropdown List */}
@@ -58,7 +60,7 @@ function Dropdown() {
                                 onClick={toggleDropdown}
                             >
                                 <div className="inline-flex items-center">
-                                    My Auction
+                                    Auction
                                 </div>
                             </Link>
                         </li>
@@ -70,7 +72,7 @@ function Dropdown() {
                                 onClick={toggleDropdown}
                             >
                                 <div className="inline-flex items-center">
-                                    My Products
+                                    Products
                                 </div>
                             </Link>
                         </li>
