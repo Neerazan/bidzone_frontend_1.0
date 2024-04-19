@@ -10,7 +10,7 @@ function Balance() {
     const fetchBalance = async () => {
         try {
             const response = await axios.get(`http://127.0.0.1:8000/auction/customers/${customer_id}/customer_coins/`);
-            console.log(response.data);
+            // console.log(response.data);
             return response.data;
         } catch (error) {
             throw new Error("Error fetching balance");
@@ -19,13 +19,13 @@ function Balance() {
 
     const { data, isError, isLoading, error } = useQuery("balance", fetchBalance);
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
 
-    if (isError) {
-        return <div>Error: {error.message}</div>;
-    }
+    // if (isError) {
+    //     return <div>Error: {error.message}</div>;
+    // }
 
     return (
         <li className="ml-2 lg:ml-4 relative inline-block">

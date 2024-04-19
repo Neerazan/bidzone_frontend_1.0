@@ -15,7 +15,7 @@ function Dropdown() {
             <button
                 type="button"
                 data-dropdown-toggle="profile-dropdown-menu"
-                className="inline-flex items-center font-medium justify-center px-2 py-2 text-sm text-gray-900 rounded-full cursor-pointer border hover:border-slate-900 border-slate-600 ml-auto"
+                className="inline-flex items-center font-medium justify-center px-2 py-2 text-sm text-gray-900 rounded-full cursor-pointer border hover:border-slate-900 border-slate-600 ml-2"
                 onClick={toggleDropdown}
             >
                 <svg

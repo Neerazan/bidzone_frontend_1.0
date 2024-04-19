@@ -9,6 +9,7 @@ import Wishlist from "./Header/Wishlist";
 import LoginOrRegister from "./Header/LoginOrRegister";
 import Dropdown from "./Header/Dropdown";
 import Notification from "./Header/Notification";
+import ProductCard from "./ProductCard";
 
 export {
     Header,
@@ -22,4 +23,5 @@ export {
     LoginOrRegister,
     Dropdown,
     Notification,
+    ProductCard,
 }

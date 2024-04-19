@@ -4,16 +4,15 @@ import { Outlet } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { useQuery } from "react-query"
 import { useDispatch } from "react-redux"
-import { useEffect } from "react"
 
 import { login } from "./store/authSlice"
 import { Header } from "./components"
 
 function App() {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const accessToken = JSON.parse(localStorage.getItem("accessToken"))
     
+    // console.log("accessToken", accessToken);
 
     const { data, isLoading, isError } = useQuery(
         "authData",
@@ -50,15 +49,15 @@ function App() {
         }
     )
 
-    useEffect(() => {
-        if (isError) {
-            navigate("/login")
-        }
-    }, [isError, navigate])
+    // useEffect(() => {
+    //     if (isError) {
+    //         navigate("/login")
+    //     }
+    // }, [isError, navigate])
 
-    if (isLoading) {
-        return <div>Loading...</div>
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>
+    // }
 
     return (
         <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
