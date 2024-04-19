@@ -11,8 +11,8 @@ function ProductCard({
     endingTime,
     auctionStatus,
 }) {
-    const MAX_DESCRIPTION_LENGTH = 50;
-    const MAX_TITLE_LENGTH = 30;
+    const MAX_DESCRIPTION_LENGTH = 60;
+    const MAX_TITLE_LENGTH = 40;
 
     function truncateDescription(description) {
         if (description.length <= MAX_DESCRIPTION_LENGTH) {
