@@ -5,7 +5,6 @@ function ProductCard({
     id,
     title,
     description,
-    price,
     image,
     currentPrice,
     bidsCount,

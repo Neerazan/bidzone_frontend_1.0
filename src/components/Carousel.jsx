@@ -1,40 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useQuery } from 'react-query';
+
+const getSlider = async () => {
+    try {
+        const response = await axios.get('http://127.0.0.1:8000/slider/items/')
+        console.log(response.data);
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
 
 function Carousel() {
     const [activeSlide, setActiveSlide] = useState(0);
-
-    const data = [
-        {
-            id: 1,
-            src: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bmF0dXJlfGVufDB8fDB8fHww',
-        },
-        {
-            id: 2,
-            src: 'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D',
-        },
-        {
-            id: 3,
-            src: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D',
-        },
-        {
-            id: 4,
-            src: 'https://images.unsplash.com/photo-1505765050516-f72dcac9c60e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D',
-        },
-        {
-            id: 5,
-            src: 'https://images.unsplash.com/photo-1690218764759-e3b29e9e5bcf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fHw%3D',
-        },
-    ];
+    const { data, isError, isLoading } = useQuery('slider', getSlider)
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             setActiveSlide((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
-        }, 5000); // Change slide every 3 seconds
+        }, 5000);
 
         return () => {
             clearInterval(intervalId);
         };
-    }, [data.length]);
+    }, [data]);
 
     const handleSlideIndicator = (index) => {
         setActiveSlide(index);
@@ -48,13 +38,16 @@ function Carousel() {
         setActiveSlide((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
     };
 
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error fetching data</div>;
+
     return (
-        <div id="default-carousel" className="relative w-2/3 mt-5 mx-auto" data-carousel="slide">
+        <div id="default-carousel" className="relative mt-5 col-span-4" data-carousel="slide">
             {/* Carousel wrapper */}
-            <div className="relative h-56 overflow-hidden rounded-lg md:h-80">
+            <div className="relative h-56 overflow-hidden rounded-lg md:h-[350px]">
                 {data.map((item, index) => (
                     <div key={index} className={`duration-700 ease-in-out absolute top-0 left-0 w-full h-full transition-opacity ${index === activeSlide ? '' : 'opacity-0'}`} data-carousel-item>
-                        <img src={item.src} className="absolute top-0 left-0 w-full h-full object-cover" alt={`Slide ${index + 1}`} />
+                        <img src={item.image} className="absolute top-0 left-0 w-full h-full" alt={`Slide ${index + 1}`} />
                     </div>
                 ))}
             </div>

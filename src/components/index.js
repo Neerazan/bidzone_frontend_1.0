@@ -11,6 +11,7 @@ import Dropdown from "./Header/Dropdown";
 import Notification from "./Header/Notification";
 import ProductCard from "./ProductCard";
 import Carousel from "./Carousel";
+import CollectionSider from "./CollectionSider";
 
 export {
     Header,
@@ -26,4 +27,5 @@ export {
     Notification,
     ProductCard,
     Carousel,
+    CollectionSider,
 }
