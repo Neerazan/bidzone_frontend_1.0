@@ -6,7 +6,7 @@ import { useQuery } from "react-query"
 import { useDispatch } from "react-redux"
 
 import { login } from "./store/authSlice"
-import { Header } from "./components"
+import { Header, Footer } from "./components"
 
 function App() {
     const dispatch = useDispatch()
@@ -66,6 +66,7 @@ function App() {
                 <main>
                     <Outlet />
                 </main>
+                <Footer />
             </div>
         </div>
     )

@@ -12,6 +12,7 @@ import Notification from "./Header/Notification";
 import ProductCard from "./ProductCard";
 import Carousel from "./Carousel";
 import CollectionSider from "./CollectionSider";
+import Footer from "./Footer/Footer";
 
 export {
     Header,
@@ -28,4 +29,5 @@ export {
     ProductCard,
     Carousel,
     CollectionSider,
+    Footer,
 }
