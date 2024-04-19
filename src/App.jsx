@@ -60,7 +60,7 @@ function App() {
     // }
 
     return (
-        <div className="min-h-screen flex flex-wrap content-between bg-gray-400">
+        <div className="min-h-screen flex flex-wrap content-between bg-slate-200">
             <div className="w-full block">
                 <Header />
                 <main>

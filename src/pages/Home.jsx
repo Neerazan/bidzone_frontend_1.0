@@ -1,5 +1,5 @@
 import React from 'react'
-import { ProductCard, Container } from '../components/index'
+import { ProductCard, Container, Carousel } from '../components/index'
 import { useQuery } from 'react-query'
 import axios from 'axios'
 
@@ -33,6 +33,7 @@ function Home() {
 
     return (
         <Container>
+            <Carousel />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
                 {data?.map((auction) => (
                     <ProductCard

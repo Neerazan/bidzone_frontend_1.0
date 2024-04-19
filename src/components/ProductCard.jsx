@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function ProductCard({
     id,
@@ -12,6 +13,7 @@ function ProductCard({
     auctionStatus,
 }) {
     const MAX_DESCRIPTION_LENGTH = 50;
+    const MAX_TITLE_LENGTH = 30;
 
     function truncateDescription(description) {
         if (description.length <= MAX_DESCRIPTION_LENGTH) {
@@ -21,11 +23,19 @@ function ProductCard({
         }
     }
 
+    function truncateTitle(title) {
+        if (title.length <= MAX_TITLE_LENGTH) {
+            return title;
+        } else {
+            return title.slice(0, MAX_TITLE_LENGTH) + "...";
+        }
+    }
+
     return (
-        <div className="relative md:my-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-            <a
+        <div className="relative md:my-1 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+            <Link
                 className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
-                href="#"
+                to="#"
             >
                 <img
                     className="w-full h-full object-cover object-center shadow"
@@ -44,19 +54,19 @@ function ProductCard({
                         Upcoming
                     </span>
                 )}
-            </a>
+            </Link>
             <div className="mt-4 px-5 pb-5">
-                <a href="#">
+                <Link to="#">
                     <h5 className="text-xl tracking-tight text-slate-900 font-bold">
-                        {title}
+                        {truncateTitle(title)}
                     </h5>
-                </a>
+                </Link>
 
-                <a href="#">
+                <Link to="#">
                     <h5 className="text-[1em] tracking-tight text-slate-900 mt-2">
                         {truncateDescription(description)}
                     </h5>
-                </a>
+                </Link>
                 {auctionStatus === "A" && (
                     <div className="mt-2 flex items-center justify-between">
                         <p>
@@ -74,19 +84,19 @@ function ProductCard({
 
                 {auctionStatus === "S" && (
                     <div>
-                        <a href="#">
+                        <Link to="#">
                             <h5 className="text-[1em] ms-2 tracking-tight text-red-600 mt-2 font-semibold">
                                 Live on: {endingTime}
                             </h5>
-                        </a>
+                        </Link>
 
                         <div className="mt-2 flex items-center justify-between">
-                            <a
-                                href="#"
+                            <Link
+                                to="#"
                                 className="text-[12px] py-2 px-3 rounded-full bg-zinc-700 text-white font-bold hover:bg-zinc-600"
                             >
                                 Notify me
-                            </a>
+                            </Link>
 
                             <div className="flex items-center">
                                 <span className="mr-2 ml-3 rounded bg-teal-600 text-white px-2.5 py-0.5 text-xs font-semibold pb-[3px]">

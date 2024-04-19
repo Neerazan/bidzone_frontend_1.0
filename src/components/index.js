@@ -10,6 +10,7 @@ import LoginOrRegister from "./Header/LoginOrRegister";
 import Dropdown from "./Header/Dropdown";
 import Notification from "./Header/Notification";
 import ProductCard from "./ProductCard";
+import Carousel from "./Carousel";
 
 export {
     Header,
@@ -24,4 +25,5 @@ export {
     Dropdown,
     Notification,
     ProductCard,
+    Carousel,
 }
