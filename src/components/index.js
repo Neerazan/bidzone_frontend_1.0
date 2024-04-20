@@ -13,6 +13,7 @@ import ProductCard from "./ProductCard";
 import Carousel from "./Carousel";
 import CollectionSider from "./CollectionSider";
 import Footer from "./Footer/Footer";
+import ProductContainer from "./container/ProductContainer";
 
 export {
     Header,
@@ -30,4 +31,5 @@ export {
     Carousel,
     CollectionSider,
     Footer,
+    ProductContainer,
 }
