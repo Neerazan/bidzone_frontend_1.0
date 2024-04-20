@@ -37,8 +37,8 @@ function Home() {
                 <CollectionSider />
                 <Carousel />
             </div>
-            <ProductContainer data={data} status='S' />
             <ProductContainer data={data} status='A' />
+            <ProductContainer data={data} status='S' />
         </Container>
     )
 }
