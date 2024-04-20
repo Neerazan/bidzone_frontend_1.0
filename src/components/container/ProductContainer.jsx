@@ -22,6 +22,7 @@ function ProductContainer({ data, status }) {
                         key={auction.id}
                         id={auction.id}
                         title={auction.product.title}
+                        slug={auction.product.slug}
                         description={auction.product.description}
                         price={auction.product.price}
                         image={auction.product.images[0].image}

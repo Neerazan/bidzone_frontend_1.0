@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 function ProductCard({
     id,
     title,
+    slug,
     description,
     image,
     currentPrice,
@@ -26,7 +27,7 @@ function ProductCard({
         <div className={`relative md:my-1 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md ${auctionStatus === 'A' ? '' : 'bg-white'}`}>
             <Link
                 className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
-                to="#"
+                to={`/auction/${slug}`}
             >
                 <img
                     className="w-full h-full object-cover object-center shadow"
@@ -39,13 +40,13 @@ function ProductCard({
                 </span>
             </Link>
             <div className="mt-4 px-5 pb-5">
-                <Link to="#">
+                <Link to={`/auction/${slug}`}>
                     <h5 className="text-xl tracking-tight text-slate-900 font-bold h-16 overflow-hidden">
                         {truncateText(title, MAX_TITLE_LENGTH)}
                     </h5>
                 </Link>
 
-                <Link to="#">
+                <Link to={`/auction/${slug}`}>
                     <h5 className="text-[1em] tracking-tight text-slate-900 mt-2 h-12 overflow-hidden">
                         {truncateText(description, MAX_DESCRIPTION_LENGTH)}
                     </h5>
@@ -73,7 +74,7 @@ function ProductCard({
                         </h5>
                         <div className="mt-2 flex items-center justify-between">
                             <Link
-                                to="#"
+                                to={`/auction/${slug}`}
                                 className="text-[12px] py-2 px-3 rounded-full bg-zinc-700 text-white font-bold hover:bg-zinc-600"
                             >
                                 Notify me
