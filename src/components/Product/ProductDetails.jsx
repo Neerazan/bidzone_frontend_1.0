@@ -34,18 +34,18 @@ function ProductDetails({ slug }) {
     }
 
     return (
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md">
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
             {/* Image Section */}
             <div className="lg:col-span-1 relative">
                 {/* Main Image */}
                 <div className="mx-3 mt-3 flex overflow-hidden rounded-xl h-96">
                     <img
-                        alt="ecommerce"
+                        alt="image"
                         className="object-cover mx-auto"
                         src={selectedImage}
                     />
                 </div>
-
+                <hr />
                 {/* Small Images Section */}
                 <div className="w-full flex justify-center bg-white p-2">
                     {data?.product?.images?.map((image) => (
@@ -62,15 +62,21 @@ function ProductDetails({ slug }) {
 
 
             {/* Product Details Section */}
-            <div className="lg:col-span-1 p-6">
-                <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+            <div className="lg:col-span-1 p-4">
+                <h1 className="text-gray-800 text-2xl title-font font-semibold mb-3">
                     {data?.product?.title}
                 </h1>
+                <hr className="mb-3"/>
+                {/* Seller Information */}
+                <div className="mb-4">
+                    <span className="text-blue-900 text-[14px] italic font-semibold">Created by, <span className=" hover:underline cursor-pointer font-bold">Neerajan Dhakal,</span> (21 Oct, 2024, 09:45 a.m.)</span>
+                </div>
 
                 {/* Reviews */}
                 <div className="flex mb-4">
-                    <span className="flex items-center">
-                        {[...Array(4)].map((_, index) => (
+                    <span className="font-semibold italic text-[14px] text-rose-600">Seller Rating:</span>
+                    <span className="flex items-center mt-[1px] ml-2">
+                        {[...Array(5)].map((_, index) => (
                             <svg
                                 key={index}
                                 fill="currentColor"
@@ -78,24 +84,29 @@ function ProductDetails({ slug }) {
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 strokeWidth="2"
-                                className="w-4 h-4 text-red-500"
+                                className="w-4 h-4 text-yellow-400"
                                 viewBox="0 0 24 24"
                             >
                                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                             </svg>
                         ))}
-                        <span className="text-gray-600 ml-3">4 Reviews</span>
                     </span>
+                    <span className="text-zinc-600 text-sm font-semibold ml-1 ">(4 Reviews)</span>
                 </div>
 
-                <p className="leading-relaxed">
-                    {data?.product?.description}
-                </p>
+                <hr className="mb-4"/>
+
+                {/* Remaining Time */}
+
+                <div className="mb-4 flex">
+                    <span className="font-semibold italic px-4 py-2 rounded-s-md border border-red-600">Ends In </span>
+                    <span className="block px-4 rounded-e-md font-semibold py-2 bg-purple-600 text-white">23 : 45 : 00</span>
+                </div>
 
                 {/* Price and Buttons */}
                 <div className="flex">
                     <span className="title-font font-medium text-2xl text-gray-900">
-                        {data?.current_price}
+                        
                     </span>
                     <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
                         Bid
@@ -113,6 +124,16 @@ function ProductDetails({ slug }) {
                         </svg>
                     </button>
                 </div>
+                <hr className="my-4"/>
+                <div>
+                    <p className="text-3xl font-semibold text-center block mb-3">Current Bid: Rs. {data?.current_price}</p>
+                    <div className="flex items-center justify-center">
+                        <span className="text-[16px] font-bold mr-2">{data.bids_count} bids(s) so far</span>
+                        {/* <span className="text-white text-sm bg-green-700 rounded-full px-3">Your bid is the heighest</span> */}
+                        <span className="text-white text-sm bg-sky-600 rounded-full px-3">Your bid is 5660</span>
+                    </div>
+                </div>
+
             </div>
             {/* Empty Section (for future use) */}
             <div className="lg:col-span-1">

@@ -19,7 +19,7 @@ function SearchBox() {
             <input
                 className="flex-grow border-gray-300 bg-transparent font-semibold text-sm sm:text-lg pl-2 outline-none sm:pl-4 sm:pr-2 py-2 sm:py-2 overflow-hidden"
                 type="text"
-                placeholder="Search.."
+                placeholder="Search Anything Here..."
             />
 
             <span className="px-4 py-1 bg-green-600 rounded-md mr-2">
