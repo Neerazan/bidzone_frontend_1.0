@@ -22,13 +22,6 @@ function Home() {
 
     if (isError){
         console.log("error");
-        
-    }
-
-
-    if (data){
-        console.log(data);
-        
     }
 
     return (

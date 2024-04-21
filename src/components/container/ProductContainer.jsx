@@ -4,10 +4,8 @@ import { ProductCard } from '../index'
 function ProductContainer({ data, status }) {
     const filteredData = data?.filter(auction => auction.auction_status === status)
 
-    console.log(`Filtered data for ${status}:`, filteredData);
-
     if (!filteredData || filteredData.length === 0) {
-        console.log("No data found");
+        // console.log("No data found in the filteredData array.");
         return null;
     }
 
