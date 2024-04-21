@@ -38,25 +38,28 @@ function ProductDetails({ slug }) {
             {/* Image Section */}
             <div className="lg:col-span-1 relative">
                 {/* Main Image */}
-                <img
-                    alt="ecommerce"
-                    className="w-full object-cover object-center rounded border border-gray-200"
-                    src={selectedImage}
-                />
+                <div className="mx-3 mt-3 flex overflow-hidden rounded-xl h-96">
+                    <img
+                        alt="ecommerce"
+                        className="object-cover mx-auto"
+                        src={selectedImage}
+                    />
+                </div>
 
                 {/* Small Images Section */}
-                <div className="absolute bottom-0 left-0 w-full flex justify-center bg-white p-2">
+                <div className="w-full flex justify-center bg-white p-2">
                     {data?.product?.images?.map((image) => (
                         <img
                             key={image.id}
                             alt={`image`}
-                            className="w-16 h-16 object-cover object-center rounded border border-gray-200 cursor-pointer mx-1"
+                            className="w-16 h-16 object-cover object-center rounded border border-gray-400 cursor-pointer mx-1"
                             src={`http://127.0.0.1:8000${image.image}`}
-                            onClick={() => setSelectedImage(`http://127.0.0.1:8000${image.image}`)}
+                            onMouseEnter={() => setSelectedImage(`http://127.0.0.1:8000${image.image}`)}
                         />
                     ))}
                 </div>
             </div>
+
 
             {/* Product Details Section */}
             <div className="lg:col-span-1 p-6">
