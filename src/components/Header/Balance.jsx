@@ -40,7 +40,7 @@ function Balance() {
 
     return (
         <div className="flex">
-            {data && <span className="font-semibold text-xl text-gray-100">{formatCurrency(data[0].balance)}</span>}
+            {data && <span className="font-semibold text-md text-gray-700">{formatCurrency(data[0].balance)}</span>}
         </div>
     )
 }
