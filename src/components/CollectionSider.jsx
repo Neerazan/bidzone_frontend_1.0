@@ -6,7 +6,8 @@ import { useQuery } from 'react-query'
 const getCollection = async () => {
     try {
         const response = await axios.get('http://127.0.0.1:8000/auction/collections')
-        return response.data.results; // Extracting results array from the response
+        console.log(`Collections: ${response.data[0]}`);
+        return response.data;
     } catch (error) {
         throw error
     }
