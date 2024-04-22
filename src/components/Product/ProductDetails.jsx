@@ -61,6 +61,25 @@ function ProductDetails({ slug }) {
         startDate
     )
 
+
+    const MAX_DESCRIPTION_LENGTH = 200;
+
+    // function truncateText(text) {
+    //     if (text.length <= MAX_DESCRIPTION_LENGTH) {
+    //         return text;
+    //     } else {
+    //         return text.slice(0, MAX_DESCRIPTION_LENGTH) + "...";
+    //     }
+    // }
+    function truncateText(text) {
+        if (text.length <= MAX_DESCRIPTION_LENGTH) {
+            return <p>{text}</p>;
+        } else {
+            // return text.slice(0, MAX_DESCRIPTION_LENGTH) + "...";
+            return <p className="mb-4">{text.slice(0, MAX_DESCRIPTION_LENGTH) + " ..."} <Link className="underline font-semibold">see more</Link></p>;
+        }
+    }
+
     return (
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
             {/* Image Section */}
@@ -118,7 +137,7 @@ function ProductDetails({ slug }) {
                     {data?.product?.title}
                 </h1>
 
-                {/* <p>{data?.product?.description}</p> */}
+                {truncateText(data?.product?.description)}
 
                 <hr className="mb-3" />
                 {/* Seller Information */}
