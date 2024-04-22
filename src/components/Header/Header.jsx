@@ -1,13 +1,13 @@
 import React from "react"
 import { useSelector } from "react-redux"
 
-import { LoginOrRegister, Logo, SearchBox, Wishlist, Balance, Dropdown, Container, Notification } from "../index"
+import { LoginBtn, RegisterBtn, Logo, SearchBox, Wishlist, Balance, Dropdown, Container, Notification } from "../index"
 
 function Header() {
     const authStatus = useSelector((state) => state.auth.status)
 
     return (
-        <header className="bg-white">
+        <header className="bg-[#212529]">
             <Container>
                 <div className="container flex items-center">
                     <Logo />
@@ -15,7 +15,8 @@ function Header() {
                     {authStatus && <Dropdown />}
                     <nav className="">
                         <ul className="xl:w-auto flex items-center justify-center">
-                            {!authStatus && <LoginOrRegister />}
+                            {!authStatus && <LoginBtn />}
+                            {!authStatus && <RegisterBtn />}
                             {authStatus && <Notification />}
                             <Wishlist />
                             {authStatus && <Balance />}

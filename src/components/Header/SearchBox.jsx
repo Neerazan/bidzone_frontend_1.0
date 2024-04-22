@@ -15,9 +15,9 @@ function SearchBox() {
     const { data, error, isLoading } = useQuery("collections", retrieveCollections);
 
     return (
-        <div className="flex bg-gray-200 rounded-lg items-center mx-5 md:mx-7 lg:mx-10 w-full">
+        <div className="flex bg-gray-200 items-center mx-3 md:mx-5 lg:mx-10 w-full rounded-md">
             <input
-                className="flex-grow border-gray-300 bg-transparent font-semibold text-sm sm:text-lg pl-2 outline-none sm:pl-4 sm:pr-2 py-2 sm:py-2 overflow-hidden"
+                className="flex-grow border-gray-300 bg-transparent text-sm pl-2 outline-none sm:pl-4 sm:pr-2 overflow-hidden"
                 type="text"
                 placeholder="Search Anything Here..."
             />

@@ -6,7 +6,6 @@ import Login from "./Login";
 import Balance from "./Header/Balance";
 import SearchBox from "./Header/SearchBox";
 import Wishlist from "./Header/Wishlist";
-import LoginOrRegister from "./Header/LoginOrRegister";
 import Dropdown from "./Header/Dropdown";
 import Notification from "./Header/Notification";
 import ProductCard from "./ProductCard";
@@ -15,6 +14,8 @@ import CollectionSider from "./CollectionSider";
 import Footer from "./Footer/Footer";
 import ProductContainer from "./container/ProductContainer";
 import ProductDetails from "./Product/ProductDetails";
+import LoginBtn from "./Header/LoginBtn";
+import RegisterBtn from "./Header/RegisterBtn";
 
 export {
     Header,
@@ -25,7 +26,6 @@ export {
     Balance,
     SearchBox,
     Wishlist,
-    LoginOrRegister,
     Dropdown,
     Notification,
     ProductCard,
@@ -34,4 +34,6 @@ export {
     Footer,
     ProductContainer,
     ProductDetails,
+    LoginBtn,
+    RegisterBtn
 }

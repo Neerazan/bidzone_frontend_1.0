@@ -7,7 +7,7 @@ function Logo({width="100px"}) {
             to="/"
         >
             <img
-                className="h-10 md:h-14 mx-auto"
+                className="h-6 md:h-8 mx-auto"
                 src="https://flowbite.com/docs/images/logo.svg"
                 alt="Logo"
             />

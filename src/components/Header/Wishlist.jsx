@@ -3,9 +3,9 @@ import { Link } from "react-router-dom"
 
 function Wishlist() {
     return (
-        <li className="ml-2 lg:ml-4 relative inline-block">
+        <li className="ml-4 lg:ml-5 relative inline-block">
             <Link className="" href="">
-                <div className="absolute -top-1 right-0 z-10 text-white bg-red-600 text-xs font-bold px-1 py-0.5 rounded-sm">
+                <div className="absolute -top-3 -right-3 z-10 text-white bg-red-600 text-xs font-bold px-1 py-0.5 rounded-sm">
                     15
                 </div>
                 <svg
@@ -16,7 +16,7 @@ function Wishlist() {
                     role="img"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
-                    className="h-9 lg:h-10 p-2 text-gray-500 svg-inline--fa fa-heart"
+                    className="h-6 text-gray-400 svg-inline--fa fa-heart hover:to-red-600"
                 >
                     <path
                         fill="currentColor"

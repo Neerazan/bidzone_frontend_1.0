@@ -4,7 +4,7 @@ import axios from "axios"
 import Countdown from "react-countdown"
 import { useQuery } from "react-query"
 
-function ProductDetails({ slug }) {
+export function ProductDetails({ slug }) {
     const [selectedImage, setSelectedImage] = useState(
         `http://127.0.0.1:8000/default-image.jpg` // Default image or loading state
     )
@@ -41,19 +41,8 @@ function ProductDetails({ slug }) {
         return <div>Error loading product details: {error.message}</div>
     }
 
-
     const custom_renderer = ({ hours, minutes, seconds, completed }) => {
         // On complete remove <Countdown /> component from the DOM
-        if (completed) {
-            return <span>Time's up!</span>
-        } else {
-            // Render a countdown
-            return (
-                <span className="text-green-700 px-4 py-1 rounded-full font-semibold border border-gray-600">
-                    {hours}:{minutes}:{seconds}
-                </span>
-            )
-        }
     }
 
     return (
@@ -68,7 +57,7 @@ function ProductDetails({ slug }) {
                         src={selectedImage}
                     />
                 </div>
-                <hr className="mt-2"/>
+                <hr className="mt-2" />
                 {/* Small Images Section */}
                 <div className="w-full flex justify-center bg-white p-2">
                     {data?.product?.images?.map((image) => (
@@ -146,7 +135,10 @@ function ProductDetails({ slug }) {
                 {/* Remaining Time */}
 
                 <div className="flex mt-4">
-                    <Countdown date={Date.now() + 10000} renderer={custom_renderer}/>
+                    <Countdown
+                        date={Date.now() + 100000}
+                        className="text-green-700 px-4 py-1 rounded-full font-semibold border border-gray-600"
+                    />
                 </div>
 
                 {/* share and wishlist icon */}
@@ -231,5 +223,3 @@ function ProductDetails({ slug }) {
         </section>
     )
 }
-
-export default ProductDetails
