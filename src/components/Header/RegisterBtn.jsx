@@ -12,11 +12,11 @@ function RegisterBtn() {
                         xmlns="http://www.w3.org/2000/svg"
                         // fill="#000000"
                     >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                         <g
                             id="SVGRepo_tracerCarrier"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         ></g>
                         <g id="SVGRepo_iconCarrier">
                             {" "}
@@ -31,9 +31,9 @@ function RegisterBtn() {
                                             d="M17,21V19a4,4,0,0,0-4-4H5a4,4,0,0,0-4,4v2"
                                             fill="none"
                                             stroke="#c0c0c0"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
                                         ></path>{" "}
                                         <circle
                                             cx="9"
@@ -41,9 +41,9 @@ function RegisterBtn() {
                                             r="4"
                                             fill="none"
                                             stroke="#c0c0c0"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
                                         ></circle>{" "}
                                         <line
                                             x1="17"
@@ -52,9 +52,9 @@ function RegisterBtn() {
                                             y2="11"
                                             fill="none"
                                             stroke="#c0c0c0"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
                                         ></line>{" "}
                                         <line
                                             x1="20"
@@ -63,16 +63,18 @@ function RegisterBtn() {
                                             y2="14"
                                             fill="none"
                                             stroke="#c0c0c0"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
                                         ></line>{" "}
                                     </g>{" "}
                                 </g>{" "}
                             </g>{" "}
                         </g>
                     </svg>
-                    <span className="text-gray-300 ml-1 mt-[2px] hover:text-red-500">Register</span>
+                    <span className="text-gray-300 ml-1 mt-[2px] hover:text-red-500">
+                        Register
+                    </span>
                 </Link>
             </div>
         </li>

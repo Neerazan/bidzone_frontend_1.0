@@ -1,24 +1,8 @@
 import React from "react"
 import { useQuery } from "react-query"
-import axios from "axios"
 
-const retrieveCollections = async () => {
-    try {
-        const response = await axios.get(
-            "http://127.0.0.1:8000/auction/collections/"
-        )
-        return response.data
-    } catch (error) {
-        throw error
-    }
-}
 
 function SearchBox() {
-    const { data, error, isLoading } = useQuery(
-        "collections",
-        retrieveCollections
-    )
-
     return (
         <>
             <div className="flex bg-gray-200 items-center ml-3 md:ml-5 lg:ml-10 w-full rounded-s-md px-1 py-2">

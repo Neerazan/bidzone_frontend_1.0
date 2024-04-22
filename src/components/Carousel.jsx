@@ -66,12 +66,12 @@ function Carousel() {
                 ))}
             </div>
             {/* Slider controls */}
-            <button type="button" className="absolute top-1/2 left-4 transform -translate-y-1/2 z-50 text-white bg-gray-800 bg-opacity-50 p-2 rounded-full" onClick={handlePrevSlide}>
+            <button type="button" className="absolute top-1/2 left-4 transform -translate-y-1/2 z-40 text-white bg-gray-800 bg-opacity-50 p-2 rounded-full" onClick={handlePrevSlide}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
-            <button type="button" className="absolute top-1/2 right-4 transform -translate-y-1/2 z-50 text-white bg-gray-800 bg-opacity-50 p-2 rounded-full" onClick={handleNextSlide}>
+            <button type="button" className="absolute top-1/2 right-4 transform -translate-y-1/2 z-40 text-white bg-gray-800 bg-opacity-50 p-2 rounded-full" onClick={handleNextSlide}>
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                 </svg>

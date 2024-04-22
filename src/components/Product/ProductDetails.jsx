@@ -41,7 +41,6 @@ function ProductDetails({ slug }) {
         return <div>Error loading product details: {error.message}</div>
     }
 
-
     const custom_renderer = ({ hours, minutes, seconds, completed }) => {
         // On complete remove <Countdown /> component from the DOM
         if (completed) {
@@ -68,7 +67,7 @@ function ProductDetails({ slug }) {
                         src={selectedImage}
                     />
                 </div>
-                <hr className="mt-2"/>
+                <hr className="mt-2" />
                 {/* Small Images Section */}
                 <div className="w-full flex justify-center bg-white p-2">
                     {data?.product?.images?.map((image) => (
@@ -146,7 +145,10 @@ function ProductDetails({ slug }) {
                 {/* Remaining Time */}
 
                 <div className="flex mt-4">
-                    <Countdown date={Date.now() + 10000} renderer={custom_renderer}/>
+                    <Countdown
+                        date={Date.now() + 10000}
+                        renderer={custom_renderer}
+                    />
                 </div>
 
                 {/* share and wishlist icon */}
@@ -178,11 +180,11 @@ function ProductDetails({ slug }) {
                             viewBox="0 0 379.768 379.768"
                             xml:space="preserve"
                         >
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                             <g
                                 id="SVGRepo_tracerCarrier"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                             ></g>
                             <g id="SVGRepo_iconCarrier">
                                 {" "}
