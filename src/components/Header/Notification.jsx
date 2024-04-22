@@ -10,7 +10,7 @@ function Notification() {
                 </div>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-9 lg:h-10 cursor-pointer p-2 fill-[#333]"
+                    className="h-9 lg:h-10 cursor-pointer p-2 fill-[#d1d1d1]"
                     viewBox="0 0 371.263 371.263"
                 >
                     <path

@@ -39,11 +39,9 @@ function Balance() {
     }
 
     return (
-        <li className="ml-2 lg:ml-4 relative inline-block">
-            <div className="flex">
-                {data && <span className="font-semibold text-xl">{formatCurrency(data[0].balance)}</span>}
-            </div>
-        </li>
+        <div className="flex">
+            {data && <span className="font-semibold text-xl text-gray-100">{formatCurrency(data[0].balance)}</span>}
+        </div>
     )
 }
 
