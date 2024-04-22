@@ -55,6 +55,26 @@ function ProductDetails({ slug }) {
         }
     }
 
+
+
+    // Convert starting time string to Date object
+    const startDate = new Date(data?.starting_time);
+
+    // Define options for formatting the date
+    const options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    };
+
+    // Format the date using Intl.DateTimeFormat
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(startDate);
+
+
+
     return (
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
             {/* Image Section */}
@@ -108,9 +128,9 @@ function ProductDetails({ slug }) {
                     <span className="text-rose-500 text-[14px] italic font-semibold">
                         Created by,{" "}
                         <span className=" hover:underline cursor-pointer font-bold">
-                            Neerajan Dhakal,
+                            {data?.product?.customer?.first_name} {data?.product?.customer?.last_name}
                         </span>{" "}
-                        (21 Oct, 2024, 09:45 a.m.)
+                        ({formattedDate})
                     </span>
                 </div>
 
