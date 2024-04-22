@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import axios from "axios"
-import Countdown from "react-countdown"
+import axiosInstance from "./AxiosInstance"
 import { useQuery } from "react-query"
+import CountdownComponent from "./Time"
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import "react-lazy-load-image-component/src/effects/blur.css"
 
 function ProductDetails({ slug }) {
     const [selectedImage, setSelectedImage] = useState(
@@ -11,8 +13,8 @@ function ProductDetails({ slug }) {
 
     const getAuctionDetails = async () => {
         try {
-            const response = await axios.get(
-                `http://127.0.0.1:8000/auction/auctions/${slug}`
+            const response = await axiosInstance.get(
+                `/auction/auctions/${slug}`
             )
             return response.data
         } catch (error) {
@@ -41,39 +43,23 @@ function ProductDetails({ slug }) {
         return <div>Error loading product details: {error.message}</div>
     }
 
-    const custom_renderer = ({ hours, minutes, seconds, completed }) => {
-        // On complete remove <Countdown /> component from the DOM
-        if (completed) {
-            return <span>Time's up!</span>
-        } else {
-            // Render a countdown
-            return (
-                <span className="text-green-700 px-4 py-1 rounded-full font-semibold border border-gray-600">
-                    {hours}:{minutes}:{seconds}
-                </span>
-            )
-        }
-    }
-
-
-
     // Convert starting time string to Date object
-    const startDate = new Date(data?.starting_time);
+    const startDate = new Date(data?.starting_time)
 
     // Define options for formatting the date
     const options = {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-    };
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+    }
 
     // Format the date using Intl.DateTimeFormat
-    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(startDate);
-
-
+    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
+        startDate
+    )
 
     return (
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
@@ -81,7 +67,7 @@ function ProductDetails({ slug }) {
             <div className="lg:col-span-1 relative">
                 {/* Main Image */}
                 <div className="mx-3 mt-3 flex overflow-hidden rounded-xl h-96">
-                    <img
+                    <LazyLoadImage
                         alt="image"
                         className="object-cover mx-auto"
                         src={selectedImage}
@@ -91,7 +77,7 @@ function ProductDetails({ slug }) {
                 {/* Small Images Section */}
                 <div className="w-full flex justify-center bg-white p-2">
                     {data?.product?.images?.map((image) => (
-                        <img
+                        <LazyLoadImage
                             key={image.id}
                             alt={`image`}
                             className="w-16 h-16 object-cover object-center rounded border border-gray-400 cursor-pointer mx-1"
@@ -109,11 +95,23 @@ function ProductDetails({ slug }) {
             {/* Product Details Section */}
             <div className="lg:col-span-1 p-4">
                 <div className="w-full flex">
-                    <span className="rounded-full bg-green-700 font-semibold text-white px-4 pb-[1px] ml-auto">
-                        Active
-                    </span>
-                    {/* <span className="rounded-full bg-gray-700 font-semibold text-white px-4 pb-[1px] ml-auto">Upcoming</span> */}
-                    {/* <span className="rounded-full bg-red-700 font-semibold text-white px-4 pb-[1px] ml-auto">Ended</span> */}
+                    {data?.auction_status === "A" && (
+                        <span className="rounded-full bg-green-700 font-semibold text-white px-4 pb-[1px] ml-auto">
+                            Active
+                        </span>
+                    )}
+
+                    {data?.auction_status === "S" && (
+                        <span className="rounded-full bg-gray-700 font-semibold text-white px-4 pb-[1px] ml-auto">
+                            Upcoming
+                        </span>
+                    )}
+
+                    {data?.auction_status === "C" && (
+                        <span className="rounded-full bg-red-700 font-semibold text-white px-4 pb-[1px] ml-auto">
+                            Ended
+                        </span>
+                    )}
                 </div>
 
                 <h1 className="text-gray-800 text-2xl title-font font-semibold mb-3 mt-1">
@@ -128,7 +126,8 @@ function ProductDetails({ slug }) {
                     <span className="text-rose-500 text-[14px] italic font-semibold">
                         Created by,{" "}
                         <span className=" hover:underline cursor-pointer font-bold">
-                            {data?.product?.customer?.first_name} {data?.product?.customer?.last_name}
+                            {data?.product?.customer?.first_name}{" "}
+                            {data?.product?.customer?.last_name}
                         </span>{" "}
                         ({formattedDate})
                     </span>
@@ -163,16 +162,14 @@ function ProductDetails({ slug }) {
                 <hr className="" />
 
                 {/* Remaining Time */}
-
-                <div className="flex mt-4">
-                    <Countdown
-                        date={Date.now() + 10000}
-                        renderer={custom_renderer}
-                    />
-                </div>
+                {data?.auction_status === "A" && (
+                    <div className="flex mt-4 h-20">
+                        <CountdownComponent apiDate={data?.ending_time} />
+                    </div>
+                )}
 
                 {/* share and wishlist icon */}
-                <div className="flex mt-3">
+                <div className="flex mt-4">
                     <Link className="mr-auto text-sky-600 font-semibold text-sm italic hover:underline">
                         11 Questions Answered{" "}
                     </Link>

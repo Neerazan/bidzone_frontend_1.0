@@ -16,6 +16,7 @@ import ProductContainer from "./container/ProductContainer";
 import ProductDetails from "./Product/ProductDetails";
 import LoginBtn from "./Header/LoginBtn";
 import RegisterBtn from "./Header/RegisterBtn";
+import CountdownComponent from "./Product/Time";
 
 export {
     Header,
@@ -35,5 +36,6 @@ export {
     ProductContainer,
     ProductDetails,
     LoginBtn,
-    RegisterBtn
+    RegisterBtn,
+    CountdownComponent,
 }

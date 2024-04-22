@@ -9,7 +9,7 @@ function ProductCard({
     image,
     currentPrice,
     bidsCount,
-    endingTime,
+    startingTime,
     auctionStatus,
 }) {
     const MAX_DESCRIPTION_LENGTH = 60;
@@ -22,6 +22,21 @@ function ProductCard({
             return text.slice(0, maxLength) + "...";
         }
     }
+
+    const startDate = new Date(startingTime);
+
+    // Define options for formatting the date
+    const options = {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    };
+
+    // Format the date using Intl.DateTimeFormat
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(startDate);
 
     return (
         <div className={`relative md:my-1 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md ${auctionStatus === 'A' ? '' : 'bg-white'}`}>
@@ -70,7 +85,7 @@ function ProductCard({
                 {auctionStatus === 'S' && (
                     <div>
                         <h5 className="text-[1em] ms-2 tracking-tight text-red-600 mt-2 font-semibold">
-                            Live on: {endingTime}
+                            Live on: {formattedDate}
                         </h5>
                         <div className="mt-2 flex items-center justify-between">
                             <Link

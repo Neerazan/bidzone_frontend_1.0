@@ -26,7 +26,7 @@ function ProductContainer({ data, status }) {
                         image={auction.product.images[0].image}
                         currentPrice={auction.current_price}
                         bidsCount={auction.bids_count}
-                        endingTime={auction.ending_time}
+                        startingTime={auction.starting_time}
                         auctionStatus={auction.auction_status}
                     />
                 ))}
