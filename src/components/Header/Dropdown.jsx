@@ -37,12 +37,12 @@ function Dropdown() {
                 {/* Dropdown List */}
                 {dropdown && (
                     <div
-                        className="absolute z-50 mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+                        className="absolute z-50 mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-48"
                         id="profile-dropdown-menu"
                         style={{ left: 0 }}
                     >
                         <ul className="py-2 font-medium" role="none">
-                            <li>
+                            <li className="hover:bg-gray-200 cursor-pointer px-4 py-2">
                                 <Balance />
                             </li>
                             <li>
