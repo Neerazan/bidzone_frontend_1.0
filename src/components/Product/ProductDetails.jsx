@@ -138,7 +138,7 @@ function ProductDetails({ slug }) {
                 {/* Seller Information */}
                 <div className="mb-4">
                     <span className="text-rose-500 text-[14px] italic font-semibold">
-                        Created by,{" "}
+                        Posted by,{" "}
                         <span className=" hover:underline cursor-pointer font-bold">
                             {data?.product?.customer?.first_name}{" "}
                             {data?.product?.customer?.last_name}
