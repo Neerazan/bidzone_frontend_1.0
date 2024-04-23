@@ -17,6 +17,8 @@ import ProductDetails from "./Product/ProductDetails";
 import LoginBtn from "./Header/LoginBtn";
 import RegisterBtn from "./Header/RegisterBtn";
 import CountdownComponent from "./Product/Time";
+import BidHistory from "./Product/BidHistory";
+
 
 export {
     Header,
@@ -38,4 +40,5 @@ export {
     LoginBtn,
     RegisterBtn,
     CountdownComponent,
+    BidHistory,
 }

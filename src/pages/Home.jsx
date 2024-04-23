@@ -16,9 +16,9 @@ function Home() {
 
     const { data, isError, isLoading } = useQuery('auctions', getAuctions)
 
-    if (isLoading){
-        console.log("Loading...");
-    }
+    // if (isLoading){
+    //     console.log("Loading...");
+    // }
 
     if (isError){
         console.log("error");

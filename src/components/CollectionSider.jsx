@@ -8,7 +8,6 @@ const getCollection = async () => {
         const response = await axios.get(
             "http://127.0.0.1:8000/auction/collections"
         )
-        console.log(`Collections: ${response.data[0]}`)
         return response.data
     } catch (error) {
         throw error

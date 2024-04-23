@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import axiosInstance from "./AxiosInstance"
 import { useQuery } from "react-query"
-import CountdownComponent from "./Time"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
+
+import CountdownComponent from "./Time"
+import BidHistory from "./BidHistory"
 
 function ProductDetails({ slug }) {
     const [selectedImage, setSelectedImage] = useState(
@@ -64,13 +66,6 @@ function ProductDetails({ slug }) {
 
     const MAX_DESCRIPTION_LENGTH = 200;
 
-    // function truncateText(text) {
-    //     if (text.length <= MAX_DESCRIPTION_LENGTH) {
-    //         return text;
-    //     } else {
-    //         return text.slice(0, MAX_DESCRIPTION_LENGTH) + "...";
-    //     }
-    // }
     function truncateText(text) {
         if (text.length <= MAX_DESCRIPTION_LENGTH) {
             return <p>{text}</p>;
@@ -211,10 +206,10 @@ function ProductDetails({ slug }) {
                             version="1.1"
                             id="Capa_1"
                             xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xmlnsXlink="http://www.w3.org/1999/xlink"
                             className="w-6 h-6 text-gray-700 ml-4 cursor-pointer hover:filter hover:brightness-125"
                             viewBox="0 0 379.768 379.768"
-                            xml:space="preserve"
+                            xmlSpace="preserve"
                         >
                             <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                             <g
@@ -263,8 +258,8 @@ function ProductDetails({ slug }) {
                 </div>
             </div>
             {/* Empty Section (for future use) */}
-            <div className="lg:col-span-1">
-                <p>Bidding History TODO</p>
+            <div className="lg:col-span-1 p-4">
+                <BidHistory auctionId={data?.id}/>
             </div>
         </section>
     )
