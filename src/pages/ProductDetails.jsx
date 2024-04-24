@@ -10,35 +10,51 @@ function Product() {
 
     const getAuctionDetails = async () => {
         try {
-            const response = await axiosInstance.get(
-                `/auction/auctions/${slug}`
-            )
+            const response = await axiosInstance.get(`/auction/auctions/${slug}`)
             return response.data
         } catch (error) {
             throw error
         }
     }
 
-
-    const { data, isError, isLoading, error } = useQuery(
+    const { data: auctionDetails, isError: auctionError, isLoading: auctionLoading } = useQuery(
         "auctionDetails",
         getAuctionDetails
     )
 
-    if (isLoading) {
+    const { data: bids, isError: bidsError, isLoading: bidsLoading } = useQuery(
+        "auctionBids",
+        async () => {
+            if (auctionDetails) {
+                try {
+                    const response = await axiosInstance.get(`/auction/auctions/${auctionDetails.id}/bids/`)
+                    return response.data
+                } catch (error) {
+                    throw error
+                }
+            }
+        },
+        { enabled: !!auctionDetails } // Ensure the query is only enabled when auctionDetails is available
+    )
+
+    if (auctionLoading || bidsLoading) {
         return <div>Loading...</div>
     }
 
-    if (isError) {
-        return <div>Error loading product details: {error.message}</div>
+    if (auctionError) {
+        return <div>Error loading product details: {auctionError.message}</div>
+    }
+
+    if (bidsError) {
+        return <div>Error loading auction bids: {bidsError.message}</div>
     }
 
     return (
         <Container>
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
-                <ProductImages data={data} />
-                <ProductInfo data={data} />
-                <BidHistory auctionId={data?.id} />
+                <ProductImages data={auctionDetails} />
+                <ProductInfo data={auctionDetails} />
+                <BidHistory data={bids} isLoading={bidsLoading}/>
             </section>
         </Container>
     )

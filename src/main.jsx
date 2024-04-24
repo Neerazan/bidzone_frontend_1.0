@@ -9,7 +9,6 @@ import App from './App.jsx'
 import './index.css'
 import Login from './pages/Login.jsx'
 import Home from './pages/Home.jsx'
-import Product from './pages/Product.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 
 

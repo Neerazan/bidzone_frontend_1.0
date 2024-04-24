@@ -1,9 +1,13 @@
 import React from "react"
-import { FormattedDate, CountdownComponent, SellerRating, BidInfo } from "../index"
+import {
+    FormattedDate,
+    CountdownComponent,
+    SellerRating,
+    BidInfo,
+} from "../index"
 import { Link } from "react-router-dom"
 
 function ProductInfo({ data }) {
-
     const MAX_DESCRIPTION_LENGTH = 200
 
     function truncateText(text) {
@@ -56,7 +60,7 @@ function ProductInfo({ data }) {
                         {data?.product?.customer?.first_name}{" "}
                         {data?.product?.customer?.last_name}
                     </span>{" "}
-                    (<FormattedDate date={data?.starting_time}/>)
+                    (<FormattedDate date={data?.starting_time} />)
                 </span>
             </div>
             <SellerRating />
@@ -65,11 +69,13 @@ function ProductInfo({ data }) {
 
             {/* Remaining Time */}
             {data?.auction_status === "A" && (
-                <div className="flex mt-4 h-20">
-                    <CountdownComponent apiDate={data?.ending_time} />
+                <div>
+                    <div className="flex mt-4 h-20">
+                        <CountdownComponent apiDate={data?.ending_time} />
+                    </div>
+                    <hr className="my-4" />
                 </div>
             )}
-            <hr className="my-4" />
 
             <BidInfo data={data} />
         </div>

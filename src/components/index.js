@@ -13,7 +13,6 @@ import Carousel from "./Home/Carousel"
 import CollectionSider from "./Home/CollectionSider"
 import Footer from "./Footer/Footer"
 import ProductContainer from "./Home/ProductContainer"
-import ProductDetails from "./Product/ProductDetails"
 import LoginBtn from "./Header/LoginBtn"
 import RegisterBtn from "./Header/RegisterBtn"
 import CountdownComponent from "./Product/CountDown"
@@ -43,7 +42,6 @@ export {
     CollectionSider,
     Footer,
     ProductContainer,
-    ProductDetails,
     LoginBtn,
     RegisterBtn,
     CountdownComponent,
@@ -54,6 +52,5 @@ export {
     FormattedDate,
     WishListBtn,
     SellerRating,
-    BidInfo,
-    
+    BidInfo, 
 }
