@@ -68,7 +68,7 @@ function ProductDetails({ slug }) {
 
     function truncateText(text) {
         if (text.length <= MAX_DESCRIPTION_LENGTH) {
-            return <p>{text}</p>;
+            return <p className="mb-4">{text}</p>;
         } else {
             // return text.slice(0, MAX_DESCRIPTION_LENGTH) + "...";
             return <p className="mb-4">{text.slice(0, MAX_DESCRIPTION_LENGTH) + " ..."} <Link className="underline font-semibold">see more</Link></p>;

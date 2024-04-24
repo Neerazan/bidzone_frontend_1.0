@@ -30,7 +30,7 @@ function BidHistory({ auctionId }) {
                     )}
                     {data &&
                         data.map((bid) => (
-                            <div className="flex rounded-full bg-white px-2 py-1 items-center mb-2">
+                            <div className="flex rounded-full bg-white px-2 py-1 items-center mb-2" key={bid.id}>
                                 <div className="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center text-2xl justify-center">
                                     {bid.bidder.first_name[0]}
                                 </div>
