@@ -15,7 +15,7 @@ function BidHistory({ auctionId }) {
     const { data, isLoading, isError } = useQuery("bidHistory", getBidHistory)
 
     return (
-        <>
+        <div className="lg:col-span-1 p-4">
             {/* Scrollable container for bid history using tailwind css */}
             <h2 className="text-center font-semibold text-xl py-2 rounded-lg bg-gray-100">
                 Bidding History
@@ -57,7 +57,7 @@ function BidHistory({ auctionId }) {
                         ))}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

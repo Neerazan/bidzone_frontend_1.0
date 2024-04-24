@@ -19,6 +19,13 @@ import RegisterBtn from "./Header/RegisterBtn"
 import CountdownComponent from "./Product/CountDown"
 import BidHistory from "./Product/BidHistory"
 import Loader from "./Loader"
+import ProductInfo from "./Product/ProductInfo"
+import ProductImages from "./Product/ProductImages"
+import FormattedDate from "./FormattedDate"
+import WishListBtn from "./Product/WishListBtn"
+import SellerRating from "./Product/SellerRating"
+import BidInfo from "./Product/BidInfo"
+
 
 export {
     Header,
@@ -42,4 +49,11 @@ export {
     CountdownComponent,
     BidHistory,
     Loader,
+    ProductInfo,
+    ProductImages,
+    FormattedDate,
+    WishListBtn,
+    SellerRating,
+    BidInfo,
+    
 }

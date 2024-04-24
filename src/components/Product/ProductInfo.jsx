@@ -1,6 +1,24 @@
 import React from "react"
+import { FormattedDate, CountdownComponent, SellerRating, BidInfo } from "../index"
+import { Link } from "react-router-dom"
 
 function ProductInfo({ data }) {
+
+    const MAX_DESCRIPTION_LENGTH = 200
+
+    function truncateText(text) {
+        if (text.length <= MAX_DESCRIPTION_LENGTH) {
+            return <p className="mb-4">{text}</p>
+        } else {
+            return (
+                <p className="mb-4">
+                    {text.slice(0, MAX_DESCRIPTION_LENGTH) + " ..."}{" "}
+                    <Link className="underline font-semibold">see more</Link>
+                </p>
+            )
+        }
+    }
+
     return (
         <div className="lg:col-span-1 p-4">
             <div className="w-full flex">
@@ -38,9 +56,10 @@ function ProductInfo({ data }) {
                         {data?.product?.customer?.first_name}{" "}
                         {data?.product?.customer?.last_name}
                     </span>{" "}
-                    ({formattedDate})
+                    (<FormattedDate date={data?.starting_time}/>)
                 </span>
             </div>
+            <SellerRating />
 
             <hr />
 
@@ -50,8 +69,9 @@ function ProductInfo({ data }) {
                     <CountdownComponent apiDate={data?.ending_time} />
                 </div>
             )}
-
             <hr className="my-4" />
+
+            <BidInfo data={data} />
         </div>
     )
 }
