@@ -53,7 +53,7 @@ function Product() {
         <Container>
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
                 <ProductImages data={auctionDetails} />
-                <ProductInfo data={auctionDetails} />
+                <ProductInfo data={auctionDetails} bidsData={bids}/>
                 <BidHistory data={bids} isLoading={bidsLoading}/>
             </section>
         </Container>

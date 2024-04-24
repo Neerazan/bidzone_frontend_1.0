@@ -1,6 +1,10 @@
 import React from "react"
+import { useSelector } from "react-redux"
 
-function BidInfo({ data }) {
+function BidInfo({ data, bidsData }) {
+
+    const customer_id = useSelector((state) => state.auth.userData.id)
+
     return (
         <>
             <div>

@@ -7,7 +7,7 @@ import {
 } from "../index"
 import { Link } from "react-router-dom"
 
-function ProductInfo({ data }) {
+function ProductInfo({ data, bidsData }) {
     const MAX_DESCRIPTION_LENGTH = 200
 
     function truncateText(text) {
@@ -77,7 +77,7 @@ function ProductInfo({ data }) {
                 </div>
             )}
 
-            <BidInfo data={data} />
+            <BidInfo data={data} bidsData={bidsData}/>
         </div>
     )
 }
