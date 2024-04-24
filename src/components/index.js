@@ -18,6 +18,7 @@ import LoginBtn from "./Header/LoginBtn";
 import RegisterBtn from "./Header/RegisterBtn";
 import CountdownComponent from "./Product/Time";
 import BidHistory from "./Product/BidHistory";
+import Loader from "./Loader";
 
 
 export {
@@ -41,4 +42,5 @@ export {
     RegisterBtn,
     CountdownComponent,
     BidHistory,
+    Loader,
 }
