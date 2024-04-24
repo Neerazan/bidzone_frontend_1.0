@@ -5,7 +5,7 @@ import { useQuery } from "react-query"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
 
-import CountdownComponent from "./Time"
+import CountdownComponent from "./CountDown"
 import BidHistory from "./BidHistory"
 
 function ProductDetails({ slug }) {
@@ -63,15 +63,19 @@ function ProductDetails({ slug }) {
         startDate
     )
 
-
-    const MAX_DESCRIPTION_LENGTH = 200;
+    const MAX_DESCRIPTION_LENGTH = 200
 
     function truncateText(text) {
         if (text.length <= MAX_DESCRIPTION_LENGTH) {
-            return <p className="mb-4">{text}</p>;
+            return <p className="mb-4">{text}</p>
         } else {
             // return text.slice(0, MAX_DESCRIPTION_LENGTH) + "...";
-            return <p className="mb-4">{text.slice(0, MAX_DESCRIPTION_LENGTH) + " ..."} <Link className="underline font-semibold">see more</Link></p>;
+            return (
+                <p className="mb-4">
+                    {text.slice(0, MAX_DESCRIPTION_LENGTH) + " ..."}{" "}
+                    <Link className="underline font-semibold">see more</Link>
+                </p>
+            )
         }
     }
 
@@ -259,7 +263,7 @@ function ProductDetails({ slug }) {
             </div>
             {/* Empty Section (for future use) */}
             <div className="lg:col-span-1 p-4">
-                <BidHistory auctionId={data?.id}/>
+                <BidHistory auctionId={data?.id} />
             </div>
         </section>
     )
