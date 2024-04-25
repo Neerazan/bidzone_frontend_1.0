@@ -4,6 +4,7 @@ import {
     CountdownComponent,
     SellerRating,
     BidInfo,
+    WishListBtn
 } from "../index"
 import { Link } from "react-router-dom"
 
@@ -73,6 +74,7 @@ function ProductInfo({ data, bidsData }) {
                     <div className="flex mt-4 h-20">
                         <CountdownComponent apiDate={data?.ending_time} />
                     </div>
+                    <WishListBtn />
                     <hr className="my-4" />
                 </div>
             )}
