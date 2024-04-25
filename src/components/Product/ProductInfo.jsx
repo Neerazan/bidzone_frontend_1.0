@@ -74,7 +74,9 @@ function ProductInfo({ data, bidsData }) {
                     <div className="flex mt-4 h-20">
                         <CountdownComponent apiDate={data?.ending_time} />
                     </div>
-                    <WishListBtn />
+
+                    <WishListBtn auctionId={data?.id}/>
+                    
                     <hr className="my-4" />
                 </div>
             )}

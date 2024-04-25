@@ -16,7 +16,7 @@ const BidHistory = ({ data, isLoading }) => {
     const renderBidHistory = () => {
         return data.map((bid) => (
             <div 
-                className={`flex rounded-full ${customer_id === bid.bidder.id ? "bg-green-200" : "bg-sky-200"} px-2 py-1 items-center mb-2`} key={bid.id}
+                className={`flex rounded-full ${customer_id === bid.bidder.id ? "bg-green-200" : "bg-sky-100"} px-2 py-1 items-center mb-2`} key={bid.id}
             >
                 <div className="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center text-2xl justify-center">
                     {bid.bidder.first_name[0]}
