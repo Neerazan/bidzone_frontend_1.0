@@ -23,7 +23,7 @@ function Product() {
     )
 
     const { data: bids, isError: bidsError, isLoading: bidsLoading } = useQuery(
-        "auctionBids",
+        ["auctionBids", auctionDetails?.id], // Include auctionDetails.id in the query key
         async () => {
             if (auctionDetails) {
                 try {
@@ -36,6 +36,7 @@ function Product() {
         },
         { enabled: !!auctionDetails } // Ensure the query is only enabled when auctionDetails is available
     )
+    
 
     if (auctionLoading || bidsLoading) {
         return <div>Loading...</div>
