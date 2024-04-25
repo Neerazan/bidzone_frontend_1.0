@@ -3,7 +3,11 @@ import { useSelector } from "react-redux"
 
 function BidInfo({ data, bidsData }) {
 
-    const customer_id = useSelector((state) => state.auth.userData.id)
+    const authStatus = useSelector((state) => state.auth.status)
+
+    if(authStatus){
+        const customer_id = useSelector((state) => state.auth.userData.id)
+    }
 
     return (
         <>
