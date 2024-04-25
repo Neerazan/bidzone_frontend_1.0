@@ -39,12 +39,12 @@ const BidHistory = ({ data, isLoading }) => {
     };
 
     return (
-        <div className="lg:col-span-1 p-4">
-            <h2 className="text-center font-semibold text-xl py-2 rounded-lg bg-white border border-gray-300">
+        <div className="lg:col-span-1 p-4 bg-gray-100">
+            <h2 className="text-center font-semibold text-xl py-2 rounded-lg bg-white">
                 Bidding History
             </h2>
 
-            <div className="flex flex-col h-96 overflow-y-scroll rounded-lg mt-2 bg-white border border-gray-300">
+            <div className="flex flex-col h-96 overflow-y-scroll rounded-lg mt-2 bg-white">
                 <div className="flex flex-col bg-white w-full px-2 py-2">
                     {isLoading && (
                         <div className="flex justify-center items-center">
