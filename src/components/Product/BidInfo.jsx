@@ -11,8 +11,7 @@ function BidInfo({ data, bidsData }) {
         customer_id = useSelector((state) => state.auth.userData.id)
     }
 
-    console.log(`customer_id: ${customer_id}`);
-    console.log(`Bidder: ${bidsData[1]?.bidder.id}`);
+    const myBid = bidsData.find((bid) => bid.bidder.id === customer_id)
 
     return (
         <>
@@ -27,9 +26,9 @@ function BidInfo({ data, bidsData }) {
                     {
                         customer_id === bidsData[0]?.bidder.id && <span className="text-white text-sm bg-green-700 rounded-full px-3">Your bid is the heighest</span>
                     }
-                    {/* <span className="text-white text-sm bg-sky-600 rounded-full px-3">
-                        Your bid is 5660
-                    </span> */}
+                    {
+                        myBid && customer_id !== bidsData[0]?.bidder.id && <span className="text-white text-sm bg-sky-600 rounded-full px-3">Your bid is {myBid.amount}</span>
+                    }
                 </div>
             </div>
 
