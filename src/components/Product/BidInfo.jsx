@@ -41,7 +41,7 @@ function BidInfo({ data, bidsData }) {
                     className="w-full bg-gray-200 rounded-md p-2 outline-1 focus:outline focus:outline-sky-500"
                 />
                 <button className="w-full border border-green-700 text-green-700 rounded-md p-2 mt-2 font-semibold hover:bg-green-700 hover:text-white">
-                    Submit Bid
+                    {myBid ? "Update Bid" : "Submit Bid"}
                 </button>
             </div>
         </>

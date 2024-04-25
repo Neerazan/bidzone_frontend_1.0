@@ -41,7 +41,7 @@ function App() {
                 return response.data
             } catch (error) {
                 console.log("Error", error)
-                throw error // Re-throw the error to let React Query handle it
+                throw error
             }
         },
         {
