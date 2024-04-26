@@ -14,8 +14,9 @@ function BidInfo({ data, bidsData }) {
     }
 
     const myBid = bidsData.find((bid) => bid.bidder.id === customer_id)
+    console.log(`myBid:`, myBid);
 
-    const submitBidMutation = useMutation(async (auction_id) => {
+    const submitBidMutation = useMutation(async () => {
         await axios.post(
             `http://127.0.0.1:8000/auction/auctions/${data.id}/bids/`,
             {
@@ -28,6 +29,31 @@ function BidInfo({ data, bidsData }) {
             }
         );
     })
+
+
+    const updateBIdMutation = useMutation(async () => {
+        await axios.put(
+            `http://127.0.0.1:8000/auction/auctions/${data.id}/bids/${myBid.id}/`,
+            {
+                amount: bidAmount,
+            },
+            {
+                headers: {
+                    Authorization: `JWT ${accessToken}`,
+                }
+            }
+        )
+    })
+
+
+    const submitBid = () => {
+        if (myBid) {
+            updateBIdMutation.mutate()
+        } else {
+            submitBidMutation.mutate()
+        }
+    }
+
 
     return (
         <>
@@ -63,9 +89,7 @@ function BidInfo({ data, bidsData }) {
                 />
                 <button
                     className="w-full border border-green-700 text-green-700 rounded-md p-2 mt-2 font-semibold hover:bg-green-700 hover:text-white"
-                    onClick={() => {
-                        submitBidMutation.mutate(data?.id)
-                    }}
+                    onClick={submitBid}
                 >
                     {myBid ? "Update Bid" : "Submit Bid"}
                 </button>
