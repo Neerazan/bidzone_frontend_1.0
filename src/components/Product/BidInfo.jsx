@@ -1,17 +1,33 @@
-import React from "react"
+import React, { useState } from "react"
 import { useSelector } from "react-redux"
+import { useMutation } from "react-query"
+import axios from "axios"
 
 function BidInfo({ data, bidsData }) {
+    const [bidAmount, setBidAmount] = useState(null)
+    const accessToken = useSelector((state) => state.auth.accessKey)
 
     const authStatus = useSelector((state) => state.auth.status)
-    
     let customer_id = null
-
-    if(authStatus){
+    if (authStatus) {
         customer_id = useSelector((state) => state.auth.userData.id)
     }
 
     const myBid = bidsData.find((bid) => bid.bidder.id === customer_id)
+
+    const submitBidMutation = useMutation(async (auction_id) => {
+        await axios.post(
+            `http://127.0.0.1:8000/auction/auctions/${data.id}/bids/`,
+            {
+                amount: bidAmount,
+            },
+            {
+                headers: {
+                    Authorization: `JWT ${accessToken}`,
+                },
+            }
+        );
+    })
 
     return (
         <>
@@ -23,12 +39,16 @@ function BidInfo({ data, bidsData }) {
                     <span className="text-[16px] font-bold mr-2">
                         {data.bids_count} bids(s) so far
                     </span>
-                    {
-                        customer_id === bidsData[0]?.bidder.id && <span className="text-white text-sm bg-green-700 rounded-full px-3">Your bid is the heighest</span>
-                    }
-                    {
-                        myBid && customer_id !== bidsData[0]?.bidder.id && <span className="text-white text-sm bg-sky-600 rounded-full px-3">Your bid is {myBid.amount}</span>
-                    }
+                    {customer_id === bidsData[0]?.bidder.id && (
+                        <span className="text-white text-sm bg-green-700 rounded-full px-3">
+                            Your bid is the heighest
+                        </span>
+                    )}
+                    {myBid && customer_id !== bidsData[0]?.bidder.id && (
+                        <span className="text-white text-sm bg-sky-600 rounded-full px-3">
+                            Your bid is {myBid.amount}
+                        </span>
+                    )}
                 </div>
             </div>
 
@@ -39,8 +59,14 @@ function BidInfo({ data, bidsData }) {
                     type="number"
                     placeholder="Enter your bid"
                     className="w-full bg-gray-200 rounded-md p-2 outline-1 focus:outline focus:outline-sky-500"
+                    onChange={(e) => setBidAmount(e.target.value)}
                 />
-                <button className="w-full border border-green-700 text-green-700 rounded-md p-2 mt-2 font-semibold hover:bg-green-700 hover:text-white">
+                <button
+                    className="w-full border border-green-700 text-green-700 rounded-md p-2 mt-2 font-semibold hover:bg-green-700 hover:text-white"
+                    onClick={() => {
+                        submitBidMutation.mutate(data?.id)
+                    }}
+                >
                     {myBid ? "Update Bid" : "Submit Bid"}
                 </button>
             </div>
