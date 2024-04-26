@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
-import { data } from "autoprefixer"
 
 function WishListBtn({ auctionId }) {
     const [inWishlist, setInWishlist] = useState(false)
     const wishlist_id = localStorage.getItem("bidzone_wishlist_id")
+    // console.log(`Wishlist ID: ${wishlist_id}`);
+    // console.log(`Auction ID: ${auctionId}`);
 
     useEffect(() => {
         if (wishlist_id) {
@@ -18,11 +19,10 @@ function WishListBtn({ auctionId }) {
             const response = await axios.get(
                 `http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`
             )
-
             const responseData = response.data.results
-
-            const itemExists = responseData.some((item) => item.id === itemId)
+            const itemExists = responseData.some((item) => item.auction.id === itemId)
             setInWishlist(itemExists)
+            
         } catch (error) {
             console.error("Error fetching wishlist items:", error)
         }
@@ -58,7 +58,7 @@ function WishListBtn({ auctionId }) {
         try {
             await axios.post(
                 `http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`,
-                { product_id: itemId }
+                { auction_id: itemId }
             )
             setInWishlist(true)
         } catch (error) {
