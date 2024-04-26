@@ -14,7 +14,6 @@ function BidInfo({ data, bidsData }) {
     }
 
     const myBid = bidsData.find((bid) => bid.bidder.id === customer_id)
-    console.log(`myBid:`, myBid);
 
     const submitBidMutation = useMutation(async () => {
         await axios.post(
