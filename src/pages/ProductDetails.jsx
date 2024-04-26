@@ -38,6 +38,7 @@ function Product() {
     )
     
 
+
     if (auctionLoading || bidsLoading) {
         return <div>Loading...</div>
     }
@@ -49,6 +50,7 @@ function Product() {
     if (bidsError) {
         return <div>Error loading auction bids: {bidsError.message}</div>
     }
+    
 
     return (
         <Container>

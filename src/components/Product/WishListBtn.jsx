@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
+import { useMutation } from "react-query"
 
 function WishListBtn({ auctionId }) {
     const [inWishlist, setInWishlist] = useState(false)
     const [itemId, setItemId] = useState(null)
     const wishlist_id = localStorage.getItem("bidzone_wishlist_id")
-    // console.log(`Wishlist ID: ${wishlist_id}`);
-    // console.log(`Auction ID: ${auctionId}`);
 
     useEffect(() => {
         if (wishlist_id) {
@@ -15,87 +14,85 @@ function WishListBtn({ auctionId }) {
         }
     }, [wishlist_id, auctionId])
 
+
+
     const checkWishlistItem = async (wishlistId, itemId) => {
         try {
             const response = await axios.get(
                 `http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`
             )
             const responseData = response.data.results
-            const itemExists = responseData.find((item) => item.auction.id === itemId)
+            const itemExists = responseData.find(
+                (item) => item.auction.id === itemId
+            )
 
             if (itemExists) {
                 setInWishlist(true)
                 setItemId(itemExists.id)
             }
-
         } catch (error) {
             console.error("Error fetching wishlist items:", error)
         }
     }
 
 
+    const createWishlistAndAddItemMutation = useMutation(async () => {
+        const response = await axios.post(
+            `http://127.0.0.1:8000/auction/wishlists/`
+        )
+        const newWishlistId = response.data.id
+        localStorage.setItem("bidzone_wishlist_id", newWishlistId)
+        await addToWishlistMutation.mutate({
+            auctionId,
+            wishlistId: newWishlistId,
+        })
+        return { newWishlistId }
+    })
 
-    const toggleWishlistItem = async () => {
+
+
+    const addToWishlistMutation = useMutation(
+        async ({ auctionId, wishlistId }) => {
+            await axios.post(
+                `http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`,
+                { auction_id: auctionId }
+            )
+            setInWishlist(true)
+            return { auctionId, wishlistId }
+        }
+    )
+
+
+
+    const removeFromWishlistMutation = useMutation(async (itemId) => {
+        await axios.delete(
+            `http://127.0.0.1:8000/auction/wishlists/${wishlist_id}/items/${itemId}/`
+        )
+        setInWishlist(false)
+        return { itemId }
+    })
+
+
+
+    const toggleWishlistItem = () => {
         if (!wishlist_id) {
-            await createWishlistAndAddItem()
+            createWishlistAndAddItemMutation.mutate()
         } else {
             const itemExists = inWishlist
             if (itemExists) {
-                console.log(`Wishlit Items ID: ${itemId}`);
-                await removeFromWishlist(itemId)
+                console.log(`Wishlist Items ID: ${itemId}`)
+                removeFromWishlistMutation.mutate(itemId)
             } else {
-                await addToWishlist(auctionId)
+                addToWishlistMutation.mutate({
+                    auctionId,
+                    wishlistId: wishlist_id,
+                })
             }
         }
     }
 
 
-
-    const createWishlistAndAddItem = async () => {
-        try {
-            const response = await axios.post(
-                `http://127.0.0.1:8000/auction/wishlists/`
-            )
-            const newWishlistId = response.data.id
-            localStorage.setItem("bidzone_wishlist_id", newWishlistId)
-            await addToWishlist(auctionId, newWishlistId)
-        } catch (error) {
-            console.error("Error creating wishlist:", error)
-        }
-    }
-
-
-
-
-    const addToWishlist = async (itemId, wishlistId = wishlist_id) => {
-        try {
-            await axios.post(
-                `http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`,
-                { auction_id: itemId }
-            )
-            setInWishlist(true)
-        } catch (error) {
-            console.error("Error adding to wishlist:", error)
-        }
-    }
-
-
-
-
-    const removeFromWishlist = async (itemId) => {
-        try {
-            await axios.delete(
-                `http://127.0.0.1:8000/auction/wishlists/${wishlist_id}/items/${itemId}/`
-            )
-            setInWishlist(false)
-        } catch (error) {
-            console.error("Error removing from wishlist:", error)
-        }
-    }
-
-
-
-
+    
     return (
         <div className="flex mt-4">
             <Link className="mr-auto text-sky-600 font-semibold text-sm italic hover:underline">
@@ -137,11 +134,9 @@ function WishListBtn({ auctionId }) {
                         strokeLinejoin="round"
                     ></g>
                     <g id="SVGRepo_iconCarrier">
-                        {" "}
                         <g>
-                            {" "}
-                            <path d="M297.331,247.235c-18.52,0-35.284,7.662-47.318,19.972l-104.012-60.72c1.705-5.867,2.669-12.04,2.669-18.453 c0-6.112-0.897-12.009-2.447-17.63l103.225-58.48c12.07,12.667,29.058,20.6,47.895,20.6c36.533,0,66.263-29.718,66.263-66.27 C363.605,29.718,333.876,0,297.343,0S231.08,29.718,231.08,66.254c0,6.113,0.895,12.01,2.456,17.643l-103.226,58.486 c-12.07-12.67-29.061-20.603-47.895-20.603c-36.536,0-66.254,29.718-66.254,66.266c0,36.534,29.718,66.256,66.254,66.256 c18.534,0,35.284-7.662,47.33-19.972l104,60.721c-1.699,5.873-2.672,12.058-2.672,18.459c0,36.545,29.729,66.257,66.257,66.257 c36.539,0,66.269-29.712,66.269-66.257C363.6,276.959,333.87,247.235,297.331,247.235z"></path>{" "}
-                        </g>{" "}
+                            <path d="M297.331,247.235c-18.52,0-35.284,7.662-47.318,19.972l-104.012-60.72c1.705-5.867,2.669-12.04,2.669-18.453 c0-6.112-0.897-12.009-2.447-17.63l103.225-58.48c12.07,12.667,29.058,20.6,47.895,20.6c36.533,0,66.263-29.718,66.263-66.27 C363.605,29.718,333.876,0,297.343,0S231.08,29.718,231.08,66.254c0,6.113,0.895,12.01,2.456,17.643l-103.226,58.486 c-12.07-12.67-29.061-20.603-47.895-20.603c-36.536,0-66.254,29.718-66.254,66.266c0,36.534,29.729,66.256,66.254,66.256 c18.534,0,35.284-7.662,47.33-19.972l104,60.721c-1.699,5.873-2.672,12.058-2.672,18.459c0,36.545,29.729,66.257,66.257,66.257 c36.539,0,66.269-29.712,66.269-66.257C363.6,276.959,333.87,247.235,297.331,247.235z"></path>
+                        </g>
                     </g>
                 </svg>
             </div>
