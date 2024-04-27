@@ -24,6 +24,7 @@ import FormattedDate from "./FormattedDate"
 import WishListBtn from "./Product/WishListBtn"
 import SellerRating from "./Product/SellerRating"
 import BidInfo from "./Product/BidInfo"
+import Sidebar from "./Profile/Sidebar"
 
 
 export {
@@ -53,4 +54,5 @@ export {
     WishListBtn,
     SellerRating,
     BidInfo, 
+    Sidebar,
 }

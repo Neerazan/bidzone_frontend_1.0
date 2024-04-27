@@ -3,15 +3,17 @@ import axios from "axios"
 import { Outlet } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { useQuery } from "react-query"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import { login } from "./store/authSlice"
-import { Header, Footer } from "./components"
+import { Header, Footer, Sidebar } from "./components"
 
 function App() {
     const dispatch = useDispatch()
     const accessToken = JSON.parse(localStorage.getItem("accessToken"))
-    
+    const isAuthenticated = useSelector((state) => state.auth.status)
+    const isUserProfilePage = window.location.pathname.includes("/user/")
+
     // console.log("accessToken", accessToken);
 
     const { data, isLoading, isError } = useQuery(
@@ -64,7 +66,13 @@ function App() {
             <div className="w-full block">
                 <Header />
                 <main>
-                    <Outlet />
+                    {isAuthenticated && isUserProfilePage ? (
+                        <Sidebar>
+                            <Outlet />
+                        </Sidebar>
+                    ) : (
+                        <Outlet />
+                    )}
                 </main>
                 <Footer />
             </div>
