@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function Logo({width="100px"}) {
     return (
         <Link className="md:w-24 flex-shrink-0 mr-auto py-4"
-            to="/"
+            href='/'
         >
             <img
                 className="h-6 md:h-8 mx-auto"

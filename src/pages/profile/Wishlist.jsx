@@ -2,9 +2,7 @@ import React from 'react'
 
 function Wishlist() {
     return (
-        <div className='grid-cols-4'>
-            Empty
-        </div>
+        <div className='w-full'>Hello WOrld</div>
     )
 }
 

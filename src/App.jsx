@@ -64,13 +64,18 @@ function App() {
     return (
         <div className="min-h-screen flex flex-wrap content-between bg-slate-200">
             <div className="w-full block">
-                <Header />
+                { !isUserProfilePage && <Header />}
+                {/* <Header /> */}
                 <main>
                     {isAuthenticated && isUserProfilePage ? (
                         <Container>
                             <div className="grid grid-cols-5 gap-4">
-                                <Sidebar />
-                                <Outlet />
+                                <div className="">
+                                    <Sidebar />
+                                </div>
+                                <div className="col-span-4">
+                                    <Outlet />
+                                </div>
                             </div>
                         </Container>
                     ) : (
