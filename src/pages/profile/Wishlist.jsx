@@ -2,8 +2,8 @@ import React from 'react'
 
 function Wishlist() {
     return (
-        <div>
-            <h1>This is Wishlist</h1>
+        <div className='grid-cols-4'>
+            Empty
         </div>
     )
 }

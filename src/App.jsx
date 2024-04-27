@@ -6,15 +6,15 @@ import { useQuery } from "react-query"
 import { useDispatch, useSelector } from "react-redux"
 
 import { login } from "./store/authSlice"
-import { Header, Footer, Sidebar } from "./components"
+import { Header, Footer, Sidebar, Container } from "./components"
 
 function App() {
     const dispatch = useDispatch()
     const accessToken = JSON.parse(localStorage.getItem("accessToken"))
     const isAuthenticated = useSelector((state) => state.auth.status)
+    console.log(`isAuthenticated: ${isAuthenticated}`)
     const isUserProfilePage = window.location.pathname.includes("/user/")
-
-    // console.log("accessToken", accessToken);
+    console.log(`isUserProfilePage: ${isUserProfilePage}`)
 
     const { data, isLoading, isError } = useQuery(
         "authData",
@@ -67,9 +67,12 @@ function App() {
                 <Header />
                 <main>
                     {isAuthenticated && isUserProfilePage ? (
-                        <Sidebar>
-                            <Outlet />
-                        </Sidebar>
+                        <Container>
+                            <div className="grid grid-cols-5 gap-4">
+                                <Sidebar />
+                                <Outlet />
+                            </div>
+                        </Container>
                     ) : (
                         <Outlet />
                     )}
