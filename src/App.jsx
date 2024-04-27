@@ -64,8 +64,8 @@ function App() {
     return (
         <div className="min-h-screen flex flex-wrap content-between bg-slate-200">
             <div className="w-full block">
-                { !isUserProfilePage && <Header />}
-                {/* <Header /> */}
+                {/* { !isUserProfilePage && <Header />} */}
+                <Header />
                 <main>
                     {isAuthenticated && isUserProfilePage ? (
                         <Container>
