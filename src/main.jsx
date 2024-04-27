@@ -10,6 +10,7 @@ import './index.css'
 import Login from './pages/Login.jsx'
 import Home from './pages/Home.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
+import Wishlist from './pages/profile/Wishlist.jsx'
 
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: '/auction/:slug',
         element: <ProductDetails />
+      },
+      {
+        path: '/user/wishlist',
+        element: <Wishlist />
       }
     ]
   }
