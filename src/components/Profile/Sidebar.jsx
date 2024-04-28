@@ -1,17 +1,12 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 const Sidebar = () => {
-    const [sidenav, setSidenav] = useState(true)
 
     return (
         <div className="flex flex-row mt-4">
             <div
                 id="sidebar"
-                className={`bg-white h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden rounded-md transition-transform duration-300 ease-in-out ${
-                    sidenav ? "" : "hidden"
-                }`}
-                onClick={() => setSidenav(false)}
+                className={`bg-white h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden rounded-md transition-transform duration-300 ease-in-out`}
             >
                 <div className="mt-4">
                     <h1 className="font-bold text-4xl text-center md:hidden">
@@ -58,9 +53,10 @@ const Sidebar = () => {
                     </div>
                     <div id="menu" className="flex flex-col mt-4">
                         {/* Navigation links */}
-                        <Link
+                        <NavLink
                             href=""
                             className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
+                            activeClassName="text-white bg-teal-500"
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -71,10 +67,11 @@ const Sidebar = () => {
                                 <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                             </svg>
                             <span>Profile</span>
-                        </Link>
-                        <Link
+                        </NavLink>
+                        <NavLink
                             href=""
                             className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
+                            activeClassName="text-white bg-teal-500"
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -85,10 +82,12 @@ const Sidebar = () => {
                                 <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                             </svg>
                             <span>Auction</span>
-                        </Link>
-                        <Link
+                        </NavLink>
+                        <NavLink
                             href=""
                             className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
+                            activeClassName="text-white bg-teal-500"
+                            to="/products"
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -99,10 +98,12 @@ const Sidebar = () => {
                                 <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                             </svg>
                             <span>Products</span>
-                        </Link>
-                        <Link
+                        </NavLink>
+                        <NavLink
                             href=""
                             className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
+                            activeClassName="text-white bg-teal-500"
+                            to="/wishlist"
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -113,7 +114,7 @@ const Sidebar = () => {
                                 <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                             </svg>
                             <span>Wishlist</span>
-                        </Link>
+                        </NavLink>
                         {/* Add more navigation links as needed */}
                     </div>
                 </div>
