@@ -25,6 +25,8 @@ import WishListBtn from "./Product/WishListBtn"
 import SellerRating from "./Product/SellerRating"
 import BidInfo from "./Product/BidInfo"
 import Sidebar from "./Profile/Sidebar"
+import Range from "./Range"
+import NumberInput from "./NumberInput"
 
 
 export {
@@ -55,4 +57,6 @@ export {
     SellerRating,
     BidInfo, 
     Sidebar,
+    Range,
+    NumberInput,
 }

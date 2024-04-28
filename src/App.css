@@ -1,3 +1,12 @@
 #collection_list:hover svg {
-    display: block;   
+    display: block;
+}
+
+
+.range::-webkit-slider-thumb {
+    @apply bg-blue-500;
+}
+
+.range::-webkit-slider-runnable-track {
+    @apply bg-blue-200;
 }
