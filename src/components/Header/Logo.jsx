@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Logo({width="100px"}) {
     return (
-        <Link className="md:w-24 flex-shrink-0 mr-auto py-4"
+        <a className="md:w-24 flex-shrink-0 mr-auto py-4"
             href='/'
         >
             <img
@@ -11,7 +11,7 @@ function Logo({width="100px"}) {
                 src="https://flowbite.com/docs/images/logo.svg"
                 alt="Logo"
             />
-        </Link>
+        </a>
     )
 }
 

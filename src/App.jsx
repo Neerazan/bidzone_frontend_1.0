@@ -12,9 +12,7 @@ function App() {
     const dispatch = useDispatch()
     const accessToken = JSON.parse(localStorage.getItem("accessToken"))
     const isAuthenticated = useSelector((state) => state.auth.status)
-    console.log(`isAuthenticated: ${isAuthenticated}`)
     const isUserProfilePage = window.location.pathname.includes("/user/")
-    console.log(`isUserProfilePage: ${isUserProfilePage}`)
 
     const { data, isLoading, isError } = useQuery(
         "authData",
