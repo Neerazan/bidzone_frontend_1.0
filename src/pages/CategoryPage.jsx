@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import { set } from "react-hook-form"
 
 const CategoryPage = () => {
     const [maxPriceInputValue, setMaxPriceInputValue] = useState('')
@@ -18,14 +19,23 @@ const CategoryPage = () => {
     const [auctions, setAuctions] = useState([])
     const [submitPriceFilter, setSubmitPriceFilter] = useState(false)
     const [submitBidFilter, setSubmitBidFilter] = useState(false)
+    const [selectedOption, setSelectedOption] = useState('A')
     const { collection_id } = useParams()
 
-
+    const onClickReset = () => {
+        setMaxPriceInputValue('')
+        setMinPriceInputValue('')
+        setMaxBidInputValue('')
+        setMinBidInputValue('')
+        setSelectedOption('A')
+        setSubmitPriceFilter(!submitPriceFilter)
+        setSubmitBidFilter(!submitBidFilter)
+    }
 
     useEffect(() => {
         const fetchAuctions = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}`);
+                const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&auction_status=${selectedOption}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}`);
                 if (response.data) {
                     setAuctions(response.data);
                 }
@@ -35,7 +45,7 @@ const CategoryPage = () => {
         };
     
         fetchAuctions();
-    }, [collection_id, submitPriceFilter, submitBidFilter]);   
+    }, [collection_id, submitPriceFilter, submitBidFilter, selectedOption]);   
 
     const HandleMaxPriceInputChange = (value) => {
         setMaxPriceInputValue(value)
@@ -108,7 +118,7 @@ const CategoryPage = () => {
                                 />
 
                                 <button 
-                                    className="text-white bg-rose-500 font-semibold hover:bg-rose-600 text-xs px-4 py-2 ml-1 rounded-sm"
+                                    className="text-white bg-teal-500 font-semibold hover:bg-teal-600 text-xs px-4 py-2 ml-1 rounded-sm"
                                     onClick={() => setSubmitPriceFilter(!submitPriceFilter)}
                                 >
                                     Apply
@@ -166,7 +176,7 @@ const CategoryPage = () => {
                                 />
 
                                 <button 
-                                    className="text-white bg-rose-500 font-semibold hover:bg-rose-600 text-xs px-4 py-2 ml-1 rounded-sm"
+                                    className="text-white bg-teal-500 font-semibold hover:bg-teal-600 text-xs px-4 py-2 ml-1 rounded-sm"
                                     onClick={() => setSubmitBidFilter(!submitBidFilter)}
                                 >
                                     Apply
@@ -185,10 +195,11 @@ const CategoryPage = () => {
                                     <input
                                         id="list-radio-license"
                                         type="radio"
-                                        value=""
+                                        value="A"
                                         name="list-radio"
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                                         defaultChecked
+                                        onChange={(e) => setSelectedOption(e.target.value)}
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                                     />
                                     <label
                                         htmlFor="list-radio-license"
@@ -203,9 +214,11 @@ const CategoryPage = () => {
                                     <input
                                         id="list-radio-id"
                                         type="radio"
-                                        value=""
+                                        value="S"
                                         name="list-radio"
+                                        onChange={(e) => setSelectedOption(e.target.value)}
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+
                                     />
                                     <label
                                         htmlFor="list-radio-id"
@@ -217,10 +230,17 @@ const CategoryPage = () => {
                             </li>
                         </ul>
                     </div>
-                    {/* <div className="w-full border border-b-gray-400 mt-4"></div> */}
+                    <div>
+                        <button
+                            className="text-white bg-red-500 font-semibold hover:bg-red-600 text-xs px-4 py-2 mt-4 rounded-sm ml-auto"
+                            onClick={onClickReset}
+                        >
+                            Reset
+                        </button>
+                    </div>
                 </div>
                 <div className="col-span-3">
-                    <div className="flex items-center border-b border-b-gray-300 pb-5">
+                    <div className="flex items-center border-b border-b-gray-300 pb-5 mb-4">
                         <div className="text-gray-500">
                             123 Items Found for{" "}
                             <span className="text-rose-500 font-semibold">
@@ -240,7 +260,7 @@ const CategoryPage = () => {
                             </select>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                         {auctions ? (
                             auctions.map((auction) => (
                                 <Link

@@ -42,7 +42,7 @@ function Breadcrumb() {
                             href="#"
                             className="ms-1 font-medium text-gray-700 hover:text-blue-600 md:ms-2"
                         >
-                            Projects
+                            Auctions
                         </a>
                     </div>
                 </li>
@@ -64,7 +64,7 @@ function Breadcrumb() {
                             />
                         </svg>
                         <span className="ms-1 font-medium text-gray-500 md:ms-2">
-                            Neerajan
+                            Electronics
                         </span>
                     </div>
                 </li>
