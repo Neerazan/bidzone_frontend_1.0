@@ -24,7 +24,7 @@ const CategoryPage = () => {
 
     useEffect(() => {
         try {
-            const response = axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}`)
+            const response = axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}`)
             setAuctions(response.data)
         } catch (error) {
             throw error;
