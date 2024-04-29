@@ -1,6 +1,6 @@
 import React from "react"
 
-function NumberInput({ value, onInputChange, className = "", ...rest }) {
+function NumberInput({ value="", onInputChange, className = "", ...rest }) {
 
     const handleInputChange = (e) => {
         onInputChange(e.target.value)

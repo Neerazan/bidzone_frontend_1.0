@@ -40,7 +40,7 @@ const router = createBrowserRouter([
         element: <Wishlist />
       },
       {
-        path: 'category_products',
+        path: '/auctions/:id',
         element: <CategoryPage />
       }
     ]

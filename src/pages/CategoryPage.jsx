@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
     Range,
     NumberInput,
@@ -6,12 +6,30 @@ import {
     ProductCard,
     Breadcrumb,
 } from "../components/index"
+import { Link } from "react-router-dom"
+import axios from "axios"
+import { useParams } from "react-router-dom"
 
 const CategoryPage = () => {
-    const [maxPriceInputValue, setMaxPriceInputValue] = useState()
-    const [minPriceInputValue, setMinPriceInputValue] = useState()
-    const [maxBidInputValue, setMaxBidInputValue] = useState()
-    const [minBidInputValue, setMinBidInputValue] = useState()
+    const [maxPriceInputValue, setMaxPriceInputValue] = useState(null)
+    const [minPriceInputValue, setMinPriceInputValue] = useState(null)
+    const [maxBidInputValue, setMaxBidInputValue] = useState(null)
+    const [minBidInputValue, setMinBidInputValue] = useState(null)
+    const [auctions, setAuctions] = useState([])
+    const { id } = useParams()
+
+
+    useEffect(() => {
+        try {
+            const response = axios.get(`http://127.0.0.1:8000/auction/auctions/?product_collection=${id}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&bids__gte=${minBidInputValue}&bids__lte=${maxBidInputValue}`)
+            console.log(response.data);
+            setAuctions(response.data)
+        } catch (error) {
+            throw error;
+        }
+
+    }, [id, maxPriceInputValue, minPriceInputValue, maxBidInputValue, minBidInputValue])
+
 
     const HandleMinBidINputChange = (value) => {
         setMinBidInputValue(value)
@@ -161,7 +179,7 @@ const CategoryPage = () => {
                                         defaultChecked
                                     />
                                     <label
-                                        for="list-radio-license"
+                                        htmlFor="list-radio-license"
                                         className="w-full py-3 ms-2 text-sm font-medium text-gray-700"
                                     >
                                         Active
@@ -178,7 +196,7 @@ const CategoryPage = () => {
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
                                     />
                                     <label
-                                        for="list-radio-id"
+                                        htmlFor="list-radio-id"
                                         className="w-full py-3 ms-2 text-sm font-medium text-gray-700"
                                     >
                                         Scheduled
@@ -200,9 +218,9 @@ const CategoryPage = () => {
                         <div className="ml-auto mr-4 text-gray-600 flex">
                             <select
                                 id="countries"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5 "
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5 "
                             >
-                                <option selected>Best Match</option>
+                                <option defaultValue={true}>Best Match</option>
                                 <option value="US">United States</option>
                                 <option value="CA">Canada</option>
                                 <option value="FR">France</option>

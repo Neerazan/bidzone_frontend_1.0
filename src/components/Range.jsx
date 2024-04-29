@@ -1,7 +1,7 @@
 import { React, useState } from "react"
 
 
-function Range({ min, max, onInputChange, value, className = "", ...rest }) {
+function Range({ min, max, onInputChange, value="", className = "", ...rest }) {
     
     const handleInputChange = (e) => {
         onInputChange(e.target.value)

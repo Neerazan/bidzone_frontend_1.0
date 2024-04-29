@@ -37,7 +37,7 @@ function CollectionSider() {
                         className="hover:bg-slate-200 flex cursor-pointer"
                     >
                         <Link
-                            to={`/collections/${collection.id}`}
+                            to={`/auctions/${collection.id}`}
                             className="text-zinc-500 px-4 py-1 text-sm font-semibold"
                         >
                             {collection.title}
