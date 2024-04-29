@@ -20,6 +20,7 @@ const CategoryPage = () => {
     const [submitPriceFilter, setSubmitPriceFilter] = useState(false)
     const [submitBidFilter, setSubmitBidFilter] = useState(false)
     const [selectedOption, setSelectedOption] = useState('A')
+    const [orderBy, setOrderBy] = useState('')
     const { collection_id } = useParams()
 
     const onClickReset = () => {
@@ -30,12 +31,13 @@ const CategoryPage = () => {
         setSelectedOption('A')
         setSubmitPriceFilter(!submitPriceFilter)
         setSubmitBidFilter(!submitBidFilter)
+        setOrderBy('')
     }
 
     useEffect(() => {
         const fetchAuctions = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&auction_status=${selectedOption}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}`);
+                const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&auction_status=${selectedOption}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}&ordering=${orderBy}`);
                 if (response.data) {
                     setAuctions(response.data);
                 }
@@ -45,7 +47,7 @@ const CategoryPage = () => {
         };
     
         fetchAuctions();
-    }, [collection_id, submitPriceFilter, submitBidFilter, selectedOption]);   
+    }, [collection_id, submitPriceFilter, submitBidFilter, selectedOption, orderBy]);   
 
     const HandleMaxPriceInputChange = (value) => {
         setMaxPriceInputValue(value)
@@ -250,13 +252,16 @@ const CategoryPage = () => {
                         <div className="ml-auto mr-4 text-gray-600 flex">
                             <select
                                 id="countries"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5 "
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5"
+                                onChange={(e) => setOrderBy(e.target.value)}
                             >
                                 <option defaultValue={true}>Best Match</option>
-                                <option value="US">United States</option>
-                                <option value="CA">Canada</option>
-                                <option value="FR">France</option>
-                                <option value="DE">Germany</option>
+                                <option value="-starting_time">Newest</option>
+                                <option value="starting_time">Oldest</option>
+                                <option value="-current_price">Price High to Low</option>
+                                <option value="current_price">Price Low to High</option>
+                                <option value="-bids_count">Bids High to Low</option>
+                                <option value="bids_count">Bids Low to High</option>
                             </select>
                         </div>
                     </div>
