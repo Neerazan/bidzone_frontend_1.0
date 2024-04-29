@@ -23,14 +23,19 @@ const CategoryPage = () => {
 
 
     useEffect(() => {
-        try {
-            const response = axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}`)
-            setAuctions(response.data)
-        } catch (error) {
-            throw error;
-        }
-
-    }, [collection_id, submitPriceFilter, submitBidFilter])
+        const fetchAuctions = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}`);
+                if (response.data) {
+                    setAuctions(response.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+    
+        fetchAuctions();
+    }, [collection_id, submitPriceFilter, submitBidFilter]);   
 
     const HandleMaxPriceInputChange = (value) => {
         setMaxPriceInputValue(value)
@@ -103,7 +108,7 @@ const CategoryPage = () => {
                                 />
 
                                 <button 
-                                    className="text-white bg-green-500 font-semibold hover:bg-green-600 text-xs px-4 py-2 ml-1 rounded-sm"
+                                    className="text-white bg-rose-500 font-semibold hover:bg-rose-600 text-xs px-4 py-2 ml-1 rounded-sm"
                                     onClick={() => setSubmitPriceFilter(!submitPriceFilter)}
                                 >
                                     Apply
@@ -161,7 +166,7 @@ const CategoryPage = () => {
                                 />
 
                                 <button 
-                                    className="text-white bg-green-500 font-semibold hover:bg-green-600 text-xs px-4 py-2 ml-1 rounded-sm"
+                                    className="text-white bg-rose-500 font-semibold hover:bg-rose-600 text-xs px-4 py-2 ml-1 rounded-sm"
                                     onClick={() => setSubmitBidFilter(!submitBidFilter)}
                                 >
                                     Apply
@@ -234,6 +239,29 @@ const CategoryPage = () => {
                                 <option value="DE">Germany</option>
                             </select>
                         </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                        {auctions ? (
+                            auctions.map((auction) => (
+                                <Link
+                                    to={`/auction/${auction.id}`}
+                                    key={auction.id}
+                                >
+                                    <ProductCard
+                                        id={auction.id}
+                                        title={auction.product.title}
+                                        slug={auction.product.slug}
+                                        description={auction.product.description}
+                                        price={auction.product.price}
+                                        image={auction.product.images[0].image}
+                                        currentPrice={auction.current_price}
+                                        bidsCount={auction.bids_count}
+                                        startingTime={auction.starting_time}
+                                        auctionStatus={auction.auction_status}
+                                    />
+                                </Link>
+                            ))
+                        ) : (<div>No auctions found</div>)}
                     </div>
                 </div>
             </div>
