@@ -27,6 +27,7 @@ import BidInfo from "./Product/BidInfo"
 import Sidebar from "./Profile/Sidebar"
 import Range from "./Range"
 import NumberInput from "./NumberInput"
+import Breadcrumb from "./Breadcrumb"
 
 
 export {
@@ -59,4 +60,5 @@ export {
     Sidebar,
     Range,
     NumberInput,
+    Breadcrumb,
 }

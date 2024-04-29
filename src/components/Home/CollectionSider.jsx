@@ -28,7 +28,7 @@ function CollectionSider() {
     }
 
     return (
-        <div className="col-span-1 bg-white mt-5 rounded-md">
+        <div className="col-span-1 bg-white mt-5 rounded-md shadow-md">
             <ul className="pt-2">
                 {data?.map((collection) => (
                     <li

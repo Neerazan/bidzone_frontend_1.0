@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Range, NumberInput, Container, ProductCard } from "../components/index"
+import { Range, NumberInput, Container, ProductCard, Breadcrumb } from "../components/index"
 
 const CategoryPage = () => {
     const [maxPriceInputValue, setMaxPriceInputValue] = useState()
@@ -25,6 +25,7 @@ const CategoryPage = () => {
 
     return (
         <Container>
+            <Breadcrumb />
             <div className="grid grid-cols-4 gap-4 mt-4">
                 <div className="col-span-1 border border-r-gray-300 p-2">
                     <h2 className="text-gray-600 mb-4 font-semibold">Filter</h2>
