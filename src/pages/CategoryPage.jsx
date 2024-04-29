@@ -1,5 +1,11 @@
 import React, { useState } from "react"
-import { Range, NumberInput, Container, ProductCard, Breadcrumb } from "../components/index"
+import {
+    Range,
+    NumberInput,
+    Container,
+    ProductCard,
+    Breadcrumb,
+} from "../components/index"
 
 const CategoryPage = () => {
     const [maxPriceInputValue, setMaxPriceInputValue] = useState()
@@ -27,7 +33,7 @@ const CategoryPage = () => {
         <Container>
             <Breadcrumb />
             <div className="grid grid-cols-4 gap-4 mt-4">
-                <div className="col-span-1 border border-r-gray-300 p-2">
+                <div className="col-span-1 px-3 py-5 border-r border-r-gray-300">
                     <h2 className="text-gray-600 mb-4 font-semibold">Filter</h2>
                     <div className="w-full border border-b-gray-400 mt-4"></div>
                     <div className="flex flex-col gap-3 mt-4">
@@ -140,25 +146,71 @@ const CategoryPage = () => {
                     </div>
                     <div className="w-full border border-b-gray-400 mt-4"></div>
                     <div className="mt-4">
-                        <div className="mb-2 text-gray-600 font-semibold">Status</div>
+                        <div className="mb-2 text-gray-600 font-semibold">
+                            Status
+                        </div>
                         <ul className="w-full text-sm font-medium text-gray-900 bg-white rounded-sm">
                             <li className="w-full border-b border-gray-200">
                                 <div className="flex items-center ps-3">
-                                    <input id="list-radio-license" type="radio" value="" name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" defaultChecked/>
-                                        <label for="list-radio-license" className="w-full py-3 ms-2 text-sm font-medium text-gray-700">Active</label>
+                                    <input
+                                        id="list-radio-license"
+                                        type="radio"
+                                        value=""
+                                        name="list-radio"
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                        defaultChecked
+                                    />
+                                    <label
+                                        for="list-radio-license"
+                                        className="w-full py-3 ms-2 text-sm font-medium text-gray-700"
+                                    >
+                                        Active
+                                    </label>
                                 </div>
                             </li>
                             <li className="w-full border-b border-gray-200 rounded-t-lg">
                                 <div className="flex items-center ps-3">
-                                    <input id="list-radio-id" type="radio" value="" name="list-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
-                                        <label for="list-radio-id" className="w-full py-3 ms-2 text-sm font-medium text-gray-700">Scheduled</label>
+                                    <input
+                                        id="list-radio-id"
+                                        type="radio"
+                                        value=""
+                                        name="list-radio"
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                    />
+                                    <label
+                                        for="list-radio-id"
+                                        className="w-full py-3 ms-2 text-sm font-medium text-gray-700"
+                                    >
+                                        Scheduled
+                                    </label>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div className="w-full border border-b-gray-400 mt-4"></div>
+                    {/* <div className="w-full border border-b-gray-400 mt-4"></div> */}
                 </div>
-                <div className="col-span-3"></div>
+                <div className="col-span-3">
+                    <div className="flex items-center border-b border-b-gray-300 pb-5">
+                        <div className="text-gray-500">
+                            123 Items Found for{" "}
+                            <span className="text-rose-500 font-semibold">
+                                "Category Name"
+                            </span>
+                        </div>
+                        <div className="ml-auto mr-4 text-gray-600 flex">
+                            <select
+                                id="countries"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5 "
+                            >
+                                <option selected>Best Match</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="FR">France</option>
+                                <option value="DE">Germany</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
         </Container>
     )
