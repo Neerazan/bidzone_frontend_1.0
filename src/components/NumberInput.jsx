@@ -1,6 +1,6 @@
 import React from "react"
 
-function NumberInput({ value, onInputChange}) {
+function NumberInput({ value, onInputChange, className = "", ...rest }) {
 
     const handleInputChange = (e) => {
         onInputChange(e.target.value)
@@ -13,9 +13,10 @@ function NumberInput({ value, onInputChange}) {
                 id="number-input"
                 value={value}
                 aria-describedby="helper-text-explanation"
-                class="bg-gray-50 border border-gray-300 mt-4 text-gray-900 text-sm rounded-lg  block p-2"
+                className={`bg-gray-50 border outline-1 focus:outline focus:outline-blue-500 border-gray-300 text-gray-900 text-sm rounded-sm block p-2 ${className}`}
                 onChange={handleInputChange}
                 required
+                {...rest}
             />
         </div>
     )
