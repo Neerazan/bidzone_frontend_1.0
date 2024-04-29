@@ -11,33 +11,26 @@ import axios from "axios"
 import { useParams } from "react-router-dom"
 
 const CategoryPage = () => {
-    const [maxPriceInputValue, setMaxPriceInputValue] = useState(null)
-    const [minPriceInputValue, setMinPriceInputValue] = useState(null)
-    const [maxBidInputValue, setMaxBidInputValue] = useState(null)
-    const [minBidInputValue, setMinBidInputValue] = useState(null)
+    const [maxPriceInputValue, setMaxPriceInputValue] = useState('')
+    const [minPriceInputValue, setMinPriceInputValue] = useState('')
+    const [maxBidInputValue, setMaxBidInputValue] = useState('')
+    const [minBidInputValue, setMinBidInputValue] = useState('')
     const [auctions, setAuctions] = useState([])
-    const { id } = useParams()
+    const [submitPriceFilter, setSubmitPriceFilter] = useState(false)
+    const [submitBidFilter, setSubmitBidFilter] = useState(false)
+    const { collection_id } = useParams()
+
 
 
     useEffect(() => {
         try {
-            const response = axios.get(`http://127.0.0.1:8000/auction/auctions/?product_collection=${id}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&bids__gte=${minBidInputValue}&bids__lte=${maxBidInputValue}`)
-            console.log(response.data);
+            const response = axios.get(`http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}`)
             setAuctions(response.data)
         } catch (error) {
             throw error;
         }
 
-    }, [id, maxPriceInputValue, minPriceInputValue, maxBidInputValue, minBidInputValue])
-
-
-    const HandleMinBidINputChange = (value) => {
-        setMinBidInputValue(value)
-    }
-
-    const HandleMaxBidInputChange = (value) => {
-        setMaxBidInputValue(value)
-    }
+    }, [collection_id, submitPriceFilter, submitBidFilter])
 
     const HandleMaxPriceInputChange = (value) => {
         setMaxPriceInputValue(value)
@@ -45,6 +38,14 @@ const CategoryPage = () => {
 
     const HandleMinPriceInputChange = (value) => {
         setMinPriceInputValue(value)
+    }
+
+    const HandleMinBidINputChange = (value) => {
+        setMinBidInputValue(value)
+    }
+
+    const HandleMaxBidInputChange = (value) => {
+        setMaxBidInputValue(value)
     }
 
     return (
@@ -101,7 +102,10 @@ const CategoryPage = () => {
                                     placeholder="Max"
                                 />
 
-                                <button className="text-white bg-green-500 font-semibold hover:bg-green-600 text-xs px-4 py-2 ml-1 rounded-sm">
+                                <button 
+                                    className="text-white bg-green-500 font-semibold hover:bg-green-600 text-xs px-4 py-2 ml-1 rounded-sm"
+                                    onClick={() => setSubmitPriceFilter(!submitPriceFilter)}
+                                >
                                     Apply
                                 </button>
                             </div>
@@ -156,7 +160,10 @@ const CategoryPage = () => {
                                     placeholder="Max"
                                 />
 
-                                <button className="text-white bg-green-500 font-semibold hover:bg-green-600 text-xs px-4 py-2 ml-1 rounded-sm">
+                                <button 
+                                    className="text-white bg-green-500 font-semibold hover:bg-green-600 text-xs px-4 py-2 ml-1 rounded-sm"
+                                    onClick={() => setSubmitBidFilter(!submitBidFilter)}
+                                >
                                     Apply
                                 </button>
                             </div>
