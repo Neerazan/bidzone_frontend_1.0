@@ -12,6 +12,9 @@ import Home from './pages/Home.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 import Wishlist from './pages/profile/Wishlist.jsx'
 import CategoryPage from './pages/CategoryPage.jsx'
+import User from './User.jsx'
+import Test1 from './pages/Test1.jsx'
+import Test2 from './pages/Test2.jsx'
 
 
 const router = createBrowserRouter([
@@ -36,8 +39,18 @@ const router = createBrowserRouter([
         element: <ProductDetails />
       },
       {
-        path: '/user/wishlist',
-        element: <Wishlist />
+        path: '/user',
+        element: <User />,
+        children: [
+          {
+            path: '/user/wishlist',
+            element: <Wishlist />
+          },
+          {
+            path: '/user/profile',
+            element: <Test2 />
+          }
+        ]
       },
       {
         path: '/auctions/:collection_id',

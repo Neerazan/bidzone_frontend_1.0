@@ -251,7 +251,7 @@ const CategoryPage = () => {
                         </div>
                         <div className="ml-auto mr-4 text-gray-600 flex">
                             <select
-                                id="countries"
+                                id=""
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5"
                                 onChange={(e) => setOrderBy(e.target.value)}
                             >

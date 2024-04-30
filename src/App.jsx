@@ -44,9 +44,6 @@ function App() {
                 throw error
             }
         },
-        {
-            enabled: !!accessToken, // Only run the query if accessToken is present
-        }
     )
 
     // useEffect(() => {
@@ -63,7 +60,7 @@ function App() {
         <div className="min-h-screen flex flex-wrap content-between bg-slate-50">
             <div className="w-full block">
                 {/* { !isUserProfilePage && <Header />} */}
-                <Header />
+                {/* <Header />
                 <main>
                     {isAuthenticated && isUserProfilePage ? (
                         <Container>
@@ -79,6 +76,11 @@ function App() {
                     ) : (
                         <Outlet />
                     )}
+                </main>
+                <Footer /> */}
+                <Header />
+                <main>
+                    <Outlet />
                 </main>
                 <Footer />
             </div>

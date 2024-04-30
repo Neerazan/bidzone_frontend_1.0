@@ -54,7 +54,7 @@ const Sidebar = () => {
                     <div id="menu" className="flex flex-col mt-4">
                         {/* Navigation links */}
                         <NavLink
-                            href=""
+                            to="/user/profile"
                             className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
                             activeClassName="text-white bg-teal-500"
                         >
@@ -69,7 +69,7 @@ const Sidebar = () => {
                             <span>Profile</span>
                         </NavLink>
                         <NavLink
-                            href=""
+                            to="/user/wishlist"
                             className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
                             activeClassName="text-white bg-teal-500"
                         >
@@ -84,10 +84,10 @@ const Sidebar = () => {
                             <span>Auction</span>
                         </NavLink>
                         <NavLink
-                            href=""
+                            to=""
                             className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
                             activeClassName="text-white bg-teal-500"
-                            to="/products"
+
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -100,10 +100,9 @@ const Sidebar = () => {
                             <span>Products</span>
                         </NavLink>
                         <NavLink
-                            href=""
+                            to=""
                             className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
                             activeClassName="text-white bg-teal-500"
-                            to="/wishlist"
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 function Wishlist() {
     return (
         <li className="ml-4 lg:ml-5 relative inline-block">
-            <Link className="" to="/user/wishlsit">
+            <Link className="" to="/user/wishlist">
                 <div className="absolute -top-3 -right-3 z-10 text-white bg-red-600 text-xs font-bold px-1 py-0.5 rounded-sm">
                     15
                 </div>
