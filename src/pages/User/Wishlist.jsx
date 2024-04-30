@@ -30,16 +30,14 @@ function Wishlist() {
             return text.slice(0, maxLength) + "...";
         }
     }
-
-
+    
 
     const { data, isLoading, isError } = useQuery("wishlist", wishlistData)
-    console.log(`wishlistData: ${data?.results}`);
 
     return (
         <div className="mt-4 flex flex-col gap-4 h-[90vh] overflow-y-scroll">
             {data?.results.map((item) => (
-                <div className="flex w-full bg-white px-4 py-4 shadow-lg rounded-md">
+                <div className="flex w-full bg-white px-4 py-4 shadow-lg rounded-md" key={item.id}>
                     <div className="grid grid-cols-6 gap-4">
                         <div className="col-span-1 overflow-x-hidden">
                             <div className="p-x2 rounded-md overflow-hidden h-32">
