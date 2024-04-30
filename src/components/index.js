@@ -28,6 +28,9 @@ import Sidebar from "./Profile/Sidebar"
 import Range from "./Range"
 import NumberInput from "./NumberInput"
 import Breadcrumb from "./Breadcrumb"
+import Input from "./Input"
+import Button from "./Button"
+import Loginn from "./Auth/Loginn"
 
 
 export {
@@ -61,4 +64,8 @@ export {
     Range,
     NumberInput,
     Breadcrumb,
+    Input,
+    Button,
+    Loginn,
+    
 }
