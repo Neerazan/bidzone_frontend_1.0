@@ -30,6 +30,7 @@ import Breadcrumb from "./Breadcrumb"
 import Input from "./Input"
 import Button from "./Button"
 import Login from "./Auth/Login"
+import SignUp from "./Auth/SignUp"
 
 
 export {
@@ -65,5 +66,6 @@ export {
     Input,
     Button,
     Login,
-
+    SignUp,
+    
 }

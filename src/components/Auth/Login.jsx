@@ -72,7 +72,11 @@ function Login() {
                                     label="Username"
                                     type="text"
                                     placeholder="neerazan"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-sm focus:ring-primary-600 focus:border-primary-600 block p-2.5 font-semibold"
+                                    className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-sm block p-2.5 font-semibold  outline-none focus:ring-1 focus:ring-blue-400 ${
+                                        errors.username
+                                            ? "border border-red-600 focus:ring-0"
+                                            : ""
+                                    }`}
                                     {...register("username", {
                                         required: "This is required field",
                                         pattern: {
@@ -82,32 +86,37 @@ function Login() {
                                         },
 
                                         minLength: {
-                                            value: 5,
+                                            value: 3,
                                             message:
-                                                "Username should not exceed 10 characters",
+                                                "Password should be atleast 3 characters long",
                                         },
                                     })}
                                 />
-
-                                <ErrorMessage
-                                    errors={errors}
-                                    name="username"
-                                    render={({ message }) => (
-                                        <p className="font-semibold text-red-600">
-                                            {message}
-                                        </p>
-                                    )}
-                                />
+                                <div className="h-2">
+                                    <ErrorMessage
+                                        errors={errors}
+                                        name="username"
+                                        render={({ message }) => (
+                                            <p className="text-sm text-red-600">
+                                                {message}
+                                            </p>
+                                        )}
+                                    />
+                                </div>
                             </div>
-
+                            
                             <div>
                                 <Input
                                     label="Password"
                                     type="password"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-sm focus:ring-primary-600 focus:border-primary-600 block p-2.5 font-semibold"
+                                    className={`bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-sm block p-2.5 font-semibold  outline-none focus:ring-1 focus:ring-blue-400 ${
+                                        errors.password
+                                            ? "border border-red-600 focus:ring-0"
+                                            : ""
+                                    }`}
                                     placeholder="••••••••"
                                     {...register("password", {
-                                        required: true,
+                                        required: "This is required field",
                                         minLength: {
                                             value: 8,
                                             message:
@@ -115,18 +124,23 @@ function Login() {
                                         },
                                     })}
                                 />
-
-                                <ErrorMessage
-                                    errors={errors}
-                                    name="password"
-                                    render={({ message }) => (
-                                        <p className="font-semibold text-red-600">
-                                            {message}
-                                        </p>
-                                    )}
-                                />
+                                <div className="h-2">
+                                    <ErrorMessage
+                                        errors={errors}
+                                        name="password"
+                                        render={({ message }) => (
+                                            <p className="text-sm text-red-600">
+                                                {message}
+                                            </p>
+                                        )}
+                                    />
+                                </div>
                             </div>
-
+                            <div className="h-2">
+                                {error && (
+                                    <p className="text-sm text-red-600">{error}</p>
+                                )}
+                            </div>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-start">
                                     <div className="flex items-center h-5">
@@ -134,13 +148,13 @@ function Login() {
                                             id="remember"
                                             aria-describedby="remember"
                                             type="checkbox"
-                                            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
+                                            className={`w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300`}
                                             {...register("remember")}
                                         />
                                     </div>
                                     <div className="ml-3 text-sm">
                                         <label
-                                            for="remember"
+                                            htmlFor="remember"
                                             className="text-gray-700"
                                         >
                                             Remember me

@@ -1,12 +1,10 @@
 import React from "react";
 import { Login as LoginComponent, Container } from "../components/index"
 
-function Login() {
+function SignUp() {
     return (
-        <Container>
-            <LoginComponent />
-        </Container>
+        <div>SignUp Form</div>
     )
 }
 
-export default Login
+export default SignUp
