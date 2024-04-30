@@ -10,11 +10,11 @@ const Input = React.forwardRef( function Input({
 
     return(
         <div className='w-full'>
-            { label&&<label className='inline-block mb-1 pl-1' htmlFor={id}>{label}</label>}
+            { label&&<label className="block mb-2 text-sm font-semibold text-gray-900" htmlFor={id}>{label}</label>}
 
             <input
                 type={type}
-                className={`w-full px-3 py-2  duration-200 borde ${className}`}
+                className={`w-full px-3 py-2  duration-200 ${className}`}
                 ref={ref}
                 {...props}
                 id={id}

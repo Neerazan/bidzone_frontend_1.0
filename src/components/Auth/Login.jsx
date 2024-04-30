@@ -1,56 +1,180 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { useDispatch } from "react-redux"
+import axios from "axios"
+import { ErrorMessage } from "@hookform/error-message"
+import { authenticateUser } from "../AuthService"
 
-import { Container } from "../index";
+import { Input, Button } from "../index"
 
 function Login() {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(null);
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm()
+    const [error, setError] = useState("")
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        const userCredentials = { username, password };
-
+    const login = async (data) => {
+        setError("")
         try {
             const response = await axios.post(
                 "http://127.0.0.1:8000/auth/jwt/create/",
-                userCredentials
-            );
-            const { access, refresh } = response.data;
-            localStorage.setItem("accessToken", JSON.stringify(access));
-            localStorage.setItem("refreshToken", JSON.stringify(refresh));
-            navigate("/");
+                {
+                    username: data.username,
+                    password: data.password,
+                }
+            )
+
+            const { access, refresh } = response.data
+
+            localStorage.setItem("accessToken", JSON.stringify(access))
+            localStorage.setItem("refreshToken", JSON.stringify(refresh))
+
+            if (access) {
+                authenticateUser(access, dispatch)
+            }
+
+            navigate("/")
         } catch (error) {
-            setError("Failed to login. Please check your credentials.");
+            setError("Failed to login. Please check your credentials.")
         }
-    };
+    }
 
     return (
-        <Container>
-            <form onSubmit={handleLogin}>
-                <label>Username: </label>
-                <input
-                    type="text"
-                    value={username}
-                    onChange={(event) => setUsername(event.target.value)}
-                />
-                <br />
-                <br />
-                <label>Password: </label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                />
-                <br />
-                <button type="submit">Login</button>
-            </form>
-            {error && <p>{error}</p>}
-        </Container>
-    );
+        <section className="bg-gray-50">
+            <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-screen lg:py-0">
+                <a
+                    href="#"
+                    className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
+                >
+                    <img
+                        className="w-8 h-8 mr-2"
+                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+                        alt="logo"
+                    />
+                    BidZone
+                </a>
+                <div className="w-full bg-white rounded-lg shadow-md md:mt-0 sm:max-w-md xl:p-0">
+                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                            Sign in to your account
+                        </h1>
+                        <form
+                            className="space-y-4 md:space-y-6"
+                            onSubmit={handleSubmit(login)}
+                        >
+                            <div>
+                                <Input
+                                    label="Username"
+                                    type="text"
+                                    placeholder="neerazan"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-sm focus:ring-primary-600 focus:border-primary-600 block p-2.5 font-semibold"
+                                    {...register("username", {
+                                        required: "This is required field",
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9_]*$/,
+                                            message:
+                                                "Username should contain only alphabets, numbers and underscore",
+                                        },
+
+                                        minLength: {
+                                            value: 5,
+                                            message:
+                                                "Username should not exceed 10 characters",
+                                        },
+                                    })}
+                                />
+
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="username"
+                                    render={({ message }) => (
+                                        <p className="font-semibold text-red-600">
+                                            {message}
+                                        </p>
+                                    )}
+                                />
+                            </div>
+
+                            <div>
+                                <Input
+                                    label="Password"
+                                    type="password"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-sm focus:ring-primary-600 focus:border-primary-600 block p-2.5 font-semibold"
+                                    placeholder="••••••••"
+                                    {...register("password", {
+                                        required: true,
+                                        minLength: {
+                                            value: 8,
+                                            message:
+                                                "Password should be atleast 8 characters long",
+                                        },
+                                    })}
+                                />
+
+                                <ErrorMessage
+                                    errors={errors}
+                                    name="password"
+                                    render={({ message }) => (
+                                        <p className="font-semibold text-red-600">
+                                            {message}
+                                        </p>
+                                    )}
+                                />
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-start">
+                                    <div className="flex items-center h-5">
+                                        <input
+                                            id="remember"
+                                            aria-describedby="remember"
+                                            type="checkbox"
+                                            className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
+                                            {...register("remember")}
+                                        />
+                                    </div>
+                                    <div className="ml-3 text-sm">
+                                        <label
+                                            for="remember"
+                                            className="text-gray-700"
+                                        >
+                                            Remember me
+                                        </label>
+                                    </div>
+                                </div>
+                                <a
+                                    href="#"
+                                    className="text-sm font-medium text-gray-700 hover:underline"
+                                >
+                                    Forgot password?
+                                </a>
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-sm text-sm px-5 py-2.5 text-center"
+                            >
+                                Sign in
+                            </button>
+                            <p className="text-sm font-light text-gray-800">
+                                Don’t have an account yet?{" "}
+                                <a
+                                    href="#"
+                                    className="font-medium text-gray-800 hover:underline"
+                                >
+                                    Sign up
+                                </a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
 }
 
-export default Login;
+export default Login

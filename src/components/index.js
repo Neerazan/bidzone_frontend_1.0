@@ -2,7 +2,6 @@ import Header from "./Header/Header"
 import Container from "./container/Container"
 import LogoutBtn from "./Header/LogoutBtn"
 import Logo from "./Header/Logo"
-import Login from "./Auth/Login"
 import Balance from "./Header/Balance"
 import SearchBox from "./Header/SearchBox"
 import Wishlist from "./Header/Wishlist"
@@ -30,7 +29,7 @@ import NumberInput from "./NumberInput"
 import Breadcrumb from "./Breadcrumb"
 import Input from "./Input"
 import Button from "./Button"
-import Loginn from "./Auth/Loginn"
+import Login from "./Auth/Login"
 
 
 export {
@@ -38,7 +37,6 @@ export {
     Container,
     LogoutBtn,
     Logo,
-    Login,
     Balance,
     SearchBox,
     Wishlist,
@@ -66,6 +64,6 @@ export {
     Breadcrumb,
     Input,
     Button,
-    Loginn,
-    
+    Login,
+
 }
