@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { Balance } from "../index"
 import { useSelector } from "react-redux"
+import { LogoutBtn } from "../index"
 
 function Dropdown() {
     const [dropdown, setDropdown] = useState(false)
@@ -184,7 +185,7 @@ function Dropdown() {
                                     onClick={toggleDropdown}
                                 >
                                     <div className="inline-flex items-center">
-                                        LogOut
+                                        <LogoutBtn />
                                     </div>
                                 </Link>
                             </li>
