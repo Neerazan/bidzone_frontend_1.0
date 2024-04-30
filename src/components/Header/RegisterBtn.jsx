@@ -5,7 +5,10 @@ function RegisterBtn() {
     return (
         <li className="ml-4 relative inline-block">
             <div className="flex">
-                <Link className="flex">
+                <Link 
+                    className="flex"
+                    to="/register"
+                >
                     <svg
                         className="h-7 w-7 cursor-pointer pt-1"
                         viewBox="0 0 24 24"

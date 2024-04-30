@@ -1,10 +1,10 @@
 import React from 'react'
-import { SignUp, Container } from "../components/index"
+import { Container, SignUp as Register } from "../components/index"
 
 function SignUp() {
     return (
         <Container>
-            <SignUp />
+            <Register />
         </Container>
     )
 }

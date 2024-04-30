@@ -4,6 +4,7 @@ import CategoryPage from "./CategoryPage"
 import Home from "./Home"
 import ProductDetails from "./ProductDetails"
 import Profile from "./User/Profile"
+import SignUp from "./SignUp";
 
 export {
     Login,
@@ -12,4 +13,6 @@ export {
     Home,
     ProductDetails,
     Profile,
+    SignUp,
+    
 }

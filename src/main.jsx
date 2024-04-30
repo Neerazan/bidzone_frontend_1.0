@@ -9,7 +9,7 @@ import App from './App.jsx'
 import User from './User.jsx'
 import './index.css'
 
-import { Login, Home, ProductDetails, Wishlist, CategoryPage, Profile } from "./pages/index.js"
+import { Login, Home, ProductDetails, Wishlist, CategoryPage, Profile, SignUp } from "./pages/index.js"
 
 
 const router = createBrowserRouter([
@@ -26,8 +26,8 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
-        path: "/signup",
-        element: <Profile />
+        path: "/register",
+        element: <SignUp />
       },
       {
         path: '/auction/:slug',
