@@ -1,30 +1,37 @@
-import React from "react"
-import axios from "axios"
-import { Link } from "react-router-dom"
-import { useQuery } from "react-query"
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { setCollections } from "../../store/common/collectionSlice";
+import { Link } from "react-router-dom";
 
 const getCollection = async () => {
     try {
         const response = await axios.get(
             "http://127.0.0.1:8000/auction/collections"
-        )
-        return response.data
+        );
+        return response.data;
     } catch (error) {
-        throw error
+        throw error;
     }
-}
+};
 
 function CollectionSider() {
-    const { data, isLoading, isError } = useQuery("collections", getCollection)
+    const dispatch = useDispatch();
+    const { data, isLoading, isError } = useQuery("collections", getCollection);
 
-    // Handling loading state
+    useEffect(() => {
+        if (data) {
+            dispatch(setCollections(data));
+        }
+    }, [data, dispatch]);
+
     if (isLoading) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
 
-    // Handling error state
     if (isError) {
-        return <div>Error fetching collections: {isError.message}</div>
+        return <div>Error fetching collections: {isError.message}</div>;
     }
 
     return (
@@ -69,7 +76,7 @@ function CollectionSider() {
                 ))}
             </ul>
         </div>
-    )
+    );
 }
 
-export default CollectionSider
+export default CollectionSider;

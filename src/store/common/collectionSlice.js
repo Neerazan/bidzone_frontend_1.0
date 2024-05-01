@@ -4,20 +4,15 @@ const initialState = {
     collections: [],
 };
 
-const categorySlice = createSlice({
+const collectionSlice = createSlice({
     name: "collection",
     initialState,
-
     reducers: {
-        addCollection: (state, action) => {
-            state.collections.push(action.payload);
-        },
-
-        removeCollection: (state, action) => {
-            state.collections = state.categories.filter(category => category.id !== action.payload.id);
+        setCollections: (state, action) => {
+            state.collections = action.payload;
         },
     },
 });
 
-export const { addCollection, removeCollection } = categorySlice.actions;
+export const { setCollections } = collectionSlice.actions;
 export default collectionSlice.reducer;
