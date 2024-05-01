@@ -12,7 +12,7 @@ function AddProduct({ product }) {
             title: product?.title || "",
             description: product?.description || "",
             slug: product?.slug || "",
-            price: product?.price || 0,
+            price: product?.price || "",
             collection: product?.collection || "",
             images: product?.images || [],
         }

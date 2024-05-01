@@ -4,7 +4,7 @@ function Select({ options, label, className = "", ...props }, ref) {
     const id = useId()
     return (
         <div className="w-full">
-            {label && <label htmlFor={id} className="font-semibold">{label}</label>}
+            {label && <label htmlFor={id} className="font-semibold text-sm mb-1">{label}</label>}
             <select
                 {...props}
                 id={id}
@@ -22,4 +22,4 @@ function Select({ options, label, className = "", ...props }, ref) {
     )
 }
 
-export default React.forwardRef(Select)
+export default forwardRef(Select)
