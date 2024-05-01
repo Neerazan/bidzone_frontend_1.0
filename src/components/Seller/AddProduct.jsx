@@ -63,6 +63,13 @@ function AddProduct({ product }) {
                     }}
                 />
 
+                <Input
+                    label="Price"
+                    placeholder="Price"
+                    type="number"
+                    className="mb-4 rounded-sm border border-gray-300"
+                    {...register("price", { required: true })}
+                />
 
                 <RTE label="Description" name="content" control={control} defaultValue={getValues("description")} />
             </div>
@@ -84,14 +91,17 @@ function AddProduct({ product }) {
                     </div>
                 )}
                 <Select
-                    options={["active", "inactive"]}
-                    label="Status"
+                    options={["Electronics", "Clothing"]}
+                    label="Category"
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Button type="submit" bgColor={product ? "bg-green-500" : undefined} className="w-full">
-                    {product ? "Update" : "Submit"}
+                <Button type="submit" bgColor={product ? "bg-green-500" : undefined} className="w-full rounded-sm py-1 font-semibold hover:bg-blue-700">
+                    {product ? "Update" : "save"}
                 </Button>
+                {
+                    product ? "" : (<Button className='w-full rounded-sm py-1 font-semibold bg-cyan-600 hover:bg-cyan-700 mt-2' children="save and add another"/>)
+                }
             </div>
         </form>
     )

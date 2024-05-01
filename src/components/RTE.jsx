@@ -7,12 +7,11 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
         <>
             <div className="w-full">
                 {label && (
-                    <label className="inline-block mb-1 pl-1">{label}</label>
+                    <label className="inline-block mb-1 pl-1 font-semibold">{label}</label>
                 )}
 
                 <Controller
                     name={name || "description"}
-                    className="font-semibold"
                     control={control}
                     render={({ field: { onChange } }) => (
                         <Editor
