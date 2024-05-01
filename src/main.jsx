@@ -9,7 +9,7 @@ import App from './App.jsx'
 import User from './User.jsx'
 import './index.css'
 
-import { Login, Home, ProductDetails, Wishlist, CategoryPage, Profile, SignUp } from "./pages/index.js"
+import { Login, Home, ProductDetails, Wishlist, CategoryPage, Profile, SignUp, AddUpdateProduct } from "./pages/index.js"
 
 
 const router = createBrowserRouter([
@@ -44,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: '/user/profile',
             element: null
+          },
+          {
+            path: '/user/add-product',
+            element: <AddUpdateProduct />
           }
         ]
       },

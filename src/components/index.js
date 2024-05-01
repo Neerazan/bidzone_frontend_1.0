@@ -31,6 +31,9 @@ import Input from "./Input"
 import Button from "./Button"
 import Login from "./Auth/Login"
 import SignUp from "./Auth/SignUp"
+import RTE from "./RTE"
+import AddProduct from "./Seller/AddProduct"
+import Select from "./Select"
 
 
 export {
@@ -67,4 +70,7 @@ export {
     Button,
     Login,
     SignUp,
+    RTE,
+    AddProduct,
+    Select,
 }
