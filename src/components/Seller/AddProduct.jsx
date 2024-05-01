@@ -96,7 +96,7 @@ function AddProduct({ product }) {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Button type="submit" bgColor={product ? "bg-green-500" : undefined} className="w-full rounded-sm py-1 font-semibold hover:bg-blue-700">
+                <Button type="submit" bgColor={product ? "bg-green-500" : undefined} className="w-full rounded-sm py-1 font-semibold hover:bg-green-700 bg-green-600">
                     {product ? "Update" : "save"}
                 </Button>
                 {
