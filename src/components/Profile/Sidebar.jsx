@@ -6,7 +6,7 @@ const Sidebar = () => {
         <div className="flex flex-row mt-4">
             <div
                 id="sidebar"
-                className={`bg-white h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden rounded-md transition-transform duration-300 ease-in-out`}
+                className={`bg-white h-[90vh] md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden rounded-md transition-transform duration-300 ease-in-out`}
             >
                 <div className="mt-4">
                     <h1 className="font-bold text-4xl text-center md:hidden">
