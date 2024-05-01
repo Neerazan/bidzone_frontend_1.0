@@ -19,16 +19,14 @@ function AddProduct({ product }) {
     })
 
     const navigate = useNavigate()
-    const user = useSelector(state => state.userData)
+    const collections = useSelector((state) => state.collection.collections);
 
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === "string") {
-            return value
-            .toLowerCase()
-            .replace(/^[a-zA-Z\d\s]+/g, "-")
-            .replace(/\s/g, "-")
-        }
+            value = value.replace(/^[^a-zA-Z]+/, '');
+            return value.toLowerCase().replace(/\s+/g, "-")
+    }
 
         return ""
     }, [])
@@ -91,7 +89,7 @@ function AddProduct({ product }) {
                     </div>
                 )}
                 <Select
-                    options={["Electronics", "Clothing"]}
+                    options={collections}
                     label="Category"
                     className="mb-4"
                     {...register("status", { required: true })}

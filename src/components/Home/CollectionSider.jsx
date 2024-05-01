@@ -1,38 +1,10 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { useQuery } from "react-query";
-import { useDispatch, useSelector } from "react-redux";
-import { setCollections } from "../../store/common/collectionSlice";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const getCollection = async () => {
-    try {
-        const response = await axios.get(
-            "http://127.0.0.1:8000/auction/collections"
-        );
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
 
 function CollectionSider() {
-    const dispatch = useDispatch();
-    const { data, isLoading, isError } = useQuery("collections", getCollection);
 
-    useEffect(() => {
-        if (data) {
-            dispatch(setCollections(data));
-        }
-    }, [data, dispatch]);
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (isError) {
-        return <div>Error fetching collections: {isError.message}</div>;
-    }
+    const data = useSelector((state) => state.collection.collections)
 
     return (
         <div className="col-span-1 bg-white mt-5 rounded-md shadow-md">
