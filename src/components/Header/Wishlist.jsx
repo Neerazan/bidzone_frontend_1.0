@@ -1,12 +1,39 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import axios from "axios"
+import { useQuery } from "react-query"
+import { useDispatch } from "react-redux"
+import { setWishlist } from "../../store/common/wishlistSlice"
+
 
 function Wishlist() {
+
+    const wishlistId = localStorage.getItem("bidzone_wishlist_id")
+    const dispatch = useDispatch()
+
+    const wishlistData = async () => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`)
+            return response.data
+
+        } catch (error) {
+            console.log("Error", error)
+            throw error
+        }
+    }
+
+    const { data, isLoading, isError } = useQuery("wishlist", wishlistData)
+    if (data) {
+        dispatch(setWishlist(data))
+    }
+
     return (
         <li className="ml-4 lg:ml-5 relative inline-block">
             <Link className="" to="/user/wishlist">
                 <div className="absolute -top-3 -right-3 z-10 text-white bg-red-600 text-xs font-bold px-1 py-0.5 rounded-sm">
-                    15
+                    {
+                        data?.count < 10 && data?.count > 0 ? `0${data?.count}` : data?.count
+                    }
                 </div>
                 <svg
                     aria-hidden="true"

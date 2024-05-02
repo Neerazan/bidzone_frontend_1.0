@@ -1,24 +1,11 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import axios from "axios"
-import { useQuery } from "react-query"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
+import { useSelector } from "react-redux"
 
 function Wishlist() {
-    const wishlistId = localStorage.getItem("bidzone_wishlist_id")
-
-    const wishlistData = async () => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`)
-            return response.data
-
-        } catch (error) {
-            console.log("Error", error)
-            throw error
-        }
-    }
-
+    const data = useSelector((state) => state.wishlist.wishlists)
 
     const MAX_DESCRIPTION_LENGTH = 70;
     const MAX_TITLE_LENGTH = 60;
@@ -30,9 +17,6 @@ function Wishlist() {
             return text.slice(0, maxLength) + "...";
         }
     }
-    
-
-    const { data, isLoading, isError } = useQuery("wishlist", wishlistData)
 
     return (
         <div className="mt-4 flex flex-col gap-4 h-[90vh] overflow-y-scroll">
