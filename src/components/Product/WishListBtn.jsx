@@ -2,28 +2,29 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { useMutation } from "react-query"
+import { useSelector, useDispatch } from "react-redux"
+import { addToWishlist, removeFromWishlist } from "../../store/common/wishlistSlice"
+
 
 function WishListBtn({ auctionId }) {
     const [inWishlist, setInWishlist] = useState(false)
     const [itemId, setItemId] = useState(null)
     const wishlist_id = localStorage.getItem("bidzone_wishlist_id")
+    const dispatch = useDispatch()
+    const wishlists = useSelector((state) => state.wishlist.wishlists)
 
     useEffect(() => {
-        if (wishlist_id) {
-            checkWishlistItem(wishlist_id, auctionId)
+        if (wishlists) {
+            checkWishlistItem(auctionId)
         }
-    }, [wishlist_id, auctionId])
+    }, [auctionId, wishlists])
 
 
 
-    const checkWishlistItem = async (wishlistId, itemId) => {
+    const checkWishlistItem = async (auctionId) => {
         try {
-            const response = await axios.get(
-                `http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`
-            )
-            const responseData = response.data.results
-            const itemExists = responseData.find(
-                (item) => item.auction.id === itemId
+            const itemExists = wishlists?.results.find(
+                (item) => item.auction.id === auctionId
             )
 
             if (itemExists) {
