@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom"
 
 const Sidebar = () => {
-
     return (
         <div className="flex flex-row mt-4">
             <div
@@ -55,8 +54,7 @@ const Sidebar = () => {
                         {/* Navigation links */}
                         <NavLink
                             to="/user/profile"
-                            className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
-                            activeClassName="text-white bg-teal-500"
+                            className={`text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out`}
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -70,8 +68,11 @@ const Sidebar = () => {
                         </NavLink>
                         <NavLink
                             to="/user/wishlist"
-                            className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
-                            activeClassName="text-white bg-teal-500"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "text-white bg-teal-500 text-sm font-medium py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white hover:text-base"
+                                    : "text-gray-700 text-sm font-medium py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white hover:text-base"
+                            }
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -85,9 +86,12 @@ const Sidebar = () => {
                         </NavLink>
                         <NavLink
                             to="/user/add-product"
-                            className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "text-white bg-teal-500 text-sm font-medium py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white hover:text-base"
+                                    : "text-gray-700 text-sm font-medium py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white hover:text-base"
+                            }
                             activeClassName="text-white bg-teal-500"
-
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
