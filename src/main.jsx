@@ -8,30 +8,46 @@ import store from './store/store.js'
 import App from './App.jsx'
 import User from './User.jsx'
 import './index.css'
-
+import { Protected } from './components/index.js'
 import { Login, Home, ProductDetails, Wishlist, CategoryPage, Profile, SignUp, AddUpdateProduct } from "./pages/index.js"
 
 
 const router = createBrowserRouter([
-  {
+{
     path: "/",
     element: <App />,
     children: [
       {
         path: "/",
-        element: <Home />
+        element: (
+          <Protected authentication={false}>
+            <Home />
+          </Protected>
+        )
       },
       {
         path: "/login",
-        element: <Login />
+        element: (
+          <Protected authentication={false}>
+            <Login />
+          </Protected>
+        )
       },
       {
         path: "/register",
-        element: <SignUp />
+        element: (
+          <Protected authentication={false}>
+            <SignUp />
+          </Protected>
+        )
       },
       {
         path: '/auction/:slug',
-        element: <ProductDetails />
+        element: (
+          <Protected authentication={false}>
+            <ProductDetails />
+          </Protected>
+        )
       },
       {
         path: '/user',
@@ -39,7 +55,11 @@ const router = createBrowserRouter([
         children: [
           {
             path: '/user/wishlist',
-            element: <Wishlist />
+            element: (
+              <Protected authentication={false}>
+                <Wishlist />
+              </Protected>
+            )
           },
           {
             path: '/user/profile',
@@ -47,7 +67,11 @@ const router = createBrowserRouter([
           },
           {
             path: '/user/add-product',
-            element: <AddUpdateProduct />
+            element: (
+              <Protected authentication={true}>
+                <AddUpdateProduct />
+              </Protected>
+            )
           }
         ]
       },

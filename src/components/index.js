@@ -34,6 +34,7 @@ import SignUp from "./Auth/SignUp"
 import RTE from "./RTE"
 import AddProduct from "./Seller/AddProduct"
 import Select from "./Select"
+import Protected from "./Auth/AuthLayout"
 
 
 export {
@@ -73,4 +74,6 @@ export {
     RTE,
     AddProduct,
     Select,
+    Protected,
+    
 }
