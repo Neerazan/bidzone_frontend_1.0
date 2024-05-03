@@ -6,6 +6,8 @@ import ProductDetails from "./ProductDetails"
 import Profile from "./User/Profile"
 import SignUp from "./SignUp";
 import AddUpdateProduct from "./User/AddUpdateProduct";
+import Auctions from "./User/Auctions";
+import Product from "./User/Product";
 
 export {
     Login,
@@ -16,5 +18,6 @@ export {
     Profile,
     SignUp,
     AddUpdateProduct,
-    
+    Auctions,
+    Product
 }

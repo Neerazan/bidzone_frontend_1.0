@@ -71,7 +71,7 @@ const Sidebar = () => {
                             <span>Profile</span>
                         </NavLink>
                         <NavLink
-                            to=""
+                            to="/user/auctions"
                             className={({ isActive }) =>
                                 isActive
                                     ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
