@@ -50,11 +50,15 @@ const Sidebar = () => {
                             </svg>
                         </button>
                     </div>
-                    <div id="menu" className="flex flex-col mt-4">
+                    <div id="menu" className="flex flex-col mt-4 gap-1">
                         {/* Navigation links */}
                         <NavLink
                             to="/user/profile"
-                            className={`text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out`}
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                                    : "text-gray-700 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                            }
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -67,11 +71,11 @@ const Sidebar = () => {
                             <span>Profile</span>
                         </NavLink>
                         <NavLink
-                            to="/user/wishlist"
+                            to=""
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-white bg-teal-500 text-sm font-medium py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white hover:text-base"
-                                    : "text-gray-700 text-sm font-medium py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white hover:text-base"
+                                    ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                                    : "text-gray-700 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
                             }
                         >
                             <svg
@@ -88,10 +92,9 @@ const Sidebar = () => {
                             to="/user/add-product"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-white bg-teal-500 text-sm font-medium py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white hover:text-base"
-                                    : "text-gray-700 text-sm font-medium py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white hover:text-base"
+                                    ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                                    : "text-gray-700 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
                             }
-                            activeClassName="text-white bg-teal-500"
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"
@@ -104,9 +107,12 @@ const Sidebar = () => {
                             <span>Products</span>
                         </NavLink>
                         <NavLink
-                            to=""
-                            className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
-                            activeClassName="text-white bg-teal-500"
+                            to="/user/wishlist"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                                    : "text-gray-700 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                            }
                         >
                             <svg
                                 className="w-6 h-6 fill-current inline-block"

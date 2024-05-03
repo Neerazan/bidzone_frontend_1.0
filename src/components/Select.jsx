@@ -9,7 +9,7 @@ function Select({ options, label, className = "", ...props }, ref) {
                 {...props}
                 id={id}
                 ref={ref}
-                className={`px-3 py-2 rounded-sm bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-300 w-full ${className}`}
+                className={`px-3 py-1 rounded-sm bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-300 w-full ${className}`}
             >
                 <option value={null}>Select a Category</option>
                 {options?.map((option) => (

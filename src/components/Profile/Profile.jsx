@@ -1,9 +1,8 @@
 import React from 'react'
-import { Profile as UserProfile } from '../../components'
 
 function Profile() {
     return (
-        <UserProfile />
+        <div>This is Profile</div>
     )
 }
 

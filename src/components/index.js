@@ -35,6 +35,9 @@ import RTE from "./RTE"
 import AddProduct from "./Seller/AddProduct"
 import Select from "./Select"
 import Protected from "./Auth/AuthLayout"
+import Profile from "./Profile/Profile"
+import Auctions from "./Seller/Auctions"
+import Products from "./Seller/Products"
 
 
 export {
@@ -75,5 +78,7 @@ export {
     AddProduct,
     Select,
     Protected,
-    
+    Profile,
+    Auctions,
+    Products
 }
