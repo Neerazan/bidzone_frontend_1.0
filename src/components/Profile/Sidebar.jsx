@@ -2,10 +2,10 @@ import { NavLink } from "react-router-dom"
 
 const Sidebar = () => {
     return (
-        <div className="flex flex-row mt-4">
+        <div className="flex flex-row min-h-[90vh] h-full">
             <div
                 id="sidebar"
-                className={`bg-white h-[90vh] md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden rounded-md transition-transform duration-300 ease-in-out`}
+                className={`bg-white md:block shadow-md px-3 w-30 md:w-60 lg:w-60  rounded-md transition-transform duration-300 ease-in-out py-2 mt-4`}
             >
                 <div className="mt-4">
                     <h1 className="font-bold text-4xl text-center md:hidden">
