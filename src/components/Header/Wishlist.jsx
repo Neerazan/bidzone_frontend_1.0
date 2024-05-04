@@ -23,7 +23,10 @@ function Wishlist() {
     }
 
     const { data, isLoading, isError } = useQuery("wishlist", wishlistData)
+
+
     if (data) {
+        console.log("Wishlist Redux");
         dispatch(setWishlist(data))
     }
 
