@@ -3,10 +3,12 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { useMutation } from "react-query"
 import { useSelector, useDispatch } from "react-redux"
-import { addToWishlist, removeFromWishlist } from "../../store/common/wishlistSlice"
+import {
+    addToWishlist,
+    removeFromWishlist,
+} from "../../store/common/wishlistSlice"
 
-
-function WishListBtn({ auctionId }) {
+function WishListBtn({ data, auctionId }) {
     const [inWishlist, setInWishlist] = useState(false)
     const [itemId, setItemId] = useState(null)
     const wishlist_id = localStorage.getItem("bidzone_wishlist_id")
@@ -19,12 +21,11 @@ function WishListBtn({ auctionId }) {
         }
     }, [auctionId, wishlists])
 
-
-
     const checkWishlistItem = async (auctionId) => {
         try {
-            const itemExists = wishlists?.results?.find(
-                (item) => item.auction.id === auctionId
+            // Safely access the auctionId by ensuring item.auction exists before accessing item.auction.id
+            const itemExists = wishlists?.find(
+                (item) => item.auction && item.auction.id === auctionId
             )
 
             if (itemExists) {
@@ -35,7 +36,6 @@ function WishListBtn({ auctionId }) {
             console.error("Error fetching wishlist items:", error)
         }
     }
-
 
     const createWishlistAndAddItemMutation = useMutation(async () => {
         const response = await axios.post(
@@ -50,20 +50,16 @@ function WishListBtn({ auctionId }) {
         return { newWishlistId }
     })
 
-
-
     const addToWishlistMutation = useMutation(
         async ({ auctionId, wishlistId }) => {
-            await axios.post(
+            const response = await axios.post(
                 `http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`,
                 { auction_id: auctionId }
             )
             setInWishlist(true)
-            return { auctionId, wishlistId }
+            return response.data
         }
     )
-
-
 
     const removeFromWishlistMutation = useMutation(async (itemId) => {
         await axios.delete(
@@ -73,27 +69,28 @@ function WishListBtn({ auctionId }) {
         return { itemId }
     })
 
-
-
     const toggleWishlistItem = () => {
         if (!wishlist_id) {
             createWishlistAndAddItemMutation.mutate()
         } else {
             const itemExists = inWishlist
             if (itemExists) {
-                dispatch(removeFromWishlist(itemId))
                 removeFromWishlistMutation.mutate(itemId)
+                dispatch(removeFromWishlist(itemId))
             } else {
                 addToWishlistMutation.mutate({
                     auctionId,
                     wishlistId: wishlist_id,
+                }, {
+                    onSuccess: (data) => {
+                        console.log(`Successfully added item to wishlist: ${data}`);
+                        dispatch(addToWishlist(data))
+                    }
                 })
             }
         }
     }
 
-
-    
     return (
         <div className="flex mt-4">
             <Link className="mr-auto text-sky-600 font-semibold text-sm italic hover:underline">

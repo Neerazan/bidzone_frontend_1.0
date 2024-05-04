@@ -75,7 +75,7 @@ function ProductInfo({ data, bidsData }) {
                         <CountdownComponent apiDate={data?.ending_time} />
                     </div>
 
-                    <WishListBtn auctionId={data?.id}/>
+                    <WishListBtn data={data} auctionId={data?.id}/>
                     
                     <hr className="my-4" />
                 </div>
