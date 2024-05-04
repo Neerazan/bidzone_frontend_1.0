@@ -6,7 +6,7 @@ export default function Protected({ children, authentication = true }) {
     const navigate = useNavigate()
     const [loader, setLoader] = useState(true)
     const authStatus = useSelector((state) => state.auth.status)
-    console.log(`authstatus: ${authStatus} and authentication: ${authentication}`);
+    // console.log(`authstatus: ${authStatus} and authentication: ${authentication}`);
 
     useEffect(() => {
         if (authentication && authStatus !== authentication) {

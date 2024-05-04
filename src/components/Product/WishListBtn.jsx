@@ -23,7 +23,7 @@ function WishListBtn({ auctionId }) {
 
     const checkWishlistItem = async (auctionId) => {
         try {
-            const itemExists = wishlists?.results.find(
+            const itemExists = wishlists?.results?.find(
                 (item) => item.auction.id === auctionId
             )
 
@@ -81,7 +81,7 @@ function WishListBtn({ auctionId }) {
         } else {
             const itemExists = inWishlist
             if (itemExists) {
-                console.log(`Wishlist Items ID: ${itemId}`)
+                dispatch(removeFromWishlist(itemId))
                 removeFromWishlistMutation.mutate(itemId)
             } else {
                 addToWishlistMutation.mutate({

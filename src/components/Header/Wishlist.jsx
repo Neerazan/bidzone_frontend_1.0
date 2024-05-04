@@ -1,42 +1,41 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import axios from "axios"
-import { useQuery } from "react-query"
-import { useDispatch } from "react-redux"
-import { setWishlist } from "../../store/common/wishlistSlice"
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
+import { setWishlist } from "../../store/common/wishlistSlice";
 
+const wishlistData = async (wishlistId) => {
+    try {
+        const response = await axios.get(`http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching wishlist data:", error);
+        throw error;
+    }
+};
 
 function Wishlist() {
+    const wishlistId = localStorage.getItem("bidzone_wishlist_id");
+    const dispatch = useDispatch();
 
-    const wishlistId = localStorage.getItem("bidzone_wishlist_id")
-    const dispatch = useDispatch()
+    const { data, isLoading, isError } = useQuery(["wishlist", wishlistId], () => wishlistId ? wishlistData(wishlistId) : undefined);
 
-    const wishlistData = async () => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`)
-            return response.data
-
-        } catch (error) {
-            console.log("Error", error)
-            throw error
+    useEffect(() => {
+        if (data) {
+            dispatch(setWishlist(data));
         }
-    }
+    }, [data, dispatch]);
 
-    const { data, isLoading, isError } = useQuery("wishlist", wishlistData)
-
-
-    if (data) {
-        console.log("Wishlist Redux");
-        dispatch(setWishlist(data))
-    }
+    if (!wishlistId) return <div>No wishlist ID found. Please set a wishlist ID.</div>;
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error fetching wishlist data. Please try again later.</div>;
 
     return (
         <li className="ml-4 lg:ml-5 relative inline-block">
             <Link className="" to="/user/wishlist">
                 <div className="absolute -top-3 -right-3 z-10 text-white bg-red-600 text-xs font-bold px-1 py-0.5 rounded-sm">
-                    {
-                        data?.count < 10 && data?.count > 0 ? `0${data?.count}` : data?.count
-                    }
+                    {data?.count ? (data.count < 10 ? `0${data.count}` : data.count) : "00"}
                 </div>
                 <svg
                     aria-hidden="true"
@@ -46,7 +45,7 @@ function Wishlist() {
                     role="img"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
-                    className="h-6 text-gray-400 svg-inline--fa fa-heart hover:to-red-600"
+                    className="h-6 text-gray-300 svg-inline--fa fa-heart hover:text-red-500"
                 >
                     <path
                         fill="currentColor"
@@ -55,7 +54,7 @@ function Wishlist() {
                 </svg>
             </Link>
         </li>
-    )
+    );
 }
 
-export default Wishlist
+export default Wishlist;

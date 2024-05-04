@@ -111,6 +111,7 @@ function AddProduct({ product }) {
                     type="file"
                     className="mb-4"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
+                    multiple = {true}
                     {...register("image", { required: !product })}
                 />
                 {product && (
