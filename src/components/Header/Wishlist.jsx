@@ -23,7 +23,8 @@ function Wishlist() {
 
     useEffect(() => {
         if (data) {
-            dispatch(setWishlist(data));
+            console.log("Wishlist data:", data);
+            dispatch(setWishlist(data.results));
         }
     }, [data, dispatch]);
 

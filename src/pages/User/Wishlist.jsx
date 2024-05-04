@@ -20,7 +20,7 @@ function Wishlist() {
 
     return (
         <div className="mt-4 flex flex-col gap-4 overflow-y-scroll h-[90vh] p-4 bg-white rounded-md">
-            {data?.results?.map((item) => (
+            {data?.map((item) => (
                 <div className="flex w-full bg-slate-50 px-4 py-4 shadow-lg rounded-md" key={item.id}>
                     <div className="grid grid-cols-6 gap-4">
                         <div className="col-span-1 overflow-x-hidden">
