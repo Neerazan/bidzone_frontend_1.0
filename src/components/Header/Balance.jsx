@@ -1,11 +1,13 @@
 import React from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 import { useQuery } from "react-query"
+import { setBalance } from "../../store/common/BalanceSlice"
 
 function Balance() {
     const customer_id = useSelector((state) => state.auth.userData.id)
-
+    const dispatch = useDispatch()
+    
     const fetchBalance = async () => {
         try {
             const response = await axios.get(
@@ -28,6 +30,10 @@ function Balance() {
             style: "currency",
             currency: "USD", // Change this according to your currency
         }).format(amount)
+    }
+
+    if (data) {
+        dispatch(setBalance(data[0].balance))
     }
 
     if (isLoading) {

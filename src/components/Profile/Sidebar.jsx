@@ -1,10 +1,13 @@
 import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-import { Balance } from "../index"
+
+
+
 
 const Sidebar = () => {
     const user = useSelector((state) => state.auth.userData)
+    const balance = useSelector((state) => state.balance.balance)
 
     return (
         <div className="flex flex-row min-h-[90vh] h-full">
@@ -94,7 +97,7 @@ const Sidebar = () => {
                                             </g>
                                         </svg>
                                         <div className="text-gray-600">
-                                            <Balance />
+                                            { balance ? `Rs. ${balance}` : "Rs. 0"}
                                         </div>
                                     </Link>
                                 </div>
