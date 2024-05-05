@@ -1,6 +1,10 @@
 import { NavLink } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 const Sidebar = () => {
+    const user = useSelector((state) => state.auth.userData)
+
     return (
         <div className="flex flex-row min-h-[90vh] h-full">
             <div
@@ -14,16 +18,30 @@ const Sidebar = () => {
                     <h1 className="hidden md:block font-bold text-sm md:text-xl text-center">
                         BidZone<span className="text-teal-600">.</span>
                     </h1>
-                    <div id="profile" className="mt-5">
-                        <img
-                            src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                            alt="Avatar user"
-                            className="w-10 md:w-16 rounded-full mx-auto"
-                        />
+                    <div id="profile" className="mt-4">
+                        {user ? (
+                            <div className="flex justify-center mb-3">
+                                <div className="w-14 h-14 rounded-full bg-cyan-500 text-white flex items-center text-2xl justify-center">
+                                    {user.first_name[0]}
+                                </div>
+                            </div>
+                        ) : (
+                            <img
+                                src="https://i.pinimg.com/originals/60/07/0e/60070ed889df308cbe80253e8c36b3a3.jpg"
+                                alt="Avatar user"
+                                className="w-10 md:w-16 rounded-full mx-auto border-2 border-cyan-500 cursor-pointer hover:ring-2 hover:ring-cyan-500 hover:opacity-55"
+                            />
+                        )}
+
                         <div>
-                            <h2 className="font-semibold text-xs md:text-sm text-center text-teal-500">
-                                Neerajan Dhakal
-                            </h2>
+                            {user ? (
+                                <h2 className="font-semibold text-xs md:text-sm text-center text-teal-500">
+                                    {user?.first_name} {user?.last_name}
+                                </h2>
+                            ) : (
+                                <div className="flex my-4 justify-center gap-3"></div>
+                            )}
+
                             <p className="text-xs text-gray-500 text-center">
                                 Administrator
                             </p>
