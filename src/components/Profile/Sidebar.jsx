@@ -2,9 +2,6 @@ import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 
-
-
-
 const Sidebar = () => {
     const user = useSelector((state) => state.auth.userData)
     const balance = useSelector((state) => state.balance.balance)
@@ -97,7 +94,9 @@ const Sidebar = () => {
                                             </g>
                                         </svg>
                                         <div className="text-gray-600">
-                                            { balance ? `Rs. ${balance}` : "Rs. 0"}
+                                            {balance
+                                                ? `Rs. ${balance}`
+                                                : "Rs. 0"}
                                         </div>
                                     </Link>
                                 </div>
@@ -133,73 +132,200 @@ const Sidebar = () => {
                             to="/user/profile"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
-                                    : "text-gray-700 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
                             <svg
-                                className="w-6 h-6 fill-current inline-block"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
+                                fill="#000000"
+                                className="5-6 h-5 fill-current inline-block"
+                                viewBox="0 0 32 32"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
-                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                <g id="SVGRepo_bgCarrier" stroke-width=""></g>
+                                <g
+                                    id="SVGRepo_tracerCarrier"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                ></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    {" "}
+                                    <title></title>{" "}
+                                    <g id="about">
+                                        {" "}
+                                        <path d="M16,16A7,7,0,1,0,9,9,7,7,0,0,0,16,16ZM16,4a5,5,0,1,1-5,5A5,5,0,0,1,16,4Z"></path>{" "}
+                                        <path d="M17,18H15A11,11,0,0,0,4,29a1,1,0,0,0,1,1H27a1,1,0,0,0,1-1A11,11,0,0,0,17,18ZM6.06,28A9,9,0,0,1,15,20h2a9,9,0,0,1,8.94,8Z"></path>{" "}
+                                    </g>{" "}
+                                </g>
                             </svg>
-                            <span>Profile</span>
+                            <span className="ml-2">Profile</span>
                         </NavLink>
                         <NavLink
                             to="/user/auctions"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
-                                    : "text-gray-700 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
                             <svg
-                                className="w-6 h-6 fill-current inline-block"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
+                                fill="#000000"
+                                className="h-5 fill-current inline-block"
+                                viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
-                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g
+                                    id="SVGRepo_tracerCarrier"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                ></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    {" "}
+                                    <title></title>{" "}
+                                    <g id="auction">
+                                        {" "}
+                                        <path d="M14.75,18.24A3.45,3.45,0,0,0,11.5,16h-4A3.44,3.44,0,0,0,5,17a3.39,3.39,0,0,0-.77,1.21A3.49,3.49,0,0,0,2,21.5a.5.5,0,0,0,.5.5h14a.5.5,0,0,0,.5-.5A3.51,3.51,0,0,0,14.75,18.24ZM7.5,17h4a2.48,2.48,0,0,1,2,1h-8a1.71,1.71,0,0,1,.2-.27A2.51,2.51,0,0,1,7.5,17ZM3.05,21A2.5,2.5,0,0,1,5.5,19h8A2.5,2.5,0,0,1,16,21Z"></path>{" "}
+                                        <path d="M21.26,13.56l-2.7-2.71a1.49,1.49,0,0,0-2,0L15.21,9.5,16,8.71l.15.14a.48.48,0,0,0,.7,0l1.3-1.29a1.51,1.51,0,0,0,0-2.12L15.56,2.85a1.51,1.51,0,0,0-2.12,0l-1.29,1.3a.48.48,0,0,0,0,.7l.14.15L10,7.29l-.15-.14a.48.48,0,0,0-.7,0L7.85,8.44a1.51,1.51,0,0,0,0,2.12l2.59,2.59a1.52,1.52,0,0,0,2.12,0l1.29-1.3a.48.48,0,0,0,0-.7L13.71,11l.79-.79,1.31,1.3a1.49,1.49,0,0,0,0,2.05l2.71,2.7a2.46,2.46,0,0,0,1.77.74h.17A1.5,1.5,0,0,0,22,15.5v-.17A2.46,2.46,0,0,0,21.26,13.56Zm-7.11-10a.5.5,0,0,1,.7,0l2.59,2.59a.5.5,0,0,1,0,.7l-.94.94L13.21,4.5Zm-2.3,8.88a.5.5,0,0,1-.7,0L8.56,9.85a.5.5,0,0,1,0-.7l.94-.94,3.29,3.29ZM10.71,8,13,5.71,15.29,8,13,10.29ZM21,15.5a.5.5,0,0,1-.5.5h-.17a1.54,1.54,0,0,1-1.07-.44l-2.7-2.71a.5.5,0,0,1,0-.7l.59-.59a.48.48,0,0,1,.7,0l2.71,2.7A1.54,1.54,0,0,1,21,15.33Z"></path>{" "}
+                                    </g>{" "}
+                                </g>
                             </svg>
-                            <span>Auction</span>
+                            <span className="ml-2">Auction</span>
                         </NavLink>
                         <NavLink
                             to="/user/add-product"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
-                                    : "text-gray-700 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
                             <svg
-                                className="w-6 h-6 fill-current inline-block"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
+                                className="w-5 h-5 fill-current inline-block "
+                                viewBox="0 0 24 24"
+                                version="1.1"
                                 xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
                             >
-                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g
+                                    id="SVGRepo_tracerCarrier"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                ></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    {" "}
+                                    <title></title>{" "}
+                                    <g
+                                        fill="none"
+                                        fill-rule="evenodd"
+                                        id="页面-1"
+                                        stroke="none"
+                                        stroke-width="1"
+                                    >
+                                        {" "}
+                                        <g
+                                            id="导航图标"
+                                            transform="translate(-325.000000, -80.000000)"
+                                        >
+                                            {" "}
+                                            <g
+                                                id="编组"
+                                                transform="translate(325.000000, 80.000000)"
+                                            >
+                                                {" "}
+                                                <polygon
+                                                    fill="#FFFFFF"
+                                                    fill-opacity="0.01"
+                                                    fill-rule="nonzero"
+                                                    id="路径"
+                                                    points="24 0 0 0 0 24 24 24"
+                                                ></polygon>{" "}
+                                                <polygon
+                                                    id="路径"
+                                                    points="22 7 12 2 2 7 2 17 12 22 22 17"
+                                                    stroke="#212121"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="1.5"
+                                                ></polygon>{" "}
+                                                <line
+                                                    id="路径"
+                                                    stroke="#212121"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="1.5"
+                                                    x1="2"
+                                                    x2="12"
+                                                    y1="7"
+                                                    y2="12"
+                                                ></line>{" "}
+                                                <line
+                                                    id="路径"
+                                                    stroke="#212121"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="1.5"
+                                                    x1="12"
+                                                    x2="12"
+                                                    y1="22"
+                                                    y2="12"
+                                                ></line>{" "}
+                                                <line
+                                                    id="路径"
+                                                    stroke="#212121"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="1.5"
+                                                    x1="22"
+                                                    x2="12"
+                                                    y1="7"
+                                                    y2="12"
+                                                ></line>{" "}
+                                                <line
+                                                    id="路径"
+                                                    stroke="#212121"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="1.5"
+                                                    x1="17"
+                                                    x2="7"
+                                                    y1="4.5"
+                                                    y2="9.5"
+                                                ></line>{" "}
+                                            </g>{" "}
+                                        </g>{" "}
+                                    </g>{" "}
+                                </g>
                             </svg>
-                            <span>Products</span>
+                            <span className="ml-2">Products</span>
                         </NavLink>
                         <NavLink
                             to="/user/wishlist"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-white bg-teal-500 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
-                                    : "text-gray-700 text-sm font-medium py-1 px-2 rounded-md transition duration-150 ease-in-out hover:bg-teal-500 hover:text-white"
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
                             <svg
-                                className="w-6 h-6 fill-current inline-block"
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
+                                className="w-5 h-5 inline-block"
+                                viewBox="0 0 64 64"
                                 xmlns="http://www.w3.org/2000/svg"
+                                stroke-width="3"
+                                stroke="#000000"
+                                fill="none"
                             >
-                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g
+                                    id="SVGRepo_tracerCarrier"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                ></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z"></path>
+                                </g>
                             </svg>
-                            <span>Wishlist</span>
+                            <span className="ml-2">Wishlist</span>
                         </NavLink>
                         {/* Add more navigation links as needed */}
                     </div>
