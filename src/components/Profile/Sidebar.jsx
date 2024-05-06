@@ -132,7 +132,7 @@ const Sidebar = () => {
                             to="/user/profile"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    ? "flex text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
@@ -164,7 +164,7 @@ const Sidebar = () => {
                             to="/user/auctions"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    ? "flex text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
@@ -196,7 +196,7 @@ const Sidebar = () => {
                             to="/user/add-product"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    ? "flex text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
@@ -303,7 +303,7 @@ const Sidebar = () => {
                             to="/user/wishlist"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    ? "flex text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
