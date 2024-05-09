@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import { BsBoxSeam, BsBagHeart, BsPerson  } from "react-icons/bs";
+import { IconContext } from "react-icons";
+
 
 const Sidebar = () => {
     const user = useSelector((state) => state.auth.userData)
@@ -132,39 +135,20 @@ const Sidebar = () => {
                             to="/user/profile"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "flex text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100 flex items-center"
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
-                            <svg
-                                fill="#000000"
-                                className="5-6 h-5 fill-current inline-block"
-                                viewBox="0 0 32 32"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <g id="SVGRepo_bgCarrier" stroke-width=""></g>
-                                <g
-                                    id="SVGRepo_tracerCarrier"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                ></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    {" "}
-                                    <title></title>{" "}
-                                    <g id="about">
-                                        {" "}
-                                        <path d="M16,16A7,7,0,1,0,9,9,7,7,0,0,0,16,16ZM16,4a5,5,0,1,1-5,5A5,5,0,0,1,16,4Z"></path>{" "}
-                                        <path d="M17,18H15A11,11,0,0,0,4,29a1,1,0,0,0,1,1H27a1,1,0,0,0,1-1A11,11,0,0,0,17,18ZM6.06,28A9,9,0,0,1,15,20h2a9,9,0,0,1,8.94,8Z"></path>{" "}
-                                    </g>{" "}
-                                </g>
-                            </svg>
+                            <IconContext.Provider value={{ size: "1.3em" }} >
+                                <BsPerson />
+                            </IconContext.Provider>
                             <span className="ml-2">Profile</span>
                         </NavLink>
                         <NavLink
                             to="/user/auctions"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "flex text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100 flex items-center"
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
@@ -196,135 +180,26 @@ const Sidebar = () => {
                             to="/user/add-product"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "flex text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100 flex items-center"
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
-                            <svg
-                                className="w-5 h-5 fill-current inline-block "
-                                viewBox="0 0 24 24"
-                                version="1.1"
-                                xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink"
-                            >
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g
-                                    id="SVGRepo_tracerCarrier"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                ></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    {" "}
-                                    <title></title>{" "}
-                                    <g
-                                        fill="none"
-                                        fill-rule="evenodd"
-                                        id="页面-1"
-                                        stroke="none"
-                                        stroke-width="1"
-                                    >
-                                        {" "}
-                                        <g
-                                            id="导航图标"
-                                            transform="translate(-325.000000, -80.000000)"
-                                        >
-                                            {" "}
-                                            <g
-                                                id="编组"
-                                                transform="translate(325.000000, 80.000000)"
-                                            >
-                                                {" "}
-                                                <polygon
-                                                    fill="#FFFFFF"
-                                                    fill-opacity="0.01"
-                                                    fill-rule="nonzero"
-                                                    id="路径"
-                                                    points="24 0 0 0 0 24 24 24"
-                                                ></polygon>{" "}
-                                                <polygon
-                                                    id="路径"
-                                                    points="22 7 12 2 2 7 2 17 12 22 22 17"
-                                                    stroke="#212121"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="1.5"
-                                                ></polygon>{" "}
-                                                <line
-                                                    id="路径"
-                                                    stroke="#212121"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="1.5"
-                                                    x1="2"
-                                                    x2="12"
-                                                    y1="7"
-                                                    y2="12"
-                                                ></line>{" "}
-                                                <line
-                                                    id="路径"
-                                                    stroke="#212121"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="1.5"
-                                                    x1="12"
-                                                    x2="12"
-                                                    y1="22"
-                                                    y2="12"
-                                                ></line>{" "}
-                                                <line
-                                                    id="路径"
-                                                    stroke="#212121"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="1.5"
-                                                    x1="22"
-                                                    x2="12"
-                                                    y1="7"
-                                                    y2="12"
-                                                ></line>{" "}
-                                                <line
-                                                    id="路径"
-                                                    stroke="#212121"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="1.5"
-                                                    x1="17"
-                                                    x2="7"
-                                                    y1="4.5"
-                                                    y2="9.5"
-                                                ></line>{" "}
-                                            </g>{" "}
-                                        </g>{" "}
-                                    </g>{" "}
-                                </g>
-                            </svg>
+                            <IconContext.Provider value={{ size: "1em" }} >
+                                <BsBoxSeam />
+                            </IconContext.Provider>
                             <span className="ml-2">Products</span>
                         </NavLink>
                         <NavLink
                             to="/user/wishlist"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "flex text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100"
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100 flex items-center"
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
-                            <svg
-                                className="w-5 h-5 inline-block"
-                                viewBox="0 0 64 64"
-                                xmlns="http://www.w3.org/2000/svg"
-                                stroke-width="3"
-                                stroke="#000000"
-                                fill="none"
-                            >
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g
-                                    id="SVGRepo_tracerCarrier"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                ></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <path d="M9.06,25C7.68,17.3,12.78,10.63,20.73,10c7-.55,10.47,7.93,11.17,9.55a.13.13,0,0,0,.25,0c3.25-8.91,9.17-9.29,11.25-9.5C49,9.45,56.51,13.78,55,23.87c-2.16,14-23.12,29.81-23.12,29.81S11.79,40.05,9.06,25Z"></path>
-                                </g>
-                            </svg>
+                            <IconContext.Provider value={{ size: "1.3em" }} >
+                                <BsBagHeart />
+                            </IconContext.Provider>
                             <span className="ml-2">Wishlist</span>
                         </NavLink>
                         {/* Add more navigation links as needed */}

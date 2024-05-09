@@ -13,7 +13,7 @@ function Header() {
                     <Logo />
                     <SearchBox />
                     <nav className="">
-                        <ul className="xl:w-auto flex items-center justify-center">
+                        <ul className="xl:w-auto flex gap-6 items-center justify-center">
                             {!authStatus && <LoginBtn />}
                             {!authStatus && <RegisterBtn />}
                             {authStatus && <Notification />}

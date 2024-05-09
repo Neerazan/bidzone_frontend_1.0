@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { Balance } from "../index"
 import { useSelector } from "react-redux"
 import { LogoutBtn } from "../index"
+import { BsPerson, BsCaretDown  } from "react-icons/bs"
+import { IconContext } from "react-icons"
 
 function Dropdown() {
     const [dropdown, setDropdown] = useState(false)
@@ -13,73 +15,22 @@ function Dropdown() {
     }
 
     return (
-        <li className="ml-2 lg:ml-4 relative inline-block">
+        <li className="relative inline-block">
             <div className="relative">
                 <button
                     type="button"
                     data-dropdown-toggle="profile-dropdown-menu"
-                    className="inline-flex items-center font-medium justify-center px-3 text-sm text-gray-100 rounded-full cursor-pointer border-2 py-[5px] border-gray-200 ml-2"
+                    className="inline-flex items-center font-medium justify-center px-3 text-sm text-gray-100 rounded-full cursor-pointer border-2 py-[5px] border-gray-200 gap-2"
                     onClick={toggleDropdown}
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20px"
-                        className="cursor-pointer fill-[#d1d1d1] md:mr-3"
-                        viewBox="0 0 512 512"
-                    >
-                        <path
-                            d="M337.711 241.3a16 16 0 0 0-11.461 3.988c-18.739 16.561-43.688 25.682-70.25 25.682s-51.511-9.121-70.25-25.683a16.007 16.007 0 0 0-11.461-3.988c-78.926 4.274-140.752 63.672-140.752 135.224v107.152C33.537 499.293 46.9 512 63.332 512h385.336c16.429 0 29.8-12.707 29.8-28.325V376.523c-.005-71.552-61.831-130.95-140.757-135.223zM446.463 480H65.537V376.523c0-52.739 45.359-96.888 104.351-102.8C193.75 292.63 224.055 302.97 256 302.97s62.25-10.34 86.112-29.245c58.992 5.91 104.351 50.059 104.351 102.8zM256 234.375a117.188 117.188 0 1 0-117.188-117.187A117.32 117.32 0 0 0 256 234.375zM256 32a85.188 85.188 0 1 1-85.188 85.188A85.284 85.284 0 0 1 256 32z"
-                            data-original="#000000"
-                        />
-                    </svg>
+                    <IconContext.Provider value={{ size: "1.3em", className: "text-gray-200" }}>
+                        <BsPerson />
+                    </IconContext.Provider>
+
                     <span className="hidden md:block uppercase">{name}</span>
-                    <svg
-                        className="h-2 ml-2 mt-1 font-semibold"
-                        viewBox="0 -4.5 20 20"
-                        version="1.1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="#000000"
-                    >
-                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                        <g
-                            id="SVGRepo_tracerCarrier"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        ></g>
-                        <g id="SVGRepo_iconCarrier">
-                            {" "}
-                            <title>arrow_down [#ffffff]</title>{" "}
-                            <desc>Created with Sketch.</desc> <defs> </defs>{" "}
-                            <g
-                                id="Page-1"
-                                stroke="none"
-                                strokeWidth="1"
-                                fill="none"
-                                fillRule="evenodd"
-                            >
-                                {" "}
-                                <g
-                                    id="Dribbble-Light-Preview"
-                                    transform="translate(-220.000000, -6684.000000)"
-                                    fill="#ffffff"
-                                >
-                                    {" "}
-                                    <g
-                                        id="icons"
-                                        transform="translate(56.000000, 160.000000)"
-                                    >
-                                        {" "}
-                                        <path
-                                            d="M164.292308,6524.36583 L164.292308,6524.36583 C163.902564,6524.77071 163.902564,6525.42619 164.292308,6525.83004 L172.555873,6534.39267 C173.33636,6535.20244 174.602528,6535.20244 175.383014,6534.39267 L183.70754,6525.76791 C184.093286,6525.36716 184.098283,6524.71997 183.717533,6524.31405 C183.328789,6523.89985 182.68821,6523.89467 182.29347,6524.30266 L174.676479,6532.19636 C174.285736,6532.60124 173.653152,6532.60124 173.262409,6532.19636 L165.705379,6524.36583 C165.315635,6523.96094 164.683051,6523.96094 164.292308,6524.36583"
-                                            id="arrow_down-[#ffffff]"
-                                        >
-                                            {" "}
-                                        </path>{" "}
-                                    </g>{" "}
-                                </g>{" "}
-                            </g>{" "}
-                        </g>
-                    </svg>
+                    <IconContext.Provider value={{ size: "1em", className: "text-gray-200 mt-1" }}>
+                        <BsCaretDown />
+                    </IconContext.Provider>
                 </button>
 
                 {/* Dropdown List */}
