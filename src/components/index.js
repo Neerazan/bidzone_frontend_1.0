@@ -12,8 +12,6 @@ import Carousel from "./Home/Carousel"
 import CollectionSider from "./Home/CollectionSider"
 import Footer from "./Footer/Footer"
 import ProductContainer from "./Home/ProductContainer"
-import LoginBtn from "./Header/LoginBtn"
-import RegisterBtn from "./Header/RegisterBtn"
 import CountdownComponent from "./Product/CountDown"
 import BidHistory from "./Product/BidHistory"
 import Loader from "./Loader"
@@ -38,6 +36,7 @@ import Protected from "./Auth/AuthLayout"
 import Profile from "./Profile/Profile"
 import Auctions from "./Seller/Auctions"
 import Products from "./Seller/Products"
+import LoginRegisterBtn from "./Header/LoginRegisterBtn"
 
 
 export {
@@ -55,8 +54,6 @@ export {
     CollectionSider,
     Footer,
     ProductContainer,
-    LoginBtn,
-    RegisterBtn,
     CountdownComponent,
     BidHistory,
     Loader,
@@ -80,5 +77,6 @@ export {
     Protected,
     Profile,
     Auctions,
-    Products
+    Products,
+    LoginRegisterBtn,
 }

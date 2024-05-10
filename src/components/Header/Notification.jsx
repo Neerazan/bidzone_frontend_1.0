@@ -13,7 +13,7 @@ function Notification() {
                 <IconContext.Provider
                     value={{
                         size: "1.5em",
-                        className: "hover:text-red-600 text-gray-200",
+                        className: "hover:text-yellow-600 text-gray-200",
                     }}
                 >
                     <BsBell />

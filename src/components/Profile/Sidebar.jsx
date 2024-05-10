@@ -1,9 +1,8 @@
 import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-import { BsBoxSeam, BsBagHeart, BsPerson  } from "react-icons/bs";
-import { IconContext } from "react-icons";
-
+import { BsBoxSeam, BsBagHeart, BsPerson } from "react-icons/bs"
+import { IconContext } from "react-icons"
 
 const Sidebar = () => {
     const user = useSelector((state) => state.auth.userData)
@@ -139,7 +138,7 @@ const Sidebar = () => {
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
-                            <IconContext.Provider value={{ size: "1.3em" }} >
+                            <IconContext.Provider value={{ size: "1.3em" }}>
                                 <BsPerson />
                             </IconContext.Provider>
                             <span className="ml-2">Profile</span>
@@ -158,11 +157,11 @@ const Sidebar = () => {
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                                 <g
                                     id="SVGRepo_tracerCarrier"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                 ></g>
                                 <g id="SVGRepo_iconCarrier">
                                     {" "}
@@ -184,7 +183,7 @@ const Sidebar = () => {
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
-                            <IconContext.Provider value={{ size: "1em" }} >
+                            <IconContext.Provider value={{ size: "1.3em" }}>
                                 <BsBoxSeam />
                             </IconContext.Provider>
                             <span className="ml-2">Products</span>
@@ -197,7 +196,7 @@ const Sidebar = () => {
                                     : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
                             }
                         >
-                            <IconContext.Provider value={{ size: "1.3em" }} >
+                            <IconContext.Provider value={{ size: "1.3em" }}>
                                 <BsBagHeart />
                             </IconContext.Provider>
                             <span className="ml-2">Wishlist</span>

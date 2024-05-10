@@ -40,13 +40,13 @@ function Wishlist() {
                             <svg
                                 className="text-gray-500 h-3 w-3 absolute top-2.5 right-2.5 fill-current"
                                 xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xmlnsXlink="http://www.w3.org/1999/xlink"
                                 version="1.1"
                                 x="0px"
                                 y="0px"
                                 viewBox="0 0 56.966 56.966"
                                 contentStyleType="enable-background:new 0 0 56.966 56.966;"
-                                xml:space="preserve"
+                                xmlSpace="preserve"
                             >
                                 <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"></path>
                             </svg>
@@ -59,14 +59,14 @@ function Wishlist() {
                         viewBox="0 0 24 24"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
                         fill="#000000"
                     >
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                         <g
                             id="SVGRepo_tracerCarrier"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         ></g>
                         <g id="SVGRepo_iconCarrier">
                             {" "}
@@ -74,16 +74,16 @@ function Wishlist() {
                             <g
                                 id="Page-1"
                                 stroke="none"
-                                stroke-width="1"
+                                strokeWidth="1"
                                 fill="none"
-                                fill-rule="evenodd"
+                                fillRule="evenodd"
                             >
                                 {" "}
                                 <g id="Filter">
                                     {" "}
                                     <rect
                                         id="Rectangle"
-                                        fill-rule="nonzero"
+                                        fillRule="nonzero"
                                         x="0"
                                         y="0"
                                         width="24"
@@ -98,8 +98,8 @@ function Wishlist() {
                                         y2="5"
                                         id="Path"
                                         stroke="#5f5f5f"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
                                     >
                                         {" "}
                                     </line>{" "}
@@ -110,8 +110,8 @@ function Wishlist() {
                                         y2="12"
                                         id="Path"
                                         stroke="#5f5f5f"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
                                     >
                                         {" "}
                                     </line>{" "}
@@ -122,8 +122,8 @@ function Wishlist() {
                                         y2="12"
                                         id="Path"
                                         stroke="#5f5f5f"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
                                     >
                                         {" "}
                                     </line>{" "}
@@ -134,16 +134,16 @@ function Wishlist() {
                                         y2="19"
                                         id="Path"
                                         stroke="#5f5f5f"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
                                     >
                                         {" "}
                                     </line>{" "}
                                     <circle
                                         id="Oval"
                                         stroke="#5f5f5f"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
                                         cx="18"
                                         cy="5"
                                         r="2"
@@ -153,8 +153,8 @@ function Wishlist() {
                                     <circle
                                         id="Oval"
                                         stroke="#5f5f5f"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
                                         cx="12"
                                         cy="12"
                                         r="2"
@@ -164,8 +164,8 @@ function Wishlist() {
                                     <circle
                                         id="Oval"
                                         stroke="#5f5f5f"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
                                         cx="6"
                                         cy="19"
                                         r="2"

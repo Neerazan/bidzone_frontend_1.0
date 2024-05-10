@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector } from "react-redux"
 
-import { LoginBtn, RegisterBtn, Logo, SearchBox, Wishlist, Balance, Dropdown, Container, Notification } from "../index"
+import { LoginRegisterBtn, Logo, SearchBox, Wishlist, Balance, Dropdown, Container, Notification } from "../index"
 
 function Header() {
     const authStatus = useSelector((state) => state.auth.status)
@@ -14,8 +14,7 @@ function Header() {
                     <SearchBox />
                     <nav className="">
                         <ul className="xl:w-auto flex gap-6 items-center justify-center">
-                            {!authStatus && <LoginBtn />}
-                            {!authStatus && <RegisterBtn />}
+                            {!authStatus && <LoginRegisterBtn />}
                             {authStatus && <Notification />}
                             <Wishlist />
                             {authStatus && <Dropdown />}
