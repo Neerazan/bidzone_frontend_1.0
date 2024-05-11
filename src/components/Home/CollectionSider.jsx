@@ -1,10 +1,17 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchCollections } from "../../store/common/collectionSlice";
+import { useDispatch } from "react-redux";
 
 
 function CollectionSider() {
+    const dispatch = useDispatch();
 
     const data = useSelector((state) => state.collection.collections)
+
+    if (!data || data.length === 0) {
+        dispatch(fetchCollections());
+    }
 
     return (
         <div className="col-span-1 bg-white mt-5 rounded-md shadow-md">

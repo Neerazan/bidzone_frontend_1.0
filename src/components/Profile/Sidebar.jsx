@@ -12,7 +12,7 @@ const Sidebar = () => {
     const accessKey = useSelector((state) => state.auth.accessKey)
     const dispatch = useDispatch()
 
-    if (!balance)  dispatch(fetchBalance({accessKey, customer_id: user.id}))
+    if (!balance && user)  dispatch(fetchBalance({accessKey, customer_id: user.id}))
 
     return (
         <div className="flex flex-row min-h-[90vh] h-full">
@@ -31,7 +31,7 @@ const Sidebar = () => {
                         {user ? (
                             <div className="flex justify-center mb-3">
                                 <div className="w-14 h-14 rounded-full bg-cyan-500 text-white flex items-center text-2xl justify-center">
-                                    {user.first_name[0]}
+                                    {user?.first_name[0]}
                                 </div>
                             </div>
                         ) : (

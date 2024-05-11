@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { RTE, Input, Button, Select } from "../index"
-import { useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 import { useMutation } from "react-query"
+import { fetchCollections } from "../../store/common/collectionSlice"
 
 function AddProduct({ product }) {
+    const dispatch = useDispatch()
     const accessKey = useSelector((state) => state.auth.accessKey)
     const user = useSelector((state) => state.auth.userData)
     const collections = useSelector((state) => state.collection.collections)
-    const navigate = useNavigate()
+
+    if(!collections || collections.length === 0) {
+        dispatch(fetchCollections())
+    }
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === "string") {
