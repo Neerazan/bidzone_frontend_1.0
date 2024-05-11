@@ -25,17 +25,15 @@ function Wishlist() {
     // const { data, isLoading, isError } = useQuery(["wishlist", wishlistId], () => wishlistId ? wishlistData(wishlistId) : undefined);
 
     useEffect(() => {
-        if (data) {
-            dispatch(fetchWishlistData(wishlistId));
-        }
+        dispatch(fetchWishlistData(wishlistId));
     }, [wishlistId, dispatch]);
 
-
-    if (!wishlistId) return <div>No wishlist ID found. Please set a wishlist ID.</div>;
+    // if (!wishlistId) return <div>No wishlist ID found. Please set a wishlist ID.</div>;
     // if (isLoading) return <div>Loading...</div>;
     // if (isError) return <div>Error fetching wishlist data. Please try again later.</div>;
 
     const data = useSelector((state) => state.wishlist.wishlists);
+
 
     return (
         <li className="relative inline-block">

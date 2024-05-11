@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { ErrorMessage } from "@hookform/error-message"
 import { authenticateUser } from "../AuthService"
 import { signup } from "../../store/authSlice"
+import { Link } from "react-router-dom"
 
 import { Input } from "../index"
+import { useEffect } from "react"
 
 function Login() {
     const navigate = useNavigate()
@@ -17,23 +19,28 @@ function Login() {
     } = useForm()
 
     const sliceError = useSelector((state) => state.auth.error)
-    const accessToken = useSelector((state) => state.auth.accessKey)
+    const accessToken = useSelector((state) => state.auth.accessKey);
+
+    useEffect(() => {
+        const handleLogin = async (data) => {
+            if (accessToken) {
+                localStorage.setItem("accessToken", JSON.stringify(accessToken));
+                await authenticateUser(accessToken, dispatch);
+                navigate("/");
+            }
+        }
+        handleLogin();
+    }, [accessToken, dispatch, navigate]);
+
 
     const login = async (data) => {
-
         const username = data.username
         const password = data.password
 
         try {
-            await dispatch(signup({username, password}));
-
-            if (accessToken) {
-                localStorage.setItem("accessToken", JSON.stringify(accessToken))
-                await authenticateUser(accessToken, dispatch)
-                navigate("/")
-            }
+            await dispatch(signup({ username, password }))
         } catch (error) {
-            console.log("Error", error)
+            console.log("Error: ", error)   
         }
     }
 
@@ -170,12 +177,12 @@ function Login() {
                             </button>
                             <p className="text-sm font-light text-gray-800">
                                 Don’t have an account yet?{" "}
-                                <a
-                                    href="#"
+                                <Link
+                                    to="/register"
                                     className="font-medium text-gray-800 hover:underline"
                                 >
                                     Sign up
-                                </a>
+                                </Link>
                             </p>
                         </form>
                     </div>
