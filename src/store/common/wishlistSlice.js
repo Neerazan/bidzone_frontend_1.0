@@ -1,9 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 
 const initialState = {
     wishlists: [],
+    loading: false,
+    error: null,
 }
+
+export const fetchWishlistData = createAsyncThunk(
+    "wishlist/fetchWishlistData",
+    async (wishlistId) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`)
+
+            return response.data
+        } catch (error) {
+            console.error("Error fetching wishlist data:", error)
+        }
+
+    }
+)
+
 
 const wishlistSlice = createSlice({
     name: "wishlist",
@@ -27,22 +44,25 @@ const wishlistSlice = createSlice({
             state.wishlists = []
         },
     },
+
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchWishlistData.fulfilled, (state, action) => {
+                state.wishlists = action.payload.results
+                state.loading = false
+                state.error = null
+            }) 
+            .addCase(fetchWishlistData.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(fetchWishlistData.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message
+            })
+    }
 })
 
 
 export const { setWishlist, addToWishlist, removeFromWishlist, clearWishlist } = wishlistSlice.actions
-
-
-export const fetchWishlistData = (wishlistId) => async (dispatch) => {
-    try {
-        const response = await axios.get(
-            `http://127.0.0.1:8000/auction/wishlists/${wishlistId}/items/`
-        )
-        dispatch(setWishlist(response.data.results))
-    } catch (error) {
-        console.error("Error fetching wishlist data:", error)
-    }
-}
-
 
 export default wishlistSlice.reducer
