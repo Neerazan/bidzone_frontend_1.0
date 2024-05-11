@@ -1,21 +1,27 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import axios from "axios"
 
-export const signup = createAsyncThunk('auth/signup', async ({ username, password }) => {
-    try {
-        const response = await axios.post("http://127.0.0.1:8000/auth/jwt/create/", {
-            username,
-            password,
-        })
+export const signup = createAsyncThunk(
+    "auth/signup",
+    async ({ username, password }) => {
+        try {
+            const response = await axios.post(
+                "http://127.0.0.1:8000/auth/jwt/create/",
+                {
+                    username,
+                    password,
+                }
+            )
 
-        const { access, refresh } = response.data
+            const { access, refresh } = response.data
 
-        return { access, refresh }
-    } catch (error) {
-        console.log(error);
+            return { access, refresh }
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return rejectWithValue("Unauthorized: Incorrect username or password.");
+        }
     }
-})
-
+)
 
 const initialState = {
     status: false,
@@ -37,7 +43,7 @@ const authSlice = createSlice({
         },
 
         logout: (state) => {
-            state.userData = ''
+            state.userData = ""
             state.status = false
             state.loading = false
             state.accessKey = null
@@ -53,16 +59,17 @@ const authSlice = createSlice({
                 state.error = null
             })
             .addCase(signup.pending, (state) => {
+                state.error = null
                 state.loading = true
-            }) 
-            .addCase(signup.rejected, (state, action) => {
-                state.loading = false
-                state.status = false
-                state.error = action.error.message
             })
-    }
+            .addCase(signup.rejected, (state, action) => {
+                state.loading = false;
+                state.status = false;
+                state.accessKey = null;
+                state.error = action.payload ? action.payload : "Incorrect username or password.";
+            })
+    },
 })
-
 
 export const { login, logout } = authSlice.actions
 export default authSlice.reducer

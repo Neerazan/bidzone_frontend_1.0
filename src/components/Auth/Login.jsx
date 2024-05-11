@@ -1,8 +1,6 @@
-import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
-import axios from "axios"
 import { ErrorMessage } from "@hookform/error-message"
 import { authenticateUser } from "../AuthService"
 import { signup } from "../../store/authSlice"
@@ -18,7 +16,7 @@ function Login() {
         formState: { errors },
     } = useForm()
 
-    const error = useSelector((state) => state.auth.error)
+    const sliceError = useSelector((state) => state.auth.error)
     const accessToken = useSelector((state) => state.auth.accessKey)
 
     const login = async (data) => {
@@ -28,39 +26,15 @@ function Login() {
 
         try {
             await dispatch(signup({username, password}));
-            console.log(`Error: ${error}`);
+
             if (accessToken) {
                 localStorage.setItem("accessToken", JSON.stringify(accessToken))
                 await authenticateUser(accessToken, dispatch)
                 navigate("/")
             }
         } catch (error) {
-            console.log("Error occurred during signup:", error);
+            console.log("Error", error)
         }
-
-
-        // try {
-        //     const response = await axios.post(
-        //         "http://127.0.0.1:8000/auth/jwt/create/",
-        //         {
-        //             username: data.username,
-        //             password: data.password,
-        //         }
-        //     )
-
-        //     const { access, refresh } = response.data
-
-        //     localStorage.setItem("accessToken", JSON.stringify(access))
-        //     localStorage.setItem("refreshToken", JSON.stringify(refresh))
-
-        //     if (access) {
-        //         authenticateUser(access, dispatch)
-        //     }
-
-        //     navigate("/")
-        // } catch (error) {
-        //     setError("Failed to login. Please check your credentials.")
-        // }
     }
 
     return (
@@ -157,8 +131,8 @@ function Login() {
                                 </div>
                             </div>
                             <div className="h-2">
-                                {error && (
-                                    <p className="text-sm text-red-600">{error}</p>
+                                {sliceError && (
+                                    <p className="text-sm text-red-600">{sliceError}</p>
                                 )}
                             </div>
                             <div className="flex items-center justify-between">
