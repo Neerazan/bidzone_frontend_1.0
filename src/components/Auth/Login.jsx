@@ -1,12 +1,13 @@
 import React, { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { ErrorMessage } from "@hookform/error-message"
 import { authenticateUser } from "../AuthService"
+import { signup } from "../../store/authSlice"
 
-import { Input, Button } from "../index"
+import { Input } from "../index"
 
 function Login() {
     const navigate = useNavigate()
@@ -16,32 +17,50 @@ function Login() {
         handleSubmit,
         formState: { errors },
     } = useForm()
-    const [error, setError] = useState("")
+
+    const error = useSelector((state) => state.auth.error)
+    const accessToken = useSelector((state) => state.auth.accessKey)
 
     const login = async (data) => {
-        setError("")
+
+        const username = data.username
+        const password = data.password
+
         try {
-            const response = await axios.post(
-                "http://127.0.0.1:8000/auth/jwt/create/",
-                {
-                    username: data.username,
-                    password: data.password,
-                }
-            )
-
-            const { access, refresh } = response.data
-
-            localStorage.setItem("accessToken", JSON.stringify(access))
-            localStorage.setItem("refreshToken", JSON.stringify(refresh))
-
-            if (access) {
-                authenticateUser(access, dispatch)
+            await dispatch(signup({username, password}));
+            console.log(`Error: ${error}`);
+            if (accessToken) {
+                localStorage.setItem("accessToken", JSON.stringify(accessToken))
+                await authenticateUser(accessToken, dispatch)
+                navigate("/")
             }
-
-            navigate("/")
         } catch (error) {
-            setError("Failed to login. Please check your credentials.")
+            console.log("Error occurred during signup:", error);
         }
+
+
+        // try {
+        //     const response = await axios.post(
+        //         "http://127.0.0.1:8000/auth/jwt/create/",
+        //         {
+        //             username: data.username,
+        //             password: data.password,
+        //         }
+        //     )
+
+        //     const { access, refresh } = response.data
+
+        //     localStorage.setItem("accessToken", JSON.stringify(access))
+        //     localStorage.setItem("refreshToken", JSON.stringify(refresh))
+
+        //     if (access) {
+        //         authenticateUser(access, dispatch)
+        //     }
+
+        //     navigate("/")
+        // } catch (error) {
+        //     setError("Failed to login. Please check your credentials.")
+        // }
     }
 
     return (

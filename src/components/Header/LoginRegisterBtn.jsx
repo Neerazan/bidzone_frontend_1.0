@@ -5,7 +5,7 @@ import { IconContext } from "react-icons";
 
 function LoginRegisterBtn() {
     return (
-        <li className="ml-2 lg:ml-4 relative inline-block">
+        <li className="relative inline-block">
             <div className="flex text-gray-300">
                 <NavLink className="flex hover:text-red-600" to="/login">
                     <IconContext.Provider value={{ size: "1.5em" }}>

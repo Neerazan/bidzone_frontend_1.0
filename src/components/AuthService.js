@@ -2,6 +2,7 @@ import axios from "axios";
 import { login } from "../store/authSlice";
 
 export async function authenticateUser(accessToken, dispatch) {
+    console.log(">>>>>>>>>>>>:: Inslide auth service");
     try {
         const response = await axios.get(
             "http://127.0.0.1:8000/auth/users/me/",
@@ -16,7 +17,8 @@ export async function authenticateUser(accessToken, dispatch) {
             dispatch(
                 login({
                     userData: response.data,
-                    accessKey: accessToken,
+                    // accessKey: accessToken,
+                    status: true,
                 })
             );
         }
