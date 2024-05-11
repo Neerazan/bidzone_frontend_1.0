@@ -20,7 +20,7 @@ function Dropdown() {
                 <button
                     type="button"
                     data-dropdown-toggle="profile-dropdown-menu"
-                    className="inline-flex items-center font-medium justify-center px-3 text-sm text-gray-100 rounded-full cursor-pointer border-2 py-[5px] border-gray-200 gap-2"
+                    className="inline-flex items-center font-medium justify-center px-3 text-sm text-gray-100 rounded-full cursor-pointer border py-[5px] border-gray-200 gap-2"
                     onClick={toggleDropdown}
                 >
                     <IconContext.Provider value={{ size: "1.3em", className: "text-gray-200" }}>
