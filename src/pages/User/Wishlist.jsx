@@ -181,6 +181,7 @@ function Wishlist() {
                     <span>Add New Products</span>
                 </div>
             </div>
+            
             <div className="mt-2 flex flex-col gap-4 overflow-y-scroll h-[90vh] p-4 bg-white rounded-md">
                 {data?.map((item) => (
                     <div
