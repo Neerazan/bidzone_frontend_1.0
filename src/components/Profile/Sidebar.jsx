@@ -207,19 +207,7 @@ const Sidebar = () => {
                             </IconContext.Provider>
                             <span className="ml-2">Wishlist</span>
                         </NavLink>
-                        <NavLink
-                            to="#"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100 flex items-center"
-                                    : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
-                            }
-                        >
-                            <IconContext.Provider value={{ size: "1.3em" }}>
-                                <BsBagHeart />
-                            </IconContext.Provider>
-                            <span className="ml-2">Add Product</span>
-                        </NavLink>
+                        
                         {/* Add more navigation links as needed */}
                     </div>
                 </div>
