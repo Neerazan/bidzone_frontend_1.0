@@ -7,17 +7,24 @@ import { IconContext } from "react-icons"
 import { useState } from "react"
 import { set, useForm } from "react-hook-form"
 
-import { Input } from "../../components/index"
-
 function QnA() {
     const [askQuestion, setAskQuestion] = useState(false)
+    const [replyQuestion, setReplyQuestion] = useState(false)
+    
     const { register, handleSubmit } = useForm()
 
     const handleQuestionSubmit = (data) => {
         alert(data.question)
         setTimeout(() => {
             setAskQuestion(!askQuestion)
-        }, 2000);
+        }, 2000)
+    }
+
+    const handleAnswerSubmit = (data) => {
+        alert(data.answer)
+        setTimeout(() => {
+            setReplyQuestion(!replyQuestion)
+        }, 2000)
     }
 
     return (
@@ -73,7 +80,10 @@ function QnA() {
             </div>
 
             {askQuestion && (
-                <form onSubmit={handleSubmit(handleQuestionSubmit)} className="my-4">
+                <form
+                    onSubmit={handleSubmit(handleQuestionSubmit)}
+                    className="my-4"
+                >
                     <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4 px-8">
                         <label htmlFor="auction_question"></label>
                         <textarea
@@ -146,19 +156,44 @@ function QnA() {
                                     No(0)
                                 </label>
                             </div>
-                            <button className="px-3 py-1 bg-blue-200 rounded-sm text-blue-800 hidden">
+                            <button 
+                                className="px-3 py-1 bg-blue-200 rounded-md text-blue-800 flex"
+                                onClick={() => setReplyQuestion(!replyQuestion)}    
+                            >
                                 <IconContext.Provider
                                     value={{
-                                        className: "text-blue-800",
-                                        size: "1.5em",
+                                        className: "text-blue-800 mt-0.5",
                                     }}
                                 >
                                     <BsReply />
                                 </IconContext.Provider>
-                                <span className="ml-1">Reply</span>
+                                <span className="ml-1 text-sm">Reply</span>
                             </button>
                         </div>
                     </div>
+                    {replyQuestion && (
+                        <div>
+                            <form
+                                onSubmit={handleSubmit(handleAnswerSubmit)}
+                                className="my-4"
+                            >
+                                <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4">
+                                    <label htmlFor="auction_question_answer"></label>
+                                    <textarea
+                                        id="auction_question_answer"
+                                        className="border border-gray-400 w-full px-4 py-2 focus:ring-[1px] focus:ring-blue-400 focus:border-transparent focus:outline-none"
+                                        placeholder="Answer the question here..."
+                                        {...register("answer")}
+                                    ></textarea>
+                                </div>
+                                <div className="w-full flex">
+                                    <button className="px-4 rounded-sm text-green-700 border border-green-600 my-2 hover:bg-green-600 hover:text-white pb-0.5">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    )}
                 </div>
 
                 {/* Answer Container */}
@@ -273,19 +308,44 @@ function QnA() {
                                     No(0)
                                 </label>
                             </div>
-                            <button className="px-3 py-1 bg-blue-200 rounded-sm text-blue-800 hidden">
+                            <button
+                                className="px-3 py-1 bg-blue-200 rounded-md text-blue-800 flex"
+                                onClick={() => setReplyQuestion(!replyQuestion)}
+                            >
                                 <IconContext.Provider
                                     value={{
-                                        className: "text-blue-800",
-                                        size: "1.5em",
+                                        className: "text-blue-800 mt-0.5",
                                     }}
                                 >
                                     <BsReply />
                                 </IconContext.Provider>
-                                <span className="ml-1">Reply</span>
+                                <span className="ml-1 text-sm">Reply</span>
                             </button>
                         </div>
                     </div>
+                    {replyQuestion && (
+                        <div>
+                            <form
+                                onSubmit={handleSubmit(handleAnswerSubmit)}
+                                className="my-4"
+                            >
+                                <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4">
+                                    <label htmlFor="auction_question_answer"></label>
+                                    <textarea
+                                        id="auction_question_answer"
+                                        className="border border-gray-400 w-full px-4 py-2 focus:ring-[1px] focus:ring-blue-400 focus:border-transparent focus:outline-none"
+                                        placeholder="Answer the question here..."
+                                        {...register("answer")}
+                                    ></textarea>
+                                </div>
+                                <div className="w-full flex">
+                                    <button className="px-4 rounded-sm text-green-700 border border-green-600 my-2 hover:bg-green-600 hover:text-white pb-0.5">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    )}
                 </div>
 
                 {/* Answer Container */}
