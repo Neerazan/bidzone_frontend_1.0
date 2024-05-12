@@ -37,6 +37,7 @@ import Profile from "./Profile/Profile"
 import Auctions from "./Seller/Auctions"
 import Products from "./Seller/Products"
 import LoginRegisterBtn from "./Header/LoginRegisterBtn"
+import QnA from "./Product/QnA"
 
 
 export {
@@ -79,4 +80,5 @@ export {
     Auctions,
     Products,
     LoginRegisterBtn,
+    QnA,
 }

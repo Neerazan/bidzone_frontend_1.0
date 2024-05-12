@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import axiosInstance from '../components/Product/AxiosInstance'
 
-import { Container, ProductImages, ProductInfo, BidHistory } from '../components'
+import { Container, ProductImages, ProductInfo, BidHistory, QnA } from '../components'
 
 function Product() {
     const { slug } = useParams()
@@ -58,6 +58,9 @@ function Product() {
                 <ProductImages data={auctionDetails} />
                 <ProductInfo data={auctionDetails} bidsData={bids}/>
                 <BidHistory data={bids} isLoading={bidsLoading}/>
+            </section>
+            <section className="grid grid-cols-1 lg:grid-cols-5 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
+                <QnA />
             </section>
         </Container>
     )
