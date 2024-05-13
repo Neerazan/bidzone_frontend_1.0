@@ -7,8 +7,13 @@ import { IconContext } from "react-icons"
 import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchQnAData } from "../../store/Auction/QnASlice"
+import { useQuery, useMutation } from "react-query"
+import axios from "axios"
+
+
+import { addQuestion } from "../../store/Auction/QnASlice"
 import { FormattedDate } from "../index"
+import { fetchQnAData } from "../../store/Auction/QnASlice"
 
 function QnA({ auctionId, seller_name }) {
     const [askQuestion, setAskQuestion] = useState(false)
@@ -18,13 +23,56 @@ function QnA({ auctionId, seller_name }) {
     const dispatch = useDispatch()
 
     const qnas = useSelector((state) => state.qna.qnas)
+    const accessKey = useSelector((state) => state.auth.accessKey)
+
+
+
+
+    const AddQuestionMutation = useMutation(
+        async ({ auctionId, data, accessKey }) => {
+            console.log("Inside addquestionmutattion function");
+            try {
+                const response = await axios.post(
+                    `http://localhost:8000/auction/auctions/${auctionId}/questions/`,
+                    data,
+                    {
+                        headers: {
+                            Authorization: `JWT ${accessKey}`,
+                        },
+                    }
+                )
+                return response.data
+            } catch (error) {
+                console.error("Error adding question:", error)
+            }
+        }
+    )
+
+
+
 
     const handleQuestionSubmit = (data) => {
-        alert(data.question)
-        setTimeout(() => {
-            setAskQuestion(!askQuestion)
-        }, 2000)
+        const formData = new FormData()
+        formData.append("question", data.question)
+
+        AddQuestionMutation.mutate({
+            auctionId,
+            data: formData,
+            accessKey,
+        }, {
+            onSuccess: (data) => {
+                dispatch(addQuestion(data))
+                setAskQuestion(!askQuestion)
+            },
+            onError: (error) => {
+                console.log("Error adding question:", error);
+            }
+        })
+
     }
+
+
+
 
     const handleAnswerSubmit = (data) => {
         alert(data.answer)
@@ -33,10 +81,16 @@ function QnA({ auctionId, seller_name }) {
         }, 2000)
     }
 
+
+
+
     useEffect(() => {
-        console.log("Hello world this is test of rendring")
         dispatch(fetchQnAData(auctionId))
     }, [])
+
+
+
+
 
     return (
         <div className="col-span-4 pb-4">
@@ -100,7 +154,7 @@ function QnA({ auctionId, seller_name }) {
                         className="my-4"
                     >
                         <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4 px-8">
-                            <label htmlhtmlFor="auction_question"></label>
+                            <label htmlFor="auction_question"></label>
                             <textarea
                                 id="auction_question"
                                 className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:border-blue-500"
@@ -133,7 +187,8 @@ function QnA({ auctionId, seller_name }) {
                             </div>
                             <div className="flex gap-3 ">
                                 <div className="font-bold">
-                                    {qna.customer.first_name}{" "}{qna.customer.last_name}
+                                    {qna.customer.first_name}{" "}
+                                    {qna.customer.last_name}
                                 </div>
                                 <div className="font-semibold text-sm text-gray-500">
                                     <FormattedDate date={qna.updated_at} />
@@ -231,7 +286,10 @@ function QnA({ auctionId, seller_name }) {
                         {/* Answer Container */}
                         {qna.answers &&
                             qna.answers.map((answer) => (
-                                <div className="p-4 border border-gray-300 rounded-md mt-2 w-11/12 ml-auto" key={answer.id}>
+                                <div
+                                    className="p-4 border border-gray-300 rounded-md mt-2 w-11/12 ml-auto"
+                                    key={answer.id}
+                                >
                                     <div className="bg-green-200 px-2 text-green-700 rounded-sm font-semibold text-sm gap-1 inline-flex pb-0.5">
                                         <IconContext.Provider
                                             value={{

@@ -27,11 +27,11 @@ const qnaSlice = createSlice({
     initialState,
     reducers: {
         addQuestion: (state, action) => {
-
+            state.qnas.push(action.payload)
         },
 
         addAnswer: (state, action) => {
-
+            
         },
 
         deleteQuestion: (state, action) => {
