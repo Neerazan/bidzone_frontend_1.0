@@ -101,7 +101,7 @@ function WishListBtn({ data, auctionId }) {
             <Link className="mr-auto text-sky-600 font-semibold text-sm italic hover:underline">
                 11 Questions Answered{" "}
             </Link>
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-end gap-4">
                 <button
                     className={`rounded-full w-7 h-7 p-0 border-0 inline-flex items-center justify-center ${
                         inWishlist ? "text-rose-500" : "text-gray-500"

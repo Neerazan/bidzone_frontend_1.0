@@ -4,14 +4,20 @@ import { FaRegQuestionCircle } from "react-icons/fa"
 import { MdOutlineQuestionAnswer } from "react-icons/md"
 import { BsReply } from "react-icons/bs"
 import { IconContext } from "react-icons"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchQnAData } from "../../store/Auction/QnASlice"
+import { FormattedDate } from "../index"
 
-function QnA() {
+function QnA({ auctionId, seller_name }) {
     const [askQuestion, setAskQuestion] = useState(false)
     const [replyQuestion, setReplyQuestion] = useState(false)
 
     const { register, handleSubmit } = useForm()
+    const dispatch = useDispatch()
+
+    const qnas = useSelector((state) => state.qna.qnas)
 
     const handleQuestionSubmit = (data) => {
         alert(data.question)
@@ -27,12 +33,17 @@ function QnA() {
         }, 2000)
     }
 
+    useEffect(() => {
+        console.log("Hello world this is test of rendring")
+        dispatch(fetchQnAData(auctionId))
+    }, [])
+
     return (
         <div className="col-span-4 pb-4">
             <div className="bg-white h-auto w-auto flex flex-col md:flex-row items-center rounded-md mt-4 px-8 mb-4">
                 <div className="mr-auto">
                     <h4 className="text-xl text-gray-600 font-bold">
-                        Questions (147)
+                        Questions ({qnas?.length})
                     </h4>
                 </div>
 
@@ -89,7 +100,7 @@ function QnA() {
                         className="my-4"
                     >
                         <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4 px-8">
-                            <label htmlFor="auction_question"></label>
+                            <label htmlhtmlFor="auction_question"></label>
                             <textarea
                                 id="auction_question"
                                 className="border border-gray-400 w-full px-4 py-2 focus:ring-[1px] focus:ring-blue-400 focus:border-transparent focus:outline-none"
@@ -107,173 +118,190 @@ function QnA() {
             </div>
 
             {/* QNA Container */}
-            <div className="px-4 mx-4 mb-8">
-                {/* Question Container */}
-                <div className="p-4 border border-gray-300 rounded-md">
-                    <div className="bg-blue-200 px-2 text-blue-700 rounded-sm font-semibold text-sm gap-1 inline-flex pb-0.5">
-                        <IconContext.Provider
-                            value={{ className: "text-blue-700 mt-1" }}
-                        >
-                            <FaRegQuestionCircle />
-                        </IconContext.Provider>
-                        <span>Question</span>
-                    </div>
-                    <div className="flex gap-3 ">
-                        <div className="font-bold">Michael Gough</div>
-                        <div className="font-semibold text-sm text-gray-500">
-                            November 20, 2023 at 12:00 PM
-                        </div>
-                    </div>
-                    <div className="font-semibold text-gray-500 mt-2">
-                        The specs say this model has 2 USB ports. The one I
-                        received has none. Are they hidden somewhere?
-                    </div>
-                    <div className="mt-2 font-semibold text-gray-500 flex">
-                        <div>I have the same question</div>
-                        <div class="flex ml-4">
-                            <div class="flex items-center me-4">
-                                <input
-                                    id="inline-radio"
-                                    type="radio"
-                                    value=""
-                                    name="inline-radio-group"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                />
-                                <label
-                                    for="inline-radio"
-                                    class="ms-2 text-sm text-gray-800 font-semibold"
-                                >
-                                    Yes(8)
-                                </label>
-                            </div>
-                            <div class="flex items-center me-4">
-                                <input
-                                    id="inline-2-radio"
-                                    type="radio"
-                                    value=""
-                                    name="inline-radio-group"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
-                                />
-                                <label
-                                    for="inline-2-radio"
-                                    class="ms-2 text-sm text-gray-800 font-semibold"
-                                >
-                                    No(0)
-                                </label>
-                            </div>
-                            <button
-                                className="px-3 py-1 bg-blue-200 rounded-md text-blue-800 flex"
-                                onClick={() => setReplyQuestion(!replyQuestion)}
-                            >
+            {qnas &&
+                qnas?.map((qna) => (
+                    <div className="px-4 mx-4 mb-8" key={qna.id}>
+                        {/* Question Container */}
+                        <div className="p-4 border border-gray-300 rounded-md">
+                            <div className="bg-blue-200 px-2 text-blue-700 rounded-sm font-semibold text-sm gap-1 inline-flex pb-0.5">
                                 <IconContext.Provider
-                                    value={{
-                                        className: "text-blue-800 mt-0.5",
-                                    }}
+                                    value={{ className: "text-blue-700 mt-1" }}
                                 >
-                                    <BsReply />
+                                    <FaRegQuestionCircle />
                                 </IconContext.Provider>
-                                <span className="ml-1 text-sm">Reply</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div
-                        className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                            replyQuestion ? "max-h-64" : "max-h-0"
-                        }`}
-                    >
-                        {replyQuestion && (
-                            <div>
-                                <form
-                                    onSubmit={handleSubmit(handleAnswerSubmit)}
-                                    className="my-4"
-                                >
-                                    <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4">
-                                        <label htmlFor="auction_question_answer"></label>
-                                        <textarea
-                                            id="auction_question_answer"
-                                            className="border border-gray-400 w-full px-4 py-2 focus:ring-[1px] focus:ring-blue-400 focus:border-transparent focus:outline-none"
-                                            placeholder="Answer the question here..."
-                                            {...register("answer")}
-                                        ></textarea>
-                                    </div>
-                                    <div className="w-full flex">
-                                        <button className="px-4 rounded-sm text-green-700 border border-green-600 my-2 hover:bg-green-600 hover:text-white pb-0.5 transition ease-in-out duration-500">
-                                            Submit
-                                        </button>
-                                    </div>
-                                </form>
+                                <span>Question</span>
                             </div>
-                        )}
-                    </div>
-                </div>
+                            <div className="flex gap-3 ">
+                                <div className="font-bold">
+                                    {qna.customer.first_name}{" "}{qna.customer.last_name}
+                                </div>
+                                <div className="font-semibold text-sm text-gray-500">
+                                    <FormattedDate date={qna.updated_at} />
+                                </div>
+                            </div>
+                            <div className="font-semibold text-gray-500 mt-2">
+                                {qna.question}
+                            </div>
+                            <div className="mt-2 font-semibold text-gray-500 flex">
+                                <div>I have the same question</div>
+                                <div className="flex ml-4">
+                                    <div className="flex items-center me-4">
+                                        <input
+                                            id="inline-radio"
+                                            type="radio"
+                                            value=""
+                                            name="inline-radio-group"
+                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                        />
+                                        <label
+                                            htmlFor="inline-radio"
+                                            className="ms-2 text-sm text-gray-800 font-semibold"
+                                        >
+                                            Yes(8)
+                                        </label>
+                                    </div>
+                                    <div className="flex items-center me-4">
+                                        <input
+                                            id="inline-2-radio"
+                                            type="radio"
+                                            value=""
+                                            name="inline-radio-group"
+                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                        />
+                                        <label
+                                            htmlFor="inline-2-radio"
+                                            className="ms-2 text-sm text-gray-800 font-semibold"
+                                        >
+                                            No(0)
+                                        </label>
+                                    </div>
+                                    <button
+                                        className="px-3 py-1 bg-blue-200 rounded-md text-blue-800 flex"
+                                        onClick={() =>
+                                            setReplyQuestion(!replyQuestion)
+                                        }
+                                    >
+                                        <IconContext.Provider
+                                            value={{
+                                                className:
+                                                    "text-blue-800 mt-0.5",
+                                            }}
+                                        >
+                                            <BsReply />
+                                        </IconContext.Provider>
+                                        <span className="ml-1 text-sm">
+                                            Reply
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                                    replyQuestion ? "max-h-64" : "max-h-0"
+                                }`}
+                            >
+                                {replyQuestion && (
+                                    <div>
+                                        <form
+                                            onSubmit={handleSubmit(
+                                                handleAnswerSubmit
+                                            )}
+                                            className="my-4"
+                                        >
+                                            <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4">
+                                                <label htmlhtmlFor="auction_question_answer"></label>
+                                                <textarea
+                                                    id="auction_question_answer"
+                                                    className="border border-gray-400 w-full px-4 py-2 focus:ring-[1px] focus:ring-blue-400 focus:border-transparent focus:outline-none"
+                                                    placeholder="Answer the question here..."
+                                                    {...register("answer")}
+                                                ></textarea>
+                                            </div>
+                                            <div className="w-full flex">
+                                                <button className="px-4 rounded-sm text-green-700 border border-green-600 my-2 hover:bg-green-600 hover:text-white pb-0.5 transition ease-in-out duration-500">
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
 
-                {/* Answer Container */}
-                <div className="p-4 border border-gray-300 rounded-md mt-2 w-11/12 ml-auto">
-                    <div className="bg-green-200 px-2 text-green-700 rounded-sm font-semibold text-sm gap-1 inline-flex pb-0.5">
-                        <IconContext.Provider
-                            value={{ className: "text-green-700 mt-1" }}
-                        >
-                            <MdOutlineQuestionAnswer />
-                        </IconContext.Provider>
-                        <span>Answer</span>
+                        {/* Answer Container */}
+                        {qna.answers &&
+                            qna.answers.map((answer) => (
+                                <div className="p-4 border border-gray-300 rounded-md mt-2 w-11/12 ml-auto" key={answer.id}>
+                                    <div className="bg-green-200 px-2 text-green-700 rounded-sm font-semibold text-sm gap-1 inline-flex pb-0.5">
+                                        <IconContext.Provider
+                                            value={{
+                                                className:
+                                                    "text-green-700 mt-1",
+                                            }}
+                                        >
+                                            <MdOutlineQuestionAnswer />
+                                        </IconContext.Provider>
+                                        <span>Answer</span>
+                                    </div>
+                                    <div className="flex gap-3 ">
+                                        <div className="font-bold">
+                                            {seller_name}
+                                        </div>
+                                        <div className="font-semibold text-sm text-gray-500">
+                                            {answer.updated_at}
+                                        </div>
+                                    </div>
+                                    <div className="font-semibold text-gray-500 mt-2">
+                                        {answer.answer}
+                                    </div>
+                                    <div className="mt-2 font-semibold text-gray-500 flex">
+                                        <div>Was it helpful to you?</div>
+                                        <div className="flex ml-4">
+                                            <div className="flex items-center me-4">
+                                                <input
+                                                    id="inline-radio"
+                                                    type="radio"
+                                                    value=""
+                                                    name="inline-radio-group"
+                                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
+                                                />
+                                                <label
+                                                    htmlFor="inline-radio"
+                                                    className="ms-2 text-sm text-gray-800 font-semibold"
+                                                >
+                                                    Yes(5)
+                                                </label>
+                                            </div>
+                                            <div className="flex items-center me-4">
+                                                <input
+                                                    id="inline-2-radio"
+                                                    type="radio"
+                                                    value=""
+                                                    name="inline-radio-group"
+                                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                                />
+                                                <label
+                                                    htmlFor="inline-2-radio"
+                                                    className="ms-2 text-sm text-gray-800 font-semibold"
+                                                >
+                                                    No(0)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                     </div>
-                    <div className="flex gap-3 ">
-                        <div className="font-bold">Bonnie Green</div>
-                        <div className="font-semibold text-sm text-gray-500">
-                            November 20, 2023 at 12:45 PM
-                        </div>
-                    </div>
-                    <div className="font-semibold text-gray-500 mt-2">
-                        Hello Joseph, it's basically the same system as your
-                        older machine, but bigger, lighter and faster. There is
-                        no disc drive and it has fewer ports.
-                    </div>
-                    <div className="mt-2 font-semibold text-gray-500 flex">
-                        <div>Was it helpful to you?</div>
-                        <div class="flex ml-4">
-                            <div class="flex items-center me-4">
-                                <input
-                                    id="inline-radio"
-                                    type="radio"
-                                    value=""
-                                    name="inline-radio-group"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 "
-                                />
-                                <label
-                                    for="inline-radio"
-                                    class="ms-2 text-sm text-gray-800 font-semibold"
-                                >
-                                    Yes(5)
-                                </label>
-                            </div>
-                            <div class="flex items-center me-4">
-                                <input
-                                    id="inline-2-radio"
-                                    type="radio"
-                                    value=""
-                                    name="inline-radio-group"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
-                                />
-                                <label
-                                    for="inline-2-radio"
-                                    class="ms-2 text-sm text-gray-800 font-semibold"
-                                >
-                                    No(0)
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                ))}
 
             {/* Pagination bar */}
             <div className="flex justify-center">
                 <nav aria-label="Page navigation example">
-                    <ul class="inline-flex -space-x-px text-sm mx-auto">
+                    <ul className="inline-flex -space-x-px text-sm mx-auto">
                         <li>
                             <a
                                 href="#"
-                                class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-sm hover:bg-gray-100 hover:text-gray-700 "
+                                className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-sm hover:bg-gray-100 hover:text-gray-700 "
                             >
                                 Previous
                             </a>
@@ -281,7 +309,7 @@ function QnA() {
                         <li>
                             <a
                                 href="#"
-                                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
                             >
                                 1
                             </a>
@@ -289,7 +317,7 @@ function QnA() {
                         <li>
                             <a
                                 href="#"
-                                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
                             >
                                 2
                             </a>
@@ -298,7 +326,7 @@ function QnA() {
                             <a
                                 href="#"
                                 aria-current="page"
-                                class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
+                                className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
                             >
                                 3
                             </a>
@@ -306,7 +334,7 @@ function QnA() {
                         <li>
                             <a
                                 href="#"
-                                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
                             >
                                 4
                             </a>
@@ -314,7 +342,7 @@ function QnA() {
                         <li>
                             <a
                                 href="#"
-                                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
                             >
                                 5
                             </a>
@@ -322,7 +350,7 @@ function QnA() {
                         <li>
                             <a
                                 href="#"
-                                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-sm hover:bg-gray-100 hover:text-gray-700"
+                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-sm hover:bg-gray-100 hover:text-gray-700"
                             >
                                 Next
                             </a>
