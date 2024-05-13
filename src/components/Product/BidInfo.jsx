@@ -87,7 +87,7 @@ function BidInfo({ data, bidsData }) {
                     onChange={(e) => setBidAmount(e.target.value)}
                 />
                 <button
-                    className="w-full border border-green-700 text-green-700 rounded-md p-2 mt-2 font-semibold hover:bg-green-700 hover:text-white"
+                    className="w-full border border-green-700 text-green-700 rounded-md p-2 mt-2 font-semibold hover:bg-green-700 hover:text-white transition-all duration-1000 ease-in-out transform hover:scale-105"
                     onClick={submitBid}
                 >
                     {myBid ? "Update Bid" : "Submit Bid"}
