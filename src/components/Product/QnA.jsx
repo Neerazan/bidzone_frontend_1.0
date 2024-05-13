@@ -103,7 +103,7 @@ function QnA({ auctionId, seller_name }) {
                             <label htmlhtmlFor="auction_question"></label>
                             <textarea
                                 id="auction_question"
-                                className="border border-gray-400 w-full px-4 py-2 focus:ring-[1px] focus:ring-blue-400 focus:border-transparent focus:outline-none"
+                                className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:border-blue-500"
                                 placeholder="What would you like to know about this product?"
                                 {...register("question")}
                             ></textarea>
@@ -212,7 +212,7 @@ function QnA({ auctionId, seller_name }) {
                                                 <label htmlhtmlFor="auction_question_answer"></label>
                                                 <textarea
                                                     id="auction_question_answer"
-                                                    className="border border-gray-400 w-full px-4 py-2 focus:ring-[1px] focus:ring-blue-400 focus:border-transparent focus:outline-none"
+                                                    className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:border-blue-500"
                                                     placeholder="Answer the question here..."
                                                     {...register("answer")}
                                                 ></textarea>
