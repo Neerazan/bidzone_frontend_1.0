@@ -10,27 +10,24 @@ import { useDispatch, useSelector } from "react-redux"
 import { useQuery, useMutation } from "react-query"
 import axios from "axios"
 
-
 import { addQuestion } from "../../store/Auction/QnASlice"
 import { FormattedDate } from "../index"
 import { fetchQnAData } from "../../store/Auction/QnASlice"
 
-function QnA({ auctionId, seller_name }) {
+function QnA({ auctionId, seller }) {
     const [askQuestion, setAskQuestion] = useState(false)
-    const [replyQuestion, setReplyQuestion] = useState(false)
+    const [replyQuestionId, setReplyQuestionId] = useState(null)
 
     const { register, handleSubmit } = useForm()
     const dispatch = useDispatch()
 
     const qnas = useSelector((state) => state.qna.qnas)
     const accessKey = useSelector((state) => state.auth.accessKey)
-
-
-
+    const user = useSelector((state) => state.auth.userData)
 
     const AddQuestionMutation = useMutation(
         async ({ auctionId, data, accessKey }) => {
-            console.log("Inside addquestionmutattion function");
+            console.log("Inside addquestionmutattion function")
             try {
                 const response = await axios.post(
                     `http://localhost:8000/auction/auctions/${auctionId}/questions/`,
@@ -48,56 +45,46 @@ function QnA({ auctionId, seller_name }) {
         }
     )
 
-
-
-
     const handleQuestionSubmit = (data) => {
         const formData = new FormData()
         formData.append("question", data.question)
 
-        AddQuestionMutation.mutate({
-            auctionId,
-            data: formData,
-            accessKey,
-        }, {
-            onSuccess: (data) => {
-                dispatch(addQuestion(data))
-                setAskQuestion(!askQuestion)
+        AddQuestionMutation.mutate(
+            {
+                auctionId,
+                data: formData,
+                accessKey,
             },
-            onError: (error) => {
-                console.log("Error adding question:", error);
+            {
+                onSuccess: (data) => {
+                    dispatch(addQuestion(data))
+                    setAskQuestion(!askQuestion)
+                },
+                onError: (error) => {
+                    console.log("Error adding question:", error)
+                },
             }
-        })
-
+        )
     }
-
-
-
 
     const handleAnswerSubmit = (data) => {
         alert(data.answer)
         setTimeout(() => {
-            setReplyQuestion(!replyQuestion)
+            setReplyQuestionId(null)
         }, 2000)
     }
 
-
-
-
     useEffect(() => {
+        // console.log("Inside useeffect");
         dispatch(fetchQnAData(auctionId))
     }, [])
-
-
-
-
 
     return (
         <div className="col-span-4 pb-4">
             <div className="bg-white h-auto w-auto flex flex-col md:flex-row items-center rounded-md mt-4 px-8 mb-4">
                 <div className="mr-auto">
                     <h4 className="text-xl text-gray-600 font-bold">
-                        Questions ({qnas?.length})
+                        Questions ({qnas?.count})
                     </h4>
                 </div>
 
@@ -173,7 +160,7 @@ function QnA({ auctionId, seller_name }) {
 
             {/* QNA Container */}
             {qnas &&
-                qnas?.map((qna) => (
+                qnas?.results?.map((qna) => (
                     <div className="px-4 mx-4 mb-8" key={qna.id}>
                         {/* Question Container */}
                         <div className="p-4 border border-gray-300 rounded-md">
@@ -230,32 +217,35 @@ function QnA({ auctionId, seller_name }) {
                                             No(0)
                                         </label>
                                     </div>
-                                    <button
-                                        className="px-3 py-1 bg-blue-200 rounded-md text-blue-800 flex"
-                                        onClick={() =>
-                                            setReplyQuestion(!replyQuestion)
-                                        }
-                                    >
-                                        <IconContext.Provider
-                                            value={{
-                                                className:
-                                                    "text-blue-800 mt-0.5",
-                                            }}
+                                    {user.id != seller.id && (
+                                        <button
+                                            className="flex px-2 pt-0.5 pb-1 border text-sm border-gray-400 rounded-sm hover:bg-gray-400 hover:text-white transition ease-in-out duration-500"
+                                            onClick={() =>
+                                                replyQuestionId === qna.id ? 
+                                                setReplyQuestionId(null) :
+                                                setReplyQuestionId(qna.id)
+                                            }
                                         >
-                                            <BsReply />
-                                        </IconContext.Provider>
-                                        <span className="ml-1 text-sm">
-                                            Reply
-                                        </span>
-                                    </button>
+                                            <IconContext.Provider
+                                                value={{
+                                                    className: "mt-0.5",
+                                                }}
+                                            >
+                                                <BsReply />
+                                            </IconContext.Provider>
+                                            <span className="ml-1 text-xs">
+                                                Reply
+                                            </span>
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                             <div
                                 className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                                    replyQuestion ? "max-h-64" : "max-h-0"
+                                    replyQuestionId ? "max-h-64" : "max-h-0"
                                 }`}
                             >
-                                {replyQuestion && (
+                                {qna.id === replyQuestionId && (
                                     <div>
                                         <form
                                             onSubmit={handleSubmit(
@@ -264,7 +254,7 @@ function QnA({ auctionId, seller_name }) {
                                             className="my-4"
                                         >
                                             <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4">
-                                                <label htmlhtmlFor="auction_question_answer"></label>
+                                                <label htmlFor="auction_question_answer"></label>
                                                 <textarea
                                                     id="auction_question_answer"
                                                     className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:border-blue-500"
@@ -303,10 +293,14 @@ function QnA({ auctionId, seller_name }) {
                                     </div>
                                     <div className="flex gap-3 ">
                                         <div className="font-bold">
-                                            {seller_name}
+                                            {seller.first_name +
+                                                " " +
+                                                seller.last_name}
                                         </div>
                                         <div className="font-semibold text-sm text-gray-500">
-                                            {answer.updated_at}
+                                            <FormattedDate
+                                                date={answer.updated_at}
+                                            />
                                         </div>
                                     </div>
                                     <div className="font-semibold text-gray-500 mt-2">
@@ -353,69 +347,71 @@ function QnA({ auctionId, seller_name }) {
                 ))}
 
             {/* Pagination bar */}
-            <div className="flex justify-center">
-                <nav aria-label="Page navigation example">
-                    <ul className="inline-flex -space-x-px text-sm mx-auto">
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-sm hover:bg-gray-100 hover:text-gray-700 "
-                            >
-                                Previous
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                            >
-                                1
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                            >
-                                2
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                aria-current="page"
-                                className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
-                            >
-                                3
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                            >
-                                4
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-                            >
-                                5
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-sm hover:bg-gray-100 hover:text-gray-700"
-                            >
-                                Next
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            {qnas?.next !== null && (
+                <div className="flex justify-center">
+                    <nav aria-label="Page navigation example">
+                        <ul className="inline-flex -space-x-px text-sm mx-auto">
+                            <li>
+                                <a
+                                    href="#"
+                                    className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-sm hover:bg-gray-100 hover:text-gray-700 "
+                                >
+                                    Previous
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+                                >
+                                    1
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+                                >
+                                    2
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    aria-current="page"
+                                    className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
+                                >
+                                    3
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+                                >
+                                    4
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                                >
+                                    5
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-sm hover:bg-gray-100 hover:text-gray-700"
+                                >
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            )}
         </div>
     )
 }

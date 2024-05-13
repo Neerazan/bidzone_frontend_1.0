@@ -5,7 +5,6 @@ const initialState = {
     qnas: [],
     loading: false,
     error: null,
-    questions_count: null
 };
 
 
@@ -27,11 +26,12 @@ const qnaSlice = createSlice({
     initialState,
     reducers: {
         addQuestion: (state, action) => {
-            state.qnas.push(action.payload)
+            state.qnas.results.push(action.payload)
+            state.qnas.count += 1
         },
 
         addAnswer: (state, action) => {
-            
+
         },
 
         deleteQuestion: (state, action) => {
@@ -52,7 +52,6 @@ const qnaSlice = createSlice({
 
         clearQnA: (state) => {
             state.qnas = []
-            state.questions_count = null
             state.loading = false
             state.error = null
         }
@@ -61,8 +60,7 @@ const qnaSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchQnAData.fulfilled, (state, action) => {
-                state.qnas = action.payload.results
-                state.questions_count = action.payload.count
+                state.qnas = action.payload
                 state.loading = false
                 state.error = null
             })
