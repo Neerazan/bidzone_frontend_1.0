@@ -31,11 +31,15 @@ const qnaSlice = createSlice({
         },
 
         addAnswer: (state, action) => {
-
+            state.qnas.results.map((qna) => {
+                if (qna.id === action.payload.questionId) {
+                    qna.answers.push(action.payload.answer)
+                }
+            })
         },
 
         deleteQuestion: (state, action) => {
-
+            
         },
 
         deleteAnswer: (state, action) => {
@@ -47,7 +51,7 @@ const qnaSlice = createSlice({
         },
 
         updateAnswer: (state, action) => {
-
+            
         },
 
         clearQnA: (state) => {

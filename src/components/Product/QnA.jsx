@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useQuery, useMutation } from "react-query"
 import axios from "axios"
 
-import { addQuestion } from "../../store/Auction/QnASlice"
+import { addQuestion, addAnswer } from "../../store/Auction/QnASlice"
 import { FormattedDate } from "../index"
 import { fetchQnAData } from "../../store/Auction/QnASlice"
 
@@ -45,6 +45,28 @@ function QnA({ auctionId, seller }) {
         }
     )
 
+
+
+    const AddQuestionAnswerMutation = useMutation(
+        async ({ auctionId, questionId, data, accessKey }) => {
+            try {
+                const response = await axios.post(
+                    `http://127.0.0.1:8000/auction/auctions/${auctionId}/questions/${questionId}/answers/`,
+                    data,
+                    {
+                        headers: {
+                            Authorization: `JWT ${accessKey}`,
+                        },
+                    }
+                )
+                return response.data
+            } catch (error) {
+                console.error("Error adding question:", error)
+            }
+        }
+    )
+
+
     const handleQuestionSubmit = (data) => {
         const formData = new FormData()
         formData.append("question", data.question)
@@ -68,10 +90,30 @@ function QnA({ auctionId, seller }) {
     }
 
     const handleAnswerSubmit = (data) => {
-        alert(data.answer)
-        setTimeout(() => {
-            setReplyQuestionId(null)
-        }, 2000)
+        const formData = new FormData()
+        formData.append("answer", data.answer)
+
+        AddQuestionAnswerMutation.mutate(
+            {
+                auctionId,
+                questionId: replyQuestionId,
+                data: formData,
+                accessKey,
+            },
+            {
+                onSuccess: (data) => {
+                    console.log("Data:", data);
+                    console.log("Answer added successfully");
+                    dispatch(addAnswer({ questionId: replyQuestionId, answer:data}))
+                    setReplyQuestionId(null)
+                }
+            },
+            {
+                onError: (error) => {
+                    console.log("Error adding answer:", error)
+                }
+            }
+        )
     }
 
     useEffect(() => {
@@ -217,7 +259,7 @@ function QnA({ auctionId, seller }) {
                                             No(0)
                                         </label>
                                     </div>
-                                    {user.id != seller.id && (
+                                    {user.id === seller.id && (
                                         <button
                                             className="flex px-2 pt-0.5 pb-1 border text-sm border-gray-400 rounded-sm hover:bg-gray-400 hover:text-white transition ease-in-out duration-500"
                                             onClick={() =>
