@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { act } from "react";
 
 const initialState = {
     qnas: [],
@@ -39,9 +40,10 @@ const qnaSlice = createSlice({
         },
 
         deleteQuestion: (state, action) => {
-            state.qnas.results = state.qnas.results.filter((qna) => qna.id !== action.payload)
+            state.qnas.results = state.qnas.results.filter((qna) => qna.id !== action.payload.questionId)
             state.qnas.count -= 1
         },
+
 
         deleteAnswer: (state, action) => {
             state.qnas.results.map((qna) => {
