@@ -3,7 +3,9 @@ import React from "react"
 import { FaRegQuestionCircle } from "react-icons/fa"
 import { MdOutlineQuestionAnswer } from "react-icons/md"
 import { BsReply } from "react-icons/bs"
+import { BiSolidEdit, BiTrash } from "react-icons/bi"
 import { IconContext } from "react-icons"
+
 import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
@@ -45,8 +47,6 @@ function QnA({ auctionId, seller }) {
         }
     )
 
-
-
     const AddQuestionAnswerMutation = useMutation(
         async ({ auctionId, questionId, data, accessKey }) => {
             try {
@@ -65,7 +65,6 @@ function QnA({ auctionId, seller }) {
             }
         }
     )
-
 
     const handleQuestionSubmit = (data) => {
         const formData = new FormData()
@@ -102,16 +101,18 @@ function QnA({ auctionId, seller }) {
             },
             {
                 onSuccess: (data) => {
-                    console.log("Data:", data);
-                    console.log("Answer added successfully");
-                    dispatch(addAnswer({ questionId: replyQuestionId, answer:data}))
+                    console.log("Data:", data)
+                    console.log("Answer added successfully")
+                    dispatch(
+                        addAnswer({ questionId: replyQuestionId, answer: data })
+                    )
                     setReplyQuestionId(null)
-                }
+                },
             },
             {
                 onError: (error) => {
                     console.log("Error adding answer:", error)
-                }
+                },
             }
         )
     }
@@ -261,11 +262,11 @@ function QnA({ auctionId, seller }) {
                                     </div>
                                     {user.id === seller.id && (
                                         <button
-                                            className="flex px-2 pt-0.5 pb-1 border text-sm border-gray-400 rounded-sm hover:bg-gray-400 hover:text-white transition ease-in-out duration-500"
+                                            className="flex px-2 border border-gray-400 rounded-sm hover:bg-gray-400 hover:text-white transition ease-in-out duration-500"
                                             onClick={() =>
-                                                replyQuestionId === qna.id ? 
-                                                setReplyQuestionId(null) :
-                                                setReplyQuestionId(qna.id)
+                                                replyQuestionId === qna.id
+                                                    ? setReplyQuestionId(null)
+                                                    : setReplyQuestionId(qna.id)
                                             }
                                         >
                                             <IconContext.Provider
@@ -275,10 +276,41 @@ function QnA({ auctionId, seller }) {
                                             >
                                                 <BsReply />
                                             </IconContext.Provider>
-                                            <span className="ml-1 text-xs">
+                                            <span className="ml-1 text-sm">
                                                 Reply
                                             </span>
                                         </button>
+                                    )}
+
+                                    {user.id === qna.customer.id && (
+                                        <div className="flex justify-end ml-2">
+                                            <div className="flex gap-2">
+                                                <button className="flex text-blue-700 px-2 border border-blue-700 rounded-sm hover:bg-blue-600 hover:text-white transition ease-in-out duration-500">
+                                                    <IconContext.Provider
+                                                        value={{
+                                                            className: "mt-0.5",
+                                                        }}
+                                                    >
+                                                        <BiSolidEdit />
+                                                    </IconContext.Provider>
+                                                    <span className="ml-1 text-sm">
+                                                        Edit
+                                                    </span>
+                                                </button>
+                                                <button className="flex text-red-500 px-2 border border-red-500 rounded-sm hover:bg-red-500 hover:text-white transition ease-in-out duration-500">
+                                                    <IconContext.Provider
+                                                        value={{
+                                                            className: "mt-0.5",
+                                                        }}
+                                                    >
+                                                        <BiTrash />
+                                                    </IconContext.Provider>
+                                                    <span className="ml-1 text-sm">
+                                                        Delete
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     )}
                                 </div>
                             </div>
@@ -381,6 +413,39 @@ function QnA({ auctionId, seller }) {
                                                     No(0)
                                                 </label>
                                             </div>
+
+                                            {user.id === seller.id && (
+                                                <div className="flex justify-end ml-2">
+                                                    <div className="flex gap-2">
+                                                        <button className="flex text-blue-700 px-2 border border-blue-700 rounded-sm hover:bg-blue-600 hover:text-white transition ease-in-out duration-500">
+                                                            <IconContext.Provider
+                                                                value={{
+                                                                    className:
+                                                                        "mt-0.5",
+                                                                }}
+                                                            >
+                                                                <BiSolidEdit />
+                                                            </IconContext.Provider>
+                                                            <span className="ml-1 text-sm">
+                                                                Edit
+                                                            </span>
+                                                        </button>
+                                                        <button className="flex text-red-500 px-2 border border-red-500 rounded-sm hover:bg-red-500 hover:text-white transition ease-in-out duration-500">
+                                                            <IconContext.Provider
+                                                                value={{
+                                                                    className:
+                                                                        "mt-0.5",
+                                                                }}
+                                                            >
+                                                                <BiTrash />
+                                                            </IconContext.Provider>
+                                                            <span className="ml-1 text-sm">
+                                                                Delete
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
