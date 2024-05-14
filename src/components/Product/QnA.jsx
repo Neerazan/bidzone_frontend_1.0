@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useMutation } from "react-query"
 import axios from "axios"
 
-import { addQuestion, addAnswer, deleteQuestion } from "../../store/Auction/QnASlice"
+import { addQuestion, addAnswer, deleteQuestion, deleteAnswer } from "../../store/Auction/QnASlice"
 import { FormattedDate } from "../index"
 import { fetchQnAData } from "../../store/Auction/QnASlice"
 
@@ -84,6 +84,40 @@ function QnA({ auctionId, seller }) {
         }
     )
 
+
+
+    const DeleteAnswerMutation = useMutation(
+        async({accessKey, questionId, answerId, auctionId}) => {
+            try {
+                const response = await axios.delete(`http://127.0.0.1:8000/auction/auctions/${auctionId}/questions/${questionId}/answers/${answerId}/`, {
+                    headers: {
+                        Authorization: `JWT ${accessKey}`
+                    }
+                })
+                return response.data
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    )
+
+
+    const handleAnswerDelete = ({ questionId, answerId }) => {
+        console.log(`Question and Answer id inside handleAnswerDelete function: ${questionId} and ${answerId}`);
+        DeleteAnswerMutation.mutate(
+            {
+                auctionId,
+                questionId,
+                answerId,
+                accessKey
+            },
+            {
+                onSuccess: () => {
+                    dispatch(deleteAnswer({questionId: questionId, answerId: answerId}))
+                }
+            }
+        )
+    }
 
     const handleQuestionDelete = (questionId) => {
         DeleteQuestionMutation.mutate(
@@ -471,7 +505,12 @@ function QnA({ auctionId, seller }) {
                                                                 Edit
                                                             </span>
                                                         </button>
-                                                        <button className="flex text-red-500 px-2 border border-red-500 rounded-sm hover:bg-red-500 hover:text-white transition ease-in-out duration-500">
+                                                        <button 
+                                                            className="flex text-red-500 px-2 border border-red-500 rounded-sm hover:bg-red-500 hover:text-white transition ease-in-out duration-500"
+                                                            onClick={() => {
+                                                                handleAnswerDelete({ questionId:qna.id, answerId:answer.id })
+                                                            }}
+                                                        >
                                                             <IconContext.Provider
                                                                 value={{
                                                                     className:

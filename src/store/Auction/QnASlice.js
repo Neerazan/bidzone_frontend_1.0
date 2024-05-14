@@ -46,8 +46,11 @@ const qnaSlice = createSlice({
 
 
         deleteAnswer: (state, action) => {
+            console.log(`Slice ${action.payload.questionId} and ${action.payload.answerId}`);
             state.qnas.results.map((qna) => {
-                qna.answers = qna.answers.filter((answer) => answer.id !== action.payload)
+                if (qna.id === action.payload.questionId) {
+                    qna.answers = qna.answers.filter((answer) => answer.id !== action.payload.answerId)
+                }
             })
         },
 
