@@ -550,8 +550,8 @@ function QnA({ auctionId, seller }) {
                 <Pagination 
                     // ref={paginationRef}
                     totalCount={qnas?.count}
-                    pageSize={1}
-                    siblingCount={1}
+                    pageSize={5}
+                    siblingCount={5}
                     currentPage={page}
                     onPageChange={handlePageChange}
                 />
