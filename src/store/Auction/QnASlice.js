@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { act } from "react";
 
 const initialState = {
     qnas: [],
@@ -11,9 +10,9 @@ const initialState = {
 
 export const fetchQnAData = createAsyncThunk(
     "auction/fetchQnAData",
-    async (auctionId) => {
+    async ({ auctionId, page=1 }) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/${auctionId}/questions/`)
+            const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/${auctionId}/questions/?page=${page}`)
             return response.data
         } catch (error) {
             console.log("Error fetching QnA data:", error)
@@ -46,7 +45,6 @@ const qnaSlice = createSlice({
 
 
         deleteAnswer: (state, action) => {
-            console.log(`Slice ${action.payload.questionId} and ${action.payload.answerId}`);
             state.qnas.results.map((qna) => {
                 if (qna.id === action.payload.questionId) {
                     qna.answers = qna.answers.filter((answer) => answer.id !== action.payload.answerId)
@@ -55,7 +53,7 @@ const qnaSlice = createSlice({
         },
 
         updateQuestion: (state, action) => {
-
+            
         },
 
         updateAnswer: (state, action) => {

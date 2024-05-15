@@ -48,7 +48,7 @@ const wishlistSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchWishlistData.fulfilled, (state, action) => {
-                state.wishlists = action.payload.results
+                state.wishlists = action.payload
                 state.loading = false
                 state.error = null
             }) 

@@ -1,32 +1,50 @@
-import React from "react"
+import React,{ useState, useEffect, useRef } from "react"
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { useForm } from "react-hook-form"
+import { useMutation } from "react-query"
 
+import { BiSolidEdit, BiTrash } from "react-icons/bi"
+import { BsReply } from "react-icons/bs"
 import { FaRegQuestionCircle } from "react-icons/fa"
 import { MdOutlineQuestionAnswer } from "react-icons/md"
-import { BsReply } from "react-icons/bs"
-import { BiSolidEdit, BiTrash } from "react-icons/bi"
 import { IconContext } from "react-icons"
 
-import { useState, useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useDispatch, useSelector } from "react-redux"
-import { useMutation } from "react-query"
-import axios from "axios"
+
 
 import { addQuestion, addAnswer, deleteQuestion, deleteAnswer } from "../../store/Auction/QnASlice"
 import { FormattedDate } from "../index"
 import { fetchQnAData } from "../../store/Auction/QnASlice"
+import Pagination from "../Pagination"
 
 function QnA({ auctionId, seller }) {
     const [askQuestion, setAskQuestion] = useState(false)
     const [replyQuestionId, setReplyQuestionId] = useState(null)
-    // const [deleteQuestionId, setDeletedQuestionId] = useState(null)
+    const [page, setPage] = useState(1)
 
     const { register, handleSubmit } = useForm()
     const dispatch = useDispatch()
+    const paginationRef = useRef(null)
 
     const qnas = useSelector((state) => state.qna.qnas)
     const accessKey = useSelector((state) => state.auth.accessKey)
     const user = useSelector((state) => state.auth.userData)
+
+    const fetchQuestions = async (page) => {
+        dispatch(fetchQnAData({ auctionId, page }))
+    }
+
+
+    useEffect(() => {
+        fetchQuestions(page);
+    }, [page, auctionId]);
+
+
+    const handlePageChange = (page) => {
+        setPage(page)
+        paginationRef.current(page)
+    }
+
 
     const AddQuestionMutation = useMutation(
         async ({ auctionId, data, accessKey }) => {
@@ -185,10 +203,6 @@ function QnA({ auctionId, seller }) {
         )
     }
 
-    useEffect(() => {
-        // console.log("Inside useeffect");
-        dispatch(fetchQnAData(auctionId))
-    }, [])
 
     return (
         <div className="col-span-4 pb-4">
@@ -394,7 +408,7 @@ function QnA({ auctionId, seller }) {
                                     replyQuestionId ? "max-h-64" : "max-h-0"
                                 }`}
                             >
-                                {qna.id === replyQuestionId && (
+                                {(qna.id === replyQuestionId) && (
                                     <div>
                                         <form
                                             onSubmit={handleSubmit(
@@ -452,7 +466,7 @@ function QnA({ auctionId, seller }) {
                                             />
                                         </div>
                                     </div>
-                                    <div className="font-semibold text-gray-500 mt-2">
+                                    <div className="font-semibold text-gray-500 mt-2 w-full">
                                         {answer.answer}
                                     </div>
                                     <div className="mt-2 font-semibold text-gray-500 flex">
@@ -492,7 +506,9 @@ function QnA({ auctionId, seller }) {
                                             {user.id === seller.id && (
                                                 <div className="flex justify-end ml-2">
                                                     <div className="flex gap-2">
-                                                        <button className="flex text-blue-700 px-2 border border-blue-700 rounded-sm hover:bg-blue-600 hover:text-white transition ease-in-out duration-500">
+                                                        <button 
+                                                            className="flex text-blue-700 px-2 border border-blue-700 rounded-sm hover:bg-blue-600 hover:text-white transition ease-in-out duration-500"
+                                                        >
                                                             <IconContext.Provider
                                                                 value={{
                                                                     className:
@@ -532,73 +548,14 @@ function QnA({ auctionId, seller }) {
                             ))}
                     </div>
                 ))}
-
-            {/* Pagination bar */}
-            {qnas?.next !== null && (
-                <div className="flex justify-center">
-                    <nav aria-label="Page navigation example">
-                        <ul className="inline-flex -space-x-px text-sm mx-auto">
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-sm hover:bg-gray-100 hover:text-gray-700 "
-                                >
-                                    Previous
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                                >
-                                    1
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                                >
-                                    2
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    aria-current="page"
-                                    className="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700"
-                                >
-                                    3
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                                >
-                                    4
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
-                                >
-                                    5
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#"
-                                    className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-sm hover:bg-gray-100 hover:text-gray-700"
-                                >
-                                    Next
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            )}
+                <Pagination 
+                    ref={paginationRef}
+                    totalCount={qnas?.count}
+                    pageSize={1}
+                    siblingCount={1}
+                    currentPage={page}
+                    onPageChange={handlePageChange} 
+                />
         </div>
     )
 }
