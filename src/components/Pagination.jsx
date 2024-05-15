@@ -1,9 +1,13 @@
 import { forwardRef, useMemo } from "react"
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import { IconContext } from "react-icons";
 
 const Pagination = forwardRef(
-    ({ totalCount, siblingCount = 1, currentPage, pageSize, onPageChange }, ref) => {
+    (
+        { totalCount, siblingCount = 1, currentPage, pageSize, onPageChange },
+        ref
+    ) => {
         const handlePageChange = (pageNumber) => {
-            console.log("Inside handlepagechange function");
             if (onPageChange) {
                 onPageChange(pageNumber)
             }
@@ -11,6 +15,9 @@ const Pagination = forwardRef(
 
         const paginationRange = useMemo(() => {
             const totalPageCount = Math.ceil(totalCount / pageSize)
+
+            if (totalPageCount === 1) return null
+
             const totalPageNumbers = siblingCount + 5
 
             if (totalPageNumbers >= totalPageCount) {
@@ -48,19 +55,44 @@ const Pagination = forwardRef(
 
         return (
             <div className="pagination flex justify-center mt-4">
+                {paginationRange && (
+                    <button
+                        className={`pagination-item mx-1 px-1 py-1 border ${currentPage === 1 ? "text-gray-300 border-gray-300" : "text-gray-500 border-gray-500"} hover:bg-gray-500 hover:text-white`}
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        <IconContext.Provider value={{ size: "1.5em" }}>
+                            <FaAngleLeft />
+                        </IconContext.Provider>
+                    </button>
+                )}
+
                 {paginationRange?.map((pageNumber, index) => (
                     <button
                         key={index}
-                        className={`pagination-item mx-1 px-3 py-1 border ${
+                        className={`pagination-item mx-1 px-3 py-1 border font-semibold hover:bg-gray-500 hover:text-white ${
                             pageNumber === currentPage
-                                ? "bg-blue-500 text-white"
-                                : "bg-white text-blue-500"
+                                ? "bg-gray-500 text-white"
+                                : "bg-white text-gray-500"
                         }`}
                         onClick={() => handlePageChange(pageNumber)}
                     >
                         {pageNumber}
                     </button>
                 ))}
+                {paginationRange && (
+                    <button
+                        className={`pagination-item mx-1 px-1 py-1 border ${currentPage === Math.ceil(totalCount / pageSize)? "border-gray-300 text-gray-300" : "border-gray-500 text-gray-500"}  hover:bg-gray-500 hover:text-white`}
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={
+                            currentPage === Math.ceil(totalCount / pageSize)
+                        }
+                    >
+                        <IconContext.Provider value={{ size: "1.5em" }}>
+                            <FaAngleRight />
+                        </IconContext.Provider>
+                    </button>
+                )}
             </div>
         )
     }

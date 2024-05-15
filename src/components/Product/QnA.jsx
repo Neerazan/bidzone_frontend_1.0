@@ -22,13 +22,15 @@ function QnA({ auctionId, seller }) {
     const [replyQuestionId, setReplyQuestionId] = useState(null)
     const [page, setPage] = useState(1)
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, reset } = useForm()
     const dispatch = useDispatch()
     // const paginationRef = useRef(null)
 
     const qnas = useSelector((state) => state.qna.qnas)
     const accessKey = useSelector((state) => state.auth.accessKey)
     const user = useSelector((state) => state.auth.userData)
+
+    const askQuestionInputBox = useRef(null);
 
     const fetchQuestions = async (page) => {
         dispatch(fetchQnAData({ auctionId, page }))
@@ -165,6 +167,7 @@ function QnA({ auctionId, seller }) {
                 onSuccess: (data) => {
                     dispatch(addQuestion(data))
                     setAskQuestion(!askQuestion)
+                    reset()
                 },
                 onError: (error) => {
                     console.log("Error adding question:", error)
@@ -267,6 +270,7 @@ function QnA({ auctionId, seller }) {
                         <div className="bg-white h-auto w-auto flex flex-col  rounded-md mt-4 px-8">
                             <label htmlFor="auction_question"></label>
                             <textarea
+                                ref={askQuestionInputBox}
                                 id="auction_question"
                                 className="border border-gray-400 w-full px-4 py-2 focus:outline-none focus:border-blue-500"
                                 placeholder="What would you like to know about this product?"
@@ -550,7 +554,7 @@ function QnA({ auctionId, seller }) {
                 <Pagination 
                     // ref={paginationRef}
                     totalCount={qnas?.count}
-                    pageSize={5}
+                    pageSize={10}
                     siblingCount={5}
                     currentPage={page}
                     onPageChange={handlePageChange}
