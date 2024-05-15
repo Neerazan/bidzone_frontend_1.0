@@ -1,10 +1,11 @@
 import { forwardRef, useMemo } from "react"
 
 const Pagination = forwardRef(
-    ({ totalCount, siblingCount = 1, currentPage, pageSize }, ref) => {
-        const handlePageChange = (page) => {
-            if (ref && ref.current) {
-                ref.current(page)
+    ({ totalCount, siblingCount = 1, currentPage, pageSize, onPageChange }, ref) => {
+        const handlePageChange = (pageNumber) => {
+            console.log("Inside handlepagechange function");
+            if (onPageChange) {
+                onPageChange(pageNumber)
             }
         }
 

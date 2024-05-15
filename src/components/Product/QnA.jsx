@@ -24,7 +24,7 @@ function QnA({ auctionId, seller }) {
 
     const { register, handleSubmit } = useForm()
     const dispatch = useDispatch()
-    const paginationRef = useRef(null)
+    // const paginationRef = useRef(null)
 
     const qnas = useSelector((state) => state.qna.qnas)
     const accessKey = useSelector((state) => state.auth.accessKey)
@@ -42,7 +42,6 @@ function QnA({ auctionId, seller }) {
 
     const handlePageChange = (page) => {
         setPage(page)
-        paginationRef.current(page)
     }
 
 
@@ -549,12 +548,12 @@ function QnA({ auctionId, seller }) {
                     </div>
                 ))}
                 <Pagination 
-                    ref={paginationRef}
+                    // ref={paginationRef}
                     totalCount={qnas?.count}
                     pageSize={1}
                     siblingCount={1}
                     currentPage={page}
-                    onPageChange={handlePageChange} 
+                    onPageChange={handlePageChange}
                 />
         </div>
     )
