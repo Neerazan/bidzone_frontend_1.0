@@ -94,7 +94,7 @@ function Dropdown() {
                             <hr />
                             <li className="px-4 hover:bg-gray-100">
                                 <Link
-                                    to="/login"
+                                    to="/user/profile"
                                     className="block py-2 text-sm text-gray-700"
                                     role="menuitem"
                                     onClick={toggleDropdown}

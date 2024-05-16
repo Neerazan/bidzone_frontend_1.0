@@ -40,9 +40,11 @@ import LoginRegisterBtn from "./Header/LoginRegisterBtn"
 import QnA from "./Product/QnA"
 import Address from "./Profile/Address"
 import BalanceDetails from "./Profile/BalanceDetails"
+import UserDetails from "./Profile/UserDetails"
 
 
 export {
+    UserDetails,
     Header,
     Container,
     LogoutBtn,
