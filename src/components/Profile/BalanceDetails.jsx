@@ -1,26 +1,40 @@
-import React from "react"
-import { BiSolidMedal } from "react-icons/bi";
+import React, { useState } from "react"
+import { BiSolidMedal } from "react-icons/bi"
 import { RiAddFill } from "react-icons/ri"
-import { GiTrophyCup } from "react-icons/gi";
+import { GiTrophyCup } from "react-icons/gi"
+import { FaRegEye } from "react-icons/fa6"
+import { FaRegEyeSlash } from "react-icons/fa6"
 import { Link } from "react-router-dom"
-import { IconContext } from "react-icons"
 
 function BalanceDetails() {
+    const [showBalance, setShowBalance] = useState(false)
+
     return (
         <div className="rounded-md shadow border border-gray-200 px-10 py-6 w-full grid gap-4 wallet-info">
             <div className="flex items-center">
                 <div>
-                    <p className="text-gray-600 font-semibold">Wallet Balance</p>
-                    <p className="font-bold text-xl text-gray-600">NPR. 99,000</p>
+                    <p className="text-gray-600 font-semibold">
+                        Wallet Balance
+                    </p>
+                    <div className="flex">
+                        <p className="font-bold text-xl text-gray-600 w-44">
+                            {showBalance ? "NPR. 99,000.00" : "NPR. XXXX.XX"}
+                        </p>
+                        <button
+                            className="cursor-pointer ml-4 text-2xl mt-1 text-gray-600 hover:text-gray-700"
+                            onClick={() => setShowBalance(!showBalance)}
+                        >
+                            {showBalance ? <FaRegEye /> : <FaRegEyeSlash />}
+                        </button>
+                    </div>
                 </div>
-                <Link 
-                    className="text-3xl font-bold bg-white rounded-sm text-green-600 ml-auto cursor-pointer border border-green-600 hover:text-white hover:bg-green-600 transition ease-in-out duration-300" 
+                <Link
+                    className="text-3xl font-bold bg-white rounded-sm text-green-600 ml-auto cursor-pointer border border-green-600 hover:text-white hover:bg-green-600 transition ease-in-out duration-300 justify-end items-end flex"
                     to="/"
                 >
-                        <RiAddFill />
+                    <RiAddFill />
                 </Link>
             </div>
-
 
             <div className="flex gap-12">
                 <div>
@@ -29,8 +43,12 @@ function BalanceDetails() {
                             <GiTrophyCup />
                         </div>
                         <div>
-                            <p className="text-gray-600 font-semibold">Reward Points</p>
-                            <p className="font-bold text-gray-600">234.00</p>
+                            <p className="text-gray-600 font-semibold">
+                                Reward Points
+                            </p>
+                            <p className="font-bold text-gray-600">
+                                {showBalance ? "1000.00" : "XXXX"}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -40,8 +58,12 @@ function BalanceDetails() {
                             <BiSolidMedal />
                         </div>
                         <div>
-                            <p className="text-gray-600 font-semibold">Badge(Tier)</p>
-                            <p className="font-bold text-gray-600">Gold</p>
+                            <p className="text-gray-600 font-semibold">
+                                Badge(Tier)
+                            </p>
+                            <p className="font-bold text-gray-600">
+                                {showBalance ? "Gold" : "XXXX"}
+                            </p>
                         </div>
                     </div>
                 </div>
