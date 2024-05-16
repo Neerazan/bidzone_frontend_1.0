@@ -232,10 +232,13 @@ function Wishlist() {
                             </div>
                             <div className="col-span-1">
                                 <div className="flex flex-col items-center h-full justify-center gap-4">
-                                    <Link className="px-3 py-2 rounded-md border border-red-500 hover:bg-red-500 text-red-600 hover:text-white w-28 text-center">
+                                    <Link className="px-3 py-2 rounded-md border border-red-500 hover:bg-red-500 text-red-600 hover:text-white w-28 text-center transition ease-in-out duration-300">
                                         Remove
                                     </Link>
-                                    <Link className="px-3 py-2 rounded-md border border-green-600 hover:bg-green-600 text-green-600 hover:text-white w-28 text-center">
+                                    <Link 
+                                        className="px-3 py-2 rounded-md border border-green-600 hover:bg-green-600 text-green-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
+                                        to={`/auction/${item?.auction?.product?.slug}`}
+                                    >
                                         Place Bid
                                     </Link>
                                 </div>

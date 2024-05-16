@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useMutation } from "react-query"
 import axios from "axios"
 
 function BidInfo({ data, bidsData }) {
     const [bidAmount, setBidAmount] = useState(null)
+    const bidInput = useRef(null)
     const accessToken = useSelector((state) => state.auth.accessKey)
 
     const authStatus = useSelector((state) => state.auth.status)
@@ -54,6 +55,11 @@ function BidInfo({ data, bidsData }) {
     }
 
 
+    useEffect(() => {
+        bidInput.current.focus()
+    }, [])
+
+
     return (
         <>
             <div>
@@ -81,6 +87,7 @@ function BidInfo({ data, bidsData }) {
             <div className="mt-6">
                 <input
                     id="bid_input"
+                    ref = {bidInput}
                     type="number"
                     placeholder="Enter your bid"
                     className="w-full bg-gray-200 rounded-md p-2 outline-1 focus:outline focus:outline-sky-500"
