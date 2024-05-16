@@ -2,11 +2,7 @@
     display: block;
 }
 
-
-/* .range::-webkit-slider-thumb {
-    @apply bg-blue-500;
+.wallet-info {
+    background-image: url("https://static.vecteezy.com/system/resources/previews/000/276/463/large_2x/white-background-vector.jpg");
+    background-size: cover;
 }
-
-.range::-webkit-slider-runnable-track {
-    @apply bg-blue-200;
-} */

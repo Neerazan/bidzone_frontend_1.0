@@ -38,6 +38,8 @@ import Auctions from "./Seller/Auctions"
 import Products from "./Seller/Products"
 import LoginRegisterBtn from "./Header/LoginRegisterBtn"
 import QnA from "./Product/QnA"
+import Address from "./Profile/Address"
+import BalanceDetails from "./Profile/BalanceDetails"
 
 
 export {
@@ -81,4 +83,6 @@ export {
     Products,
     LoginRegisterBtn,
     QnA,
+    Address,
+    BalanceDetails
 }

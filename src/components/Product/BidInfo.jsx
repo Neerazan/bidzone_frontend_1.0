@@ -55,9 +55,9 @@ function BidInfo({ data, bidsData }) {
     }
 
 
-    useEffect(() => {
-        bidInput.current.focus()
-    }, [])
+    // useEffect(() => {
+    //     bidInput.current.focus()
+    // }, [])
 
 
     return (
