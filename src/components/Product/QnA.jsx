@@ -552,7 +552,6 @@ function QnA({ auctionId, seller }) {
                     </div>
                 ))}
                 <Pagination 
-                    // ref={paginationRef}
                     totalCount={qnas?.count}
                     pageSize={10}
                     siblingCount={5}

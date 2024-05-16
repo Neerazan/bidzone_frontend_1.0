@@ -1,17 +1,17 @@
-import { forwardRef, useMemo } from "react"
+import { useMemo } from "react"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IconContext } from "react-icons";
 
-const Pagination = forwardRef(
+const Pagination = (
     (
         { totalCount, siblingCount = 1, currentPage, pageSize, onPageChange },
-        ref
     ) => {
         const handlePageChange = (pageNumber) => {
             if (onPageChange) {
                 onPageChange(pageNumber)
             }
         }
+
 
         const paginationRange = useMemo(() => {
             const totalPageCount = Math.ceil(totalCount / pageSize)
