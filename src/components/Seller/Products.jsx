@@ -1,5 +1,8 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
+import { IoMdAdd } from "react-icons/io";
+import { MdCancel } from "react-icons/md";
+import { IconContext } from "react-icons";
 
 function Products() {
     const [selectedItems, setSelectedItems] = useState([])
@@ -224,7 +227,7 @@ function Products() {
                     <table className="w-full">
                         <thead>
                             <tr
-                                className="bg-gray-100 text-gray-500"
+                                className="bg-blue-50 text-gray-600"
                                 style={{ textAlign: "left" }}
                             >
                                 <th className="px-2 py-2">
@@ -235,29 +238,39 @@ function Products() {
                                         onChange={handleSelectAll}
                                     />
                                 </th>
-                                <th className="px-4 py-2">Image</th>
-                                <th className="px-4 py-2">Title</th>
-                                <th className="px-4 py-2">Price</th>
-                                <th className="px-4 py-2">Collection</th>
-                                <th className="px-4 py-2">Action</th>
+                                <th className="px-4 py-2 font-semibold">
+                                    Image
+                                </th>
+                                <th className="px-4 py-2 font-semibold">
+                                    Title
+                                </th>
+                                <th className="px-4 py-2 font-semibold">
+                                    Price
+                                </th>
+                                <th className="px-4 py-2 font-semibold">
+                                    Collection
+                                </th>
+                                <th className="px-4 py-2 font-semibold">
+                                    In Auction
+                                </th>
+                                <th className="px-4 py-2 font-semibold">
+                                    Action
+                                </th>
                             </tr>
                         </thead>
                         <tbody className="">
                             {Array.from({ length: 10 }).map((_, index) => (
                                 <tr
                                     key={index}
-                                    className={`
-                                        ${
-                                            isSelected(index)
-                                                ? "bg-blue-50"
-                                                : index % 2 === 0
-                                                ? "bg-white"
-                                                : "bg-gray-100"
-                                        }
-                                        text-sm
-                                        text-gray-700
-                                    `}
+                                    className={`${
+                                        isSelected(index)
+                                            ? "bg-sky-200"
+                                            : index % 2 === 0
+                                            ? "bg-white"
+                                            : "bg-sky-50"
+                                    } text-sm text-gray-700`} // Added mb-2 for bottom margin
                                     onClick={() => handleSelectItem(index)}
+                                    style={{ marginBottom: '8px' }}
                                 >
                                     <td className="px-2 py-2">
                                         <input
@@ -278,25 +291,36 @@ function Products() {
                                             />
                                         </div>
                                     </td>
-
                                     <td className="px-4 py-2">
                                         Product Name Product Name Product Name
                                         Product Name
                                     </td>
-                                    <td className="px-4 py-2">Price</td>
-                                    <td className="px-4 py-2">Quantity</td>
+                                    <td className="px-4 py-2">12,000</td>
+                                    <td className="px-4 py-2">Electronics</td>
                                     <td className="px-4 py-2">
-                                        <Link
-                                            to="/user/edit-product"
-                                            className="text-blue-500"
+                                        <IconContext.Provider
+                                            value={{ color: "red", size: "1.2em", className: "mx-auto my-auto"}}
                                         >
-                                            Edit
-                                        </Link>
+                                            <MdCancel />
+                                        </IconContext.Provider>
+                                    </td>
+                                    <td className="px-4 py-2">
+                                        <button
+                                            className="flex px-2 py-1 bg-green-600 text-white rounded-sm border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 ease-in-out"
+                                        >
+                                            auction
+                                            <span className="ml-1 mt-1">
+                                                <IoMdAdd />
+                                            </span>
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                    <div className="border border-x-0 border-y-1 border-gray-400 py-1 px-3 mt-4 text-gray-500">
+                        8 Products
+                    </div>
                 </div>
             </div>
         </>
