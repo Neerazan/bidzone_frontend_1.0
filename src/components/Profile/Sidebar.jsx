@@ -182,7 +182,7 @@ const Sidebar = () => {
                             <span className="ml-2">Auction</span>
                         </NavLink>
                         <NavLink
-                            to="/user/add-product"
+                            to="/user/products"
                             className={({ isActive }) =>
                                 isActive
                                     ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100 flex items-center"

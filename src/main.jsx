@@ -80,14 +80,6 @@ const router = createBrowserRouter([
                         ),
                     },
                     {
-                        path: "/user/add-product",
-                        element: (
-                            <Protected authentication={true}>
-                                <AddUpdateProduct />
-                            </Protected>
-                        ),
-                    },
-                    {
                         path: "/user/auctions",
                         element: (
                             <Protected authentication={true}>
@@ -102,7 +94,15 @@ const router = createBrowserRouter([
                                 <Product />
                             </Protected>
                         ),
-                    }
+                    },
+                    {
+                        path: "/user/add-product",
+                        element: (
+                            <Protected authentication={true}>
+                                <AddUpdateProduct />
+                            </Protected>
+                        ),
+                    },
                 ],
             },
             {

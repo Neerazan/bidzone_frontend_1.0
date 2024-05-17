@@ -12,7 +12,9 @@
     background-size: cover;
 }
 
-/* .profile-page {
-    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd39l2hkdp2esp1.cloudfront.net%2Fimg%2Feps%2FE2972_2x%2Fc%2FE2972_02.jpg%3F20160614045745&f=1&nofb=1&ipt=85086f64e350c84030a1c857360de1e6acd6dd4ca5b593ddde8a6cf63ab1197b&ipo=images");
+.profile-page {
+    /* background-image: url("https://www.creativefabrica.com/wp-content/uploads/2022/03/19/White-abstract-background-design-Graphics-27460023-1.jpg"); */
+    /* make background image transparent */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.7)), url("https://www.creativefabrica.com/wp-content/uploads/2022/03/19/White-abstract-background-design-Graphics-27460023-1.jpg");
     background-size: cover;
-} */
+}
