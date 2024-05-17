@@ -3,19 +3,11 @@ import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { BsBoxSeam, BsBagHeart, BsPerson } from "react-icons/bs"
 import { IconContext } from "react-icons"
-import { fetchBalance } from "../../store/common/BalanceSlice"
-import { useDispatch } from "react-redux"
-import { useEffect } from "react"
 
 const Sidebar = () => {
     const user = useSelector((state) => state.auth.userData)
-    const balance = useSelector((state) => state.balance.balance)
-    const accessKey = useSelector((state) => state.auth.accessKey)
-    const dispatch = useDispatch()
-    
-    useEffect(() => {
-        if (!balance && user)  dispatch(fetchBalance({accessKey, customer_id: user.id}))
-    }, [user, balance, accessKey])
+    const balance = useSelector((state) => state.auth.userData.user_balance)
+
 
     return (
         <div className="flex flex-row min-h-[90vh] h-full">

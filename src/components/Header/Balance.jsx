@@ -1,17 +1,9 @@
 import React from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { fetchBalance } from "../../store/common/BalanceSlice"
+import { useSelector } from "react-redux"
 
 function Balance() {
-    const user = useSelector((state) => state.auth.userData)
-    const balance = useSelector((state) => state.balance.balance)
-    const accessKey = useSelector((state) => state.auth.accessKey)
-    
-    const dispatch = useDispatch()
+    const balance = useSelector((state) => state.auth.userData.user_balance)
 
-    if(!balance) {
-        dispatch(fetchBalance({ accessKey:accessKey, customer_id:user.id }))
-    }
 
     // Function to format the balance as currency
     const formatCurrency = (amount) => {
