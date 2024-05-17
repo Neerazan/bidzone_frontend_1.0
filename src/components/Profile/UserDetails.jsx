@@ -1,22 +1,41 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Input } from "../index"
 import { useForm } from "react-hook-form"
+import { useSelector } from "react-redux"
+import { useMutation } from "react-query"
 
 function UserDetails() {
+    
+    const userData = useSelector((state) => state.auth.userData)
+
     const { register, handleSubmit } = useForm({
         defaultValues: {
-            firstName: "Nirajan",
-            lastName: "Dhakal",
-            email: "neerajan334@gmail.com",
-            username: "Neerazan",
-            phone: "9840294335",
-            dob: "2001-09-26",
+            firstName: `${userData?.first_name}` || "",
+            lastName: `${userData?.last_name}` || "",
+            email: `${userData?.email}` || "",
+            username: `${userData?.username}` || "",
+            phone: `${userData?.phone}` || "",
+            dob: userData?.birth_date || "",
         },
     })
 
+    const updateUserMutation = useMutation(async (data) => {
+        console.log("Updating user data:", data)
+        }
+    )
+
+    const updateUser = async (data) => {
+        try {
+            await updateUserMutation.mutateAsync(data)
+        } catch (error) {
+            console.log("Error updating user data:", error)
+        }
+    }
+
+
     return (
         <>
-            <form className="items-center mt-8 sm:mt-14 text-[#202142]">
+            <form className="items-center mt-8 sm:mt-14 text-[#202142]" onSubmit={handleSubmit(updateUser)}>
                 <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                     <div className="w-full">
                         <Input
@@ -39,6 +58,7 @@ function UserDetails() {
                 <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                     <div className="w-full">
                         <Input
+                            disabled
                             label="Username"
                             className="border border-gray-400 rounded-md p-2.5 w-full text-sm text-gray-900 outline-none focus:border-blue-400"
                             {...register("username")}
@@ -69,6 +89,7 @@ function UserDetails() {
                         <Input
                             label="Date of Birth"
                             type="date"
+                            format="yyyy-mm-dd"
                             className="border border-gray-400 rounded-md p-2.5 w-full text-sm text-gray-900 outline-none focus:border-blue-400"
                             {...register("dob")}
                         />
