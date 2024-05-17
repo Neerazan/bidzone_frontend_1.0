@@ -31,7 +31,7 @@ function Products() {
         if (selectAll) {
             setSelectedItems([])
         } else {
-            setSelectedItems(Array.from({ length: 5 }, (_, i) => i)) // Assuming 5 items
+            setSelectedItems(Array.from({ length: 10 }, (_, i) => i)) // Assuming 5 items
         }
         setSelectAll(!selectAll)
     }
@@ -217,8 +217,8 @@ function Products() {
                         </button>
                     </form>
 
-                    <span className="text-gray-700 font-semibold mt-0.5">
-                        {selectedItems.length} of 8 selected
+                    <span className="text-gray-700 mt-0.5">
+                        {selectedItems.length} of 10 selected
                     </span>
                 </div>
 
@@ -319,7 +319,7 @@ function Products() {
                         </tbody>
                     </table>
                     <div className="border border-x-0 border-y-1 border-gray-400 py-1 px-3 mt-4 text-gray-500">
-                        8 Products
+                        10 Products
                     </div>
                 </div>
             </div>
