@@ -307,7 +307,7 @@ function Products() {
                                     <td className="px-4 py-2">
                                         {product.price}
                                     </td>
-                                    <td className="px-4 py-2">Electronics</td>
+                                    <td className="px-4 py-2">{product.collection.title}</td>
                                     <td className="px-4 py-2">
                                         <span
                                             className={`${product.in_auction ? "text-green-600" : "text-red-600"}`}
