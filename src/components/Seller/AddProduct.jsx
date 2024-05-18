@@ -5,12 +5,14 @@ import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 import { useMutation } from "react-query"
 import { fetchCollections } from "../../store/common/collectionSlice"
+import { useNavigate } from "react-router-dom"
 
 function AddProduct({ product }) {
     const dispatch = useDispatch()
     const accessKey = useSelector((state) => state.auth.accessKey)
     const user = useSelector((state) => state.auth.userData)
     const collections = useSelector((state) => state.collection.collections)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!collections || collections.length === 0) {
@@ -38,20 +40,21 @@ function AddProduct({ product }) {
                     },
                 }
             )
-            console.log(`Product added successfully: ${response.data}`)
+            // console.log(`Product added successfully: ${response.data}`)
             return response.data
         },
         {
             onSuccess: (response, { formData }) => {
-                console.log("Product added successfully inside on success")
+                // console.log("Product added successfully inside on success")
                 if (formData.get("image")) {
                     const productId = response.id
                     imageMutation.mutate({
                         images: formData.getAll("image"),
                         productId,
                     })
+                    reset()
+                    navigate("/user/products")
                 } else {
-                    // navigate("/seller/products")
                     console.log("product added successfully")
                 }
             },
@@ -62,7 +65,7 @@ function AddProduct({ product }) {
     )
 
     const imageMutation = useMutation(async ({ images, productId }) => {
-        console.log("Inside image mutation")
+        
         const formDataArray = Array.from(images) // Convert FileList to array
         const promises = formDataArray.map(async (img) => {
             try {
@@ -78,7 +81,6 @@ function AddProduct({ product }) {
                         },
                     }
                 )
-                // console.log("Image uploaded successfully");
             } catch (error) {
                 console.log(error)
             }
@@ -87,7 +89,7 @@ function AddProduct({ product }) {
         // navigate("/seller/products");
     })
 
-    const { register, handleSubmit, setValue, control, getValues, watch } =
+    const { register, handleSubmit, setValue, control, getValues, watch, reset } =
         useForm({
             defaultValues: {
                 title: product?.title || "",
@@ -116,9 +118,8 @@ function AddProduct({ product }) {
         formData.append("description", data.description)
         formData.append("slug", data.slug)
         formData.append("price", data.price)
-        formData.append("collection", data.collection)
-        console.log(`Image: ${data.image}`)
-        console.log(`Image Array: ${Array.isArray(data.image)}`)
+        formData.append("collection_id", data.collection_id)
+        console.log(`Collection: ${data.collection_id}`)
 
         if (data.image instanceof FileList) {
             const imageArray = Array.from(data.image) // Convert FileList to array
@@ -166,7 +167,7 @@ function AddProduct({ product }) {
 
                 <RTE
                     label="Description"
-                    name="content"
+                    name="description"
                     control={control}
                     defaultValue={getValues("description")}
                 />
@@ -193,7 +194,7 @@ function AddProduct({ product }) {
                     options={collections}
                     label="Category"
                     className="mb-4"
-                    {...register("collection", { required: true })}
+                    {...register("collection_id", { required: true })}
                 />
                 <Button
                     type="submit"
