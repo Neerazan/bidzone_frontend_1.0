@@ -212,7 +212,7 @@ function Products() {
                             <option value="">------------------------</option>
                             <option value="">Delete selected products</option>
                         </select>
-                        <button className="border border-gray-400 px-2 py-0.5 mx-2 rounded-sm hover:border-gray-600">
+                        <button className="border border-gray-400 px-1 py-0.5 mx-2 rounded-sm hover:border-gray-600 text-sm">
                             Go
                         </button>
                     </form>

@@ -4,6 +4,7 @@ import collectionReducer from "./common/collectionSlice";
 import wishlistReducer from "./common/wishlistSlice";
 import BalanceReducer from "./common/BalanceSlice";
 import QnASlice from "./Auction/QnASlice";
+import productSlice from "./productSlice";
 
 const store = configureStore({
     reducer :{
@@ -12,6 +13,7 @@ const store = configureStore({
         wishlist: wishlistReducer,
         balance: BalanceReducer,
         qna: QnASlice,
+        product: productSlice,
     },
 })
 
