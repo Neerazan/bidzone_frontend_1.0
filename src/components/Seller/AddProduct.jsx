@@ -5,14 +5,19 @@ import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 import { useMutation } from "react-query"
 import { fetchCollections } from "../../store/common/collectionSlice"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
-function AddProduct({ product }) {
+function AddProduct() {
     const dispatch = useDispatch()
     const accessKey = useSelector((state) => state.auth.accessKey)
     const user = useSelector((state) => state.auth.userData)
     const collections = useSelector((state) => state.collection.collections)
     const navigate = useNavigate()
+
+    const { slug } = useParams()
+    const product = useSelector((state) =>
+        state.product.products.results.find((product) => product.slug === slug)
+    )
 
     useEffect(() => {
         if (!collections || collections.length === 0) {
@@ -65,7 +70,6 @@ function AddProduct({ product }) {
     )
 
     const imageMutation = useMutation(async ({ images, productId }) => {
-        
         const formDataArray = Array.from(images) // Convert FileList to array
         const promises = formDataArray.map(async (img) => {
             try {
@@ -89,17 +93,24 @@ function AddProduct({ product }) {
         // navigate("/seller/products");
     })
 
-    const { register, handleSubmit, setValue, control, getValues, watch, reset } =
-        useForm({
-            defaultValues: {
-                title: product?.title || "",
-                description: product?.description || "",
-                slug: product?.slug || "",
-                price: product?.price || "",
-                collection: product?.collection || "",
-                images: product?.images || [],
-            },
-        })
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        control,
+        getValues,
+        watch,
+        reset,
+    } = useForm({
+        defaultValues: {
+            title: product?.title || "",
+            description: product?.description || "",
+            slug: product?.slug || "",
+            price: product?.price || "",
+            collection: product?.collection.id || "",
+            images: product?.images || [],
+        },
+    })
 
     useEffect(() => {
         const subscription = watch((value, { name }) => {
@@ -177,25 +188,28 @@ function AddProduct({ product }) {
                     label="Featured Image"
                     type="file"
                     className="mb-4"
+                    alt="Featured Image"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     multiple={true}
                     {...register("image", { required: !product })}
                 />
                 {product && (
-                    <div className="w-full mb-4">
+                    <div className="h-24 w-24 mb-4">
                         <img
-                            src={product.featuredImage} // You need to provide the correct source for the image here
+                            src={`http://127.0.0.1:8000/${product.images[0].image}/`} // You need to provide the correct source for the image here
                             alt={product.title}
                             className="rounded-lg"
                         />
                     </div>
                 )}
                 <Select
+                    value={product ? product.collection.id : ""}
                     options={collections}
                     label="Category"
                     className="mb-4"
                     {...register("collection_id", { required: true })}
                 />
+
                 <Button
                     type="submit"
                     bgColor={product ? "bg-green-500" : undefined}
