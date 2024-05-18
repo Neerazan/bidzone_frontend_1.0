@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { IoMdAdd } from "react-icons/io"
-import { MdCancel } from "react-icons/md"
+import { MdCancel, MdCheckCircle } from "react-icons/md"
 import { IconContext } from "react-icons"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchProducts } from "../../store/productSlice"
@@ -270,7 +270,7 @@ function Products() {
                             </tr>
                         </thead>
                         <tbody className="">
-                            {products.results.map((product) => (
+                            {products?.results?.map((product) => (
                                 <tr
                                     key={product.id}
                                     className={`${
@@ -309,18 +309,26 @@ function Products() {
                                     </td>
                                     <td className="px-4 py-2">Electronics</td>
                                     <td className="px-4 py-2">
-                                        <IconContext.Provider
-                                            value={{
-                                                color: "red",
-                                                size: "1.2em",
-                                                className: "mx-auto my-auto",
-                                            }}
+                                        <span
+                                            className={`${product.in_auction ? "text-green-600" : "text-red-600"}`}
                                         >
-                                            <MdCancel />
-                                        </IconContext.Provider>
+                                            <IconContext.Provider
+                                                value={{
+                                                    size: "1.2em",
+                                                    className:
+                                                        "mx-auto my-auto",
+                                                }}
+                                            >
+                                                {product.in_auction ? (
+                                                    <MdCheckCircle />
+                                                ) : (
+                                                    <MdCancel />
+                                                )}
+                                            </IconContext.Provider>
+                                        </span>
                                     </td>
                                     <td className="px-4 py-2">
-                                        <button className="flex px-2 py-1 bg-green-600 text-white rounded-sm border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 ease-in-out">
+                                        <button className="flex px-2 py-1 bg-blue-600 text-white rounded-sm border border-blue-600 hover:bg-white hover:text-blue-600 transition duration-300 ease-in-out">
                                             auction
                                             <span className="ml-1 mt-1">
                                                 <IoMdAdd />
@@ -332,7 +340,7 @@ function Products() {
                         </tbody>
                     </table>
                     <div className="border border-x-0 border-y-1 border-gray-400 py-1 px-3 mt-4 text-gray-500">
-                        {products.results.length} Products
+                        {products?.count} Products
                     </div>
                 </div>
             </div>
