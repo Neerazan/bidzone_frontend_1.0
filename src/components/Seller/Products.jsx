@@ -281,7 +281,7 @@ function Products() {
                     </svg>
                 </div>
                 <Link
-                    className="flex px-4 py-1 bg-gray-500 rounded-md hover:bg-gray-600 cursor-pointer text-white ml-3"
+                    className="flex px-4 py-1 rounded-md cursor-pointer ml-3 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition duration-300 ease-in-out"
                     to="/user/add-product"
                 >
                     <span>Add New Products</span>
@@ -343,7 +343,7 @@ function Products() {
                                     Collection
                                 </th>
                                 <th className="px-4 py-2 font-semibold">
-                                    inAuction
+                                    InAuction
                                 </th>
                                 <th className="px-4 py-2 font-semibold">
                                     Action
@@ -409,9 +409,9 @@ function Products() {
                                         </span>
                                     </td>
                                     <td className="px-4 py-2">
-                                        <button className="flex px-2 py-1 bg-blue-600 text-white rounded-sm border border-blue-600 hover:bg-white hover:text-blue-600 transition duration-300 ease-in-out">
+                                        <button className="flex px-2 py-1 font-semibold bg-blue-600 text-white rounded-sm border border-blue-600 hover:bg-white hover:text-blue-600 transition duration-300 ease-in-out">
                                             auction
-                                            <span className="ml-1 mt-1">
+                                            <span className="ml-1 mt-1 font-semibold">
                                                 <IoMdAdd />
                                             </span>
                                         </button>
