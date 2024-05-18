@@ -302,7 +302,7 @@ function Products() {
                             <option value="delete">Delete selected products</option>
                         </select>
                         <button 
-                            className="border border-gray-400 px-1 py-0.5 mx-2 rounded-sm hover:border-gray-600 text-sm"
+                            className="px-1 py-0.5 mx-2 rounded-sm text-sm border border-gray-400 text-gray-500 hover:bg-gray-400 hover:text-white transition duration-300 ease-in-out"
                             onClick={() => {handleDeleteProducts()}}
                         >
                             Go
