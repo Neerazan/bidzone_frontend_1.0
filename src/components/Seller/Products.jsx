@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import { IoMdAdd } from "react-icons/io"
 import { MdCancel, MdCheckCircle } from "react-icons/md"
 import { IconContext } from "react-icons"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchProducts } from "../../store/productSlice"
+import { deleteProducts } from "../../store/productSlice"
+import { useMutation } from "react-query"
+import axios from "axios"
 
 function Products() {
     const [selectedItems, setSelectedItems] = useState([])
     const [selectAll, setSelectAll] = useState(false)
     const dispatch = useDispatch()
+    const auctionDropdownRef = useRef(null)
 
     const accessKey = useSelector((state) => state.auth.accessKey)
     const customer_id = useSelector((state) => state.auth.userData.id)
@@ -46,6 +50,75 @@ function Products() {
     useEffect(() => {
         dispatch(fetchProducts({ accessKey, customer_id }))
     }, [dispatch, accessKey, customer_id])
+
+
+    const deleteProductMutation = useMutation(
+        async ({ customerId, productId, accessKey }) => {
+            try {
+                const response = await axios.delete(`http://127.0.0.1:8000/auction/customers/${customerId}/products/${productId}/`, {
+                    headers: {
+                        Authorization: `JWT ${accessKey}`
+                    }
+                })
+                return response.data
+            } catch (error) {
+                console.log("Error deleting a product:", error)
+            }
+        }
+    )
+
+    const bulkDeleteProductsMutation = useMutation(
+        async ({ customerId, productIds, accessKey }) => {
+            try {
+                const response = await axios.post(`http://127.0.0.1:8000/auction/customers/${customerId}/products/bulk-delete/`,
+                { "ids": productIds },
+                {
+                    headers: {
+                        Authorization: `JWT ${accessKey}`
+                    }
+                })
+                return response.data
+            } catch (error) {
+                console.log("Error deleting products:", error)
+            }
+        }
+    )
+
+    const handleDeleteProducts = () => {
+        if (auctionDropdownRef.current.value === "delete") {
+            if (selectedItems.length === 1) {
+                const productId = selectedItems[0]
+                deleteProductMutation.mutate(
+                    { 
+                        customerId: customer_id, 
+                        productId, selectedItems,
+                        accessKey
+                    },
+                    {
+                        onSuccess: (data) => {
+                            dispatch(deleteProducts({ productsIds: selectedItems }))
+                        }
+                    }
+                )
+
+            } else if(selectedItems.length > 1){
+                bulkDeleteProductsMutation.mutate(
+                    { 
+                        customerId: customer_id, 
+                        productIds: selectedItems, 
+                        accessKey 
+                    },
+                    {
+                        onSuccess: (data) => {
+                            dispatch(deleteProducts({ productsIds: selectedItems }))
+                            alert('data.detail')
+                        }
+                    }
+                )
+            }
+        }
+    }
+
 
     return (
         <>
@@ -215,18 +288,22 @@ function Products() {
                     <span className="font-semibold text-gray-600">
                         Actions:
                     </span>
-                    <form className="max-w-sm ml-3 flex">
+                    <div className="max-w-sm ml-3 flex">
                         <select
                             id="countries"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm py-0.5 px-1 rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full"
+                            ref={auctionDropdownRef}
                         >
                             <option value="">------------------------</option>
-                            <option value="">Delete selected products</option>
+                            <option value="delete">Delete selected products</option>
                         </select>
-                        <button className="border border-gray-400 px-1 py-0.5 mx-2 rounded-sm hover:border-gray-600 text-sm">
+                        <button 
+                            className="border border-gray-400 px-1 py-0.5 mx-2 rounded-sm hover:border-gray-600 text-sm"
+                            onClick={() => {handleDeleteProducts()}}
+                        >
                             Go
                         </button>
-                    </form>
+                    </div>
 
                     <span className="text-gray-700 mt-0.5">
                         {selectedItems.length} of {products?.count} selected
@@ -238,7 +315,7 @@ function Products() {
                     <table className="w-full">
                         <thead>
                             <tr
-                                className="bg-blue-50 text-gray-600"
+                                className="bg-sky-100 text-gray-600"
                                 style={{ textAlign: "left" }}
                             >
                                 <th className="px-2 py-2">
@@ -270,17 +347,17 @@ function Products() {
                             </tr>
                         </thead>
                         <tbody className="">
-                            {products?.results?.map((product) => (
+                            {products?.results?.map((product, index) => (
                                 <tr
                                     key={product.id}
                                     className={`${
                                         isSelected(product.id)
                                             ? "bg-sky-200"
-                                            : product.id % 2 === 0
+                                            : index % 2 === 0
                                             ? "bg-white"
-                                            : "bg-sky-50"
+                                            : "bg-sky-100"
                                     } text-sm text-gray-700`}
-                                    onClick={() => handleSelectItem(product.id)}
+                                    // onClick={() => handleSelectItem(product.id)}
                                 >
                                     <td className="px-2 py-2">
                                         <input
@@ -293,11 +370,11 @@ function Products() {
                                         />
                                     </td>
                                     <td className="px-2 py-2">
-                                        <div className="flex justify-center items-center w-16 h-26 mx-auto">
+                                        <div className="flex justify-center items-center mx-auto">
                                             <img
-                                                src={`http://127.0.0.1:8000/${product.images[0].image}`}
+                                                src={`http://127.0.0.1:8000/${product.images[0]?.image}`}
                                                 alt="product image"
-                                                className="object-cover rounded-sm"
+                                                className="w-14 h-14 object-cover rounded-md border border-gray-300"
                                             />
                                         </div>
                                     </td>

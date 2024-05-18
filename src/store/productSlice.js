@@ -36,7 +36,11 @@ const productSlice = createSlice({
             state.products = action.payload
         },
         deleteProducts: (state, action) => {
-            state.products = state.products.filter((product) => product.id !== action.payload)
+            const productIdsToDelete = action.payload.productsIds;
+            state.products.results = state.products.results.filter(
+                (product) => !productIdsToDelete.includes(product.id)
+            );
+            state.products.count -= productIdsToDelete.length;
         }
     },
     extraReducers: (builder) => {
