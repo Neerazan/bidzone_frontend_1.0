@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect } from "react"
+import React, { useState, useCallback, useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { RTE, Input, Button, Select } from "../index"
+import { RTE, Input, Button, Select, ConfirmationModal } from "../index"
 import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 import { useMutation } from "react-query"
@@ -11,6 +11,9 @@ import { editProducts } from "../../store/productSlice"
 
 
 function AddProduct() {
+    const [showModal, setShowModal] = useState(false)
+    const [imageIdToDelete, setImageIdToDelete] = useState(null)
+
     const dispatch = useDispatch()
     const accessKey = useSelector((state) => state.auth.accessKey)
     const user = useSelector((state) => state.auth.userData)
@@ -149,7 +152,7 @@ function AddProduct() {
     }, [watch, slugTransform, setValue])
 
     const onSubmit = (data) => {
-        console.log(`Inslide on submit function`)
+        console.log(`Inside on submit function`)
         const formData = new FormData()
         formData.append("title", data.title)
         formData.append("description", data.description)
@@ -170,15 +173,21 @@ function AddProduct() {
     }
 
     const handleImageDelete = (imageId) => {
-        try {
+        setImageIdToDelete(imageId)
+        setShowModal(true)
+    }
+
+    const confirmDeleteImage = () => {
+        setShowModal(false)
+        if (imageIdToDelete) {
             deleteImageMutation.mutate(
                 {
-                    imageId,
+                    imageId: imageIdToDelete,
                 },
                 {
                     onSuccess: () => {
                         const updatedImages = product.images.filter(
-                            (image) => image.id !== imageId
+                            (image) => image.id !== imageIdToDelete
                         )
                         const updatedProduct = {
                             ...product,
@@ -188,99 +197,112 @@ function AddProduct() {
                     },
                 }
             )
-        } catch (error) {
-            console.log(`Error deleting image: ${error}`)
         }
     }
 
+    const cancelDeleteImage = () => {
+        setShowModal(false)
+        setImageIdToDelete(null)
+    }
+
     return (
-        <form
-            className="flex flex-wrap h-[90vh]"
-            onSubmit={handleSubmit(onSubmit)}
-        >
-            <div className="w-2/3 px-2">
-                <Input
-                    label="Title"
-                    placeholder="Title"
-                    className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
-                    {...register("title", { required: true })}
-                />
-                <Input
-                    label="Slug"
-                    placeholder="Slug"
-                    className="mb-4 border border-gray-300 rounded-sm focus:outline-none focus:border-blue-600"
-                    {...register("slug", { required: true })}
-                    onInput={(e) => {
-                        setValue("slug", slugTransform(e.currentTarget.value), {
-                            shouldValidate: true,
-                        })
-                    }}
-                />
-                <Input
-                    label="Price"
-                    placeholder="Price"
-                    type="number"
-                    className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
-                    {...register("price", { required: true })}
-                />
-                <RTE
-                    label="Description"
-                    name="description"
-                    control={control}
-                    defaultValue={getValues("description")}
-                />
-            </div>
-            <div className="w-1/3 px-2">
-                <Input
-                    label="Featured Image"
-                    type="file"
-                    className="mb-4"
-                    alt="Featured Image"
-                    accept="image/png, image/jpg, image/jpeg, image/gif"
-                    multiple={true}
-                    {...register("image", { required: !product })}
-                />
-                {product && (
-                    <div className="flex h-auto justify-center items-start gap-1 p-2">
-                        {product.images.map((image) => (
-                            <div
-                                key={image.id}
-                                className="h-auto flex justify-center items-center relative"
-                            >
-                                <div>
-                                    <button
-                                        type="button"
-                                        className="text-white font-semibold absolute p-0.5 rounded-full bg-red-600 border-none -right-1 -top-2"
-                                        onClick={() => {
-                                            handleImageDelete(image.id)
-                                        }}
-                                    >
-                                        <RxCross2 />
-                                    </button>
+        <>
+            <form
+                className="flex flex-wrap h-[90vh]"
+                onSubmit={handleSubmit(onSubmit)}
+            >
+                <div className="w-2/3 px-2">
+                    <Input
+                        label="Title"
+                        placeholder="Title"
+                        className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
+                        {...register("title", { required: true })}
+                    />
+                    <Input
+                        label="Slug"
+                        placeholder="Slug"
+                        className="mb-4 border border-gray-300 rounded-sm focus:outline-none focus:border-blue-600"
+                        {...register("slug", { required: true })}
+                        onInput={(e) => {
+                            setValue(
+                                "slug",
+                                slugTransform(e.currentTarget.value),
+                                {
+                                    shouldValidate: true,
+                                }
+                            )
+                        }}
+                    />
+                    <Input
+                        label="Price"
+                        placeholder="Price"
+                        type="number"
+                        className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
+                        {...register("price", { required: true })}
+                    />
+                    <RTE
+                        label="Description"
+                        name="description"
+                        control={control}
+                        defaultValue={getValues("description")}
+                    />
+                </div>
+                <div className="w-1/3 px-2">
+                    <Input
+                        label="Featured Image"
+                        type="file"
+                        className="mb-4"
+                        alt="Featured Image"
+                        accept="image/png, image/jpg, image/jpeg, image/gif"
+                        multiple={true}
+                        {...register("image", { required: !product })}
+                    />
+                    {product && (
+                        <div className="flex h-auto justify-center items-start gap-1 p-2">
+                            {product.images.map((image) => (
+                                <div
+                                    key={image.id}
+                                    className="h-auto flex justify-center items-center relative"
+                                >
+                                    <div>
+                                        <button
+                                            type="button"
+                                            className="text-white font-semibold absolute p-0.5 rounded-full bg-red-600 border-none -right-1 -top-2"
+                                            onClick={() => {
+                                                handleImageDelete(image.id)
+                                            }}
+                                        >
+                                            <RxCross2 />
+                                        </button>
+                                    </div>
+                                    <img
+                                        src={`http://127.0.0.1:8000/${image.image}/`}
+                                        alt={product.title}
+                                        className="h-24 w-24 object-cover rounded-md"
+                                    />
                                 </div>
-                                <img
-                                    src={`http://127.0.0.1:8000/${image.image}/`}
-                                    alt={product.title}
-                                    className="h-24 w-24 object-cover rounded-md"
-                                />
-                            </div>
-                        ))}
-                    </div>
-                )}
-                <Select
-                    value={product ? product.collection.id : ""}
-                    options={collections}
-                    label="Category"
-                    className="mb-4"
-                    {...register("collection_id", { required: true })}
-                />
-                <Button
-                    className="w-full rounded-sm py-1 font-semibold hover:bg-green-700 bg-green-600"
-                >
-                    {product ? "Update" : "Save"}
-                </Button>
-            </div>
-        </form>
+                            ))}
+                        </div>
+                    )}
+                    <Select
+                        value={product ? product.collection.id : ""}
+                        options={collections}
+                        label="Category"
+                        className="mb-4"
+                        {...register("collection_id", { required: true })}
+                    />
+                    <Button className="w-full rounded-sm py-1 font-semibold hover:bg-green-700 bg-green-600">
+                        {product ? "Update" : "Save"}
+                    </Button>
+                </div>
+            </form>
+            <ConfirmationModal
+                show={showModal}
+                onConfirm={confirmDeleteImage}
+                onCancel={cancelDeleteImage}
+                message="Are you sure you want to delete this image?"
+            />
+        </>
     )
 }
 
