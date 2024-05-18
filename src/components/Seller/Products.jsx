@@ -8,6 +8,7 @@ import { fetchProducts } from "../../store/productSlice"
 import { deleteProducts } from "../../store/productSlice"
 import { useMutation } from "react-query"
 import axios from "axios"
+import { set } from "react-hook-form"
 
 function Products() {
     const [selectedItems, setSelectedItems] = useState([])
@@ -97,6 +98,8 @@ function Products() {
                     {
                         onSuccess: (data) => {
                             dispatch(deleteProducts({ productsIds: selectedItems }))
+                            setSelectedItems([])
+                            setSelectAll(false)
                         }
                     }
                 )
@@ -111,7 +114,8 @@ function Products() {
                     {
                         onSuccess: (data) => {
                             dispatch(deleteProducts({ productsIds: selectedItems }))
-                            alert('data.detail')
+                            setSelectedItems([])
+                            setSelectAll(false)
                         }
                     }
                 )
