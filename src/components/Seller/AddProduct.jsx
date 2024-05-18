@@ -6,6 +6,9 @@ import axios from "axios"
 import { useMutation } from "react-query"
 import { fetchCollections } from "../../store/common/collectionSlice"
 import { useNavigate, useParams } from "react-router-dom"
+import { RxCross2 } from "react-icons/rx"
+import { editProducts } from "../../store/productSlice"
+
 
 function AddProduct() {
     const dispatch = useDispatch()
@@ -13,8 +16,8 @@ function AddProduct() {
     const user = useSelector((state) => state.auth.userData)
     const collections = useSelector((state) => state.collection.collections)
     const navigate = useNavigate()
-
     const { slug } = useParams()
+
     const product = useSelector((state) =>
         state.product.products.results.find((product) => product.slug === slug)
     )
@@ -34,33 +37,40 @@ function AddProduct() {
     }, [])
 
     const mutation = useMutation(
-        async ({ formData }) => {
-            const response = await axios.post(
-                `http://127.0.0.1:8000/auction/customers/${user.id}/products/`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        Authorization: `JWT ${accessKey}`,
-                    },
-                }
-            )
-            // console.log(`Product added successfully: ${response.data}`)
+        async ({ formData, isUpdate }) => {
+            const url = isUpdate
+                ? `http://127.0.0.1:8000/auction/customers/${user.id}/products/${product.id}/`
+                : `http://127.0.0.1:8000/auction/customers/${user.id}/products/`
+            const method = isUpdate ? "put" : "post"
+            const response = await axios[method](url, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `JWT ${accessKey}`,
+                },
+            })
             return response.data
         },
         {
-            onSuccess: (response, { formData }) => {
-                // console.log("Product added successfully inside on success")
+            onSuccess: (response, { formData, isUpdate }) => {
                 if (formData.get("image")) {
                     const productId = response.id
-                    imageMutation.mutate({
-                        images: formData.getAll("image"),
-                        productId,
-                    })
-                    reset()
-                    navigate("/user/products")
+                    imageMutation.mutate(
+                        {
+                            images: formData.getAll("image"),
+                            productId,
+                        },
+                        {
+                            onSuccess: () => {
+                                if (!isUpdate) {
+                                    reset()
+                                }
+                            },
+                        }
+                    )
                 } else {
-                    console.log("product added successfully")
+                    if (!isUpdate) {
+                        reset()
+                    }
                 }
             },
             onError: (error) => {
@@ -68,6 +78,22 @@ function AddProduct() {
             },
         }
     )
+
+    const deleteImageMutation = useMutation(async ({ imageId }) => {
+        try {
+            const response = await axios.delete(
+                `http://localhost:8000/auction/customers/${user.id}/products/${product.id}/images/${imageId}/`,
+                {
+                    headers: {
+                        Authorization: `JWT ${accessKey}`,
+                    },
+                }
+            )
+            return response.data
+        } catch (error) {
+            console.log(error)
+        }
+    })
 
     const imageMutation = useMutation(async ({ images, productId }) => {
         const formDataArray = Array.from(images) // Convert FileList to array
@@ -90,7 +116,6 @@ function AddProduct() {
             }
         })
         await Promise.all(promises)
-        // navigate("/seller/products");
     })
 
     const {
@@ -124,13 +149,13 @@ function AddProduct() {
     }, [watch, slugTransform, setValue])
 
     const onSubmit = (data) => {
+        console.log(`Inslide on submit function`)
         const formData = new FormData()
         formData.append("title", data.title)
         formData.append("description", data.description)
         formData.append("slug", data.slug)
         formData.append("price", data.price)
         formData.append("collection_id", data.collection_id)
-        console.log(`Collection: ${data.collection_id}`)
 
         if (data.image instanceof FileList) {
             const imageArray = Array.from(data.image) // Convert FileList to array
@@ -141,7 +166,31 @@ function AddProduct() {
             formData.append("image", data.image)
         }
 
-        mutation.mutate({ formData })
+        mutation.mutate({ formData, isUpdate: !!product })
+    }
+
+    const handleImageDelete = (imageId) => {
+        try {
+            deleteImageMutation.mutate(
+                {
+                    imageId,
+                },
+                {
+                    onSuccess: () => {
+                        const updatedImages = product.images.filter(
+                            (image) => image.id !== imageId
+                        )
+                        const updatedProduct = {
+                            ...product,
+                            images: updatedImages,
+                        }
+                        dispatch(editProducts(updatedProduct))
+                    },
+                }
+            )
+        } catch (error) {
+            console.log(`Error deleting image: ${error}`)
+        }
     }
 
     return (
@@ -167,7 +216,6 @@ function AddProduct() {
                         })
                     }}
                 />
-
                 <Input
                     label="Price"
                     placeholder="Price"
@@ -175,7 +223,6 @@ function AddProduct() {
                     className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
                     {...register("price", { required: true })}
                 />
-
                 <RTE
                     label="Description"
                     name="description"
@@ -194,12 +241,30 @@ function AddProduct() {
                     {...register("image", { required: !product })}
                 />
                 {product && (
-                    <div className="h-24 w-24 mb-4">
-                        <img
-                            src={`http://127.0.0.1:8000/${product.images[0].image}/`} // You need to provide the correct source for the image here
-                            alt={product.title}
-                            className="rounded-lg"
-                        />
+                    <div className="flex h-auto justify-center items-start gap-1 p-2">
+                        {product.images.map((image) => (
+                            <div
+                                key={image.id}
+                                className="h-auto flex justify-center items-center relative"
+                            >
+                                <div>
+                                    <button
+                                        type="button"
+                                        className="text-white font-semibold absolute p-0.5 rounded-full bg-red-600 border-none -right-1 -top-2"
+                                        onClick={() => {
+                                            handleImageDelete(image.id)
+                                        }}
+                                    >
+                                        <RxCross2 />
+                                    </button>
+                                </div>
+                                <img
+                                    src={`http://127.0.0.1:8000/${image.image}/`}
+                                    alt={product.title}
+                                    className="h-24 w-24 object-cover rounded-md"
+                                />
+                            </div>
+                        ))}
                     </div>
                 )}
                 <Select
@@ -209,10 +274,7 @@ function AddProduct() {
                     className="mb-4"
                     {...register("collection_id", { required: true })}
                 />
-
                 <Button
-                    type="submit"
-                    bgColor={product ? "bg-green-500" : undefined}
                     className="w-full rounded-sm py-1 font-semibold hover:bg-green-700 bg-green-600"
                 >
                     {product ? "Update" : "Save"}

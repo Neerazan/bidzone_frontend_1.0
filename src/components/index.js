@@ -41,6 +41,7 @@ import QnA from "./Product/QnA"
 import Address from "./Profile/Address"
 import BalanceDetails from "./Profile/BalanceDetails"
 import UserDetails from "./Profile/UserDetails"
+import ConfirmationModal from "./ConfirmationModal"
 
 
 export {
@@ -86,5 +87,6 @@ export {
     LoginRegisterBtn,
     QnA,
     Address,
-    BalanceDetails
+    BalanceDetails,
+    ConfirmationModal,
 }
