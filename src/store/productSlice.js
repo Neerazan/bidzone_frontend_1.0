@@ -41,7 +41,7 @@ const productSlice = createSlice({
                 (product) => !productIdsToDelete.includes(product.id)
             );
             state.products.count -= productIdsToDelete.length;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder

@@ -8,7 +8,7 @@ import { fetchProducts } from "../../store/productSlice"
 import { deleteProducts } from "../../store/productSlice"
 import { useMutation } from "react-query"
 import axios from "axios"
-import { set } from "react-hook-form"
+
 
 function Products() {
     const [selectedItems, setSelectedItems] = useState([])
@@ -383,12 +383,19 @@ function Products() {
                                         </div>
                                     </td>
                                     <td className="px-4 py-2">
-                                        {product.title}
+                                        <Link 
+                                            className="cursor-pointer hover:underline text-[#264b5d] hover:text-[#377792]"
+                                            to={`/user/update-product/${product.slug}`}
+                                        >
+                                            {product.title}
+                                        </Link>
                                     </td>
                                     <td className="px-4 py-2">
                                         {product.price}
                                     </td>
-                                    <td className="px-4 py-2">{product.collection.title}</td>
+                                    <td className="px-4 py-2">
+                                        {product.collection.title}
+                                    </td>
                                     <td className="px-4 py-2">
                                         <span
                                             className={`${product.in_auction ? "text-green-600" : "text-red-600"}`}

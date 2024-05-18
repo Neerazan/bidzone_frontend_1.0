@@ -103,6 +103,14 @@ const router = createBrowserRouter([
                             </Protected>
                         ),
                     },
+                    {
+                        path: "/user/update-product/:slug",
+                        element: (
+                            <Protected authentication={true}>
+                                <AddUpdateProduct />
+                            </Protected>
+                        ),
+                    },
                 ],
             },
             {
