@@ -1,40 +1,51 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { IoMdAdd } from "react-icons/io";
-import { MdCancel } from "react-icons/md";
-import { IconContext } from "react-icons";
+import { IoMdAdd } from "react-icons/io"
+import { MdCancel } from "react-icons/md"
+import { IconContext } from "react-icons"
+import { useSelector, useDispatch } from "react-redux"
+import { fetchProducts } from "../../store/productSlice"
 
 function Products() {
     const [selectedItems, setSelectedItems] = useState([])
     const [selectAll, setSelectAll] = useState(false)
+    const dispatch = useDispatch()
+
+    const accessKey = useSelector((state) => state.auth.accessKey)
+    const customer_id = useSelector((state) => state.auth.userData.id)
+    const products = useSelector((state) => state.product.products)
 
     // Function to handle selecting items
-    const handleSelectItem = (index) => {
-        const selectedIndex = selectedItems.indexOf(index)
+    const handleSelectItem = (id) => {
+        const selectedIndex = selectedItems.indexOf(id)
         let newSelected = []
 
         if (selectedIndex === -1) {
-            newSelected = [...selectedItems, index]
+            newSelected = [...selectedItems, id]
         } else {
-            newSelected = selectedItems.filter((item) => item !== index)
+            newSelected = selectedItems.filter((item) => item !== id)
         }
 
         setSelectedItems(newSelected)
-        setSelectAll(selectedItems.length === newSelected.length)
+        setSelectAll(newSelected.length === products.results.length)
     }
 
     // Function to check if item is selected
-    const isSelected = (index) => selectedItems.includes(index)
+    const isSelected = (id) => selectedItems.includes(id)
 
     // Function to handle select all action
     const handleSelectAll = () => {
         if (selectAll) {
             setSelectedItems([])
         } else {
-            setSelectedItems(Array.from({ length: 10 }, (_, i) => i)) // Assuming 5 items
+            setSelectedItems(products.results.map((product) => product.id))
         }
         setSelectAll(!selectAll)
     }
+
+    useEffect(() => {
+        dispatch(fetchProducts({ accessKey, customer_id }))
+    }, [dispatch, accessKey, customer_id])
 
     return (
         <>
@@ -218,7 +229,7 @@ function Products() {
                     </form>
 
                     <span className="text-gray-700 mt-0.5">
-                        {selectedItems.length} of 10 selected
+                        {selectedItems.length} of {products?.count} selected
                     </span>
                 </div>
 
@@ -251,7 +262,7 @@ function Products() {
                                     Collection
                                 </th>
                                 <th className="px-4 py-2 font-semibold">
-                                    In Auction
+                                    inAuction
                                 </th>
                                 <th className="px-4 py-2 font-semibold">
                                     Action
@@ -259,55 +270,57 @@ function Products() {
                             </tr>
                         </thead>
                         <tbody className="">
-                            {Array.from({ length: 10 }).map((_, index) => (
+                            {products.results.map((product) => (
                                 <tr
-                                    key={index}
+                                    key={product.id}
                                     className={`${
-                                        isSelected(index)
+                                        isSelected(product.id)
                                             ? "bg-sky-200"
-                                            : index % 2 === 0
+                                            : product.id % 2 === 0
                                             ? "bg-white"
                                             : "bg-sky-50"
-                                    } text-sm text-gray-700`} // Added mb-2 for bottom margin
-                                    onClick={() => handleSelectItem(index)}
-                                    style={{ marginBottom: '8px' }}
+                                    } text-sm text-gray-700`}
+                                    onClick={() => handleSelectItem(product.id)}
                                 >
                                     <td className="px-2 py-2">
                                         <input
                                             type="checkbox"
                                             className="form-checkbox h-4 w-4 text-blue-600"
-                                            checked={isSelected(index)}
+                                            checked={isSelected(product.id)}
                                             onChange={() =>
-                                                handleSelectItem(index)
+                                                handleSelectItem(product.id)
                                             }
                                         />
                                     </td>
                                     <td className="px-2 py-2">
                                         <div className="flex justify-center items-center w-16 h-26 mx-auto">
                                             <img
-                                                src="https://images.macrumors.com/t/xq3jBq3yK0pzNnG6uyM25WwNbUY=/800x0/smart/article-new/2023/03/iPhone-16-Mock-Header-1.jpg?lossy"
-                                                alt="product"
-                                                // className="object-cover rounded-sm"
+                                                src={`http://127.0.0.1:8000/${product.images[0].image}`}
+                                                alt="product image"
+                                                className="object-cover rounded-sm"
                                             />
                                         </div>
                                     </td>
                                     <td className="px-4 py-2">
-                                        Product Name Product Name Product Name
-                                        Product Name
+                                        {product.title}
                                     </td>
-                                    <td className="px-4 py-2">12,000</td>
+                                    <td className="px-4 py-2">
+                                        {product.price}
+                                    </td>
                                     <td className="px-4 py-2">Electronics</td>
                                     <td className="px-4 py-2">
                                         <IconContext.Provider
-                                            value={{ color: "red", size: "1.2em", className: "mx-auto my-auto"}}
+                                            value={{
+                                                color: "red",
+                                                size: "1.2em",
+                                                className: "mx-auto my-auto",
+                                            }}
                                         >
                                             <MdCancel />
                                         </IconContext.Provider>
                                     </td>
                                     <td className="px-4 py-2">
-                                        <button
-                                            className="flex px-2 py-1 bg-green-600 text-white rounded-sm border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 ease-in-out"
-                                        >
+                                        <button className="flex px-2 py-1 bg-green-600 text-white rounded-sm border border-green-600 hover:bg-white hover:text-green-600 transition duration-300 ease-in-out">
                                             auction
                                             <span className="ml-1 mt-1">
                                                 <IoMdAdd />
@@ -319,7 +332,7 @@ function Products() {
                         </tbody>
                     </table>
                     <div className="border border-x-0 border-y-1 border-gray-400 py-1 px-3 mt-4 text-gray-500">
-                        10 Products
+                        {products.results.length} Products
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { asyncThunkCreator, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 
-export const fetchProducts = asyncThunkCreator(
+export const fetchProducts = createAsyncThunk(
     "user/fetchProducts",
     async ({ accessKey, customer_id }) => {
         try {
