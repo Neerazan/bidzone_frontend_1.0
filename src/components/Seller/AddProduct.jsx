@@ -12,9 +12,11 @@ function AddProduct({ product }) {
     const user = useSelector((state) => state.auth.userData)
     const collections = useSelector((state) => state.collection.collections)
 
-    if(!collections || collections.length === 0) {
-        dispatch(fetchCollections())
-    }
+    useEffect(() => {
+        if (!collections || collections.length === 0) {
+            dispatch(fetchCollections())
+        }
+    }, [collections, dispatch])
 
     const slugTransform = useCallback((value) => {
         if (value && typeof value === "string") {
@@ -36,12 +38,12 @@ function AddProduct({ product }) {
                     },
                 }
             )
-            console.log(`Product added successfully: ${response.data}`);
+            console.log(`Product added successfully: ${response.data}`)
             return response.data
         },
         {
             onSuccess: (response, { formData }) => {
-                console.log("Product added successfully inside on success");
+                console.log("Product added successfully inside on success")
                 if (formData.get("image")) {
                     const productId = response.id
                     imageMutation.mutate({
@@ -50,7 +52,7 @@ function AddProduct({ product }) {
                     })
                 } else {
                     // navigate("/seller/products")
-                    console.log("product added successfully");
+                    console.log("product added successfully")
                 }
             },
             onError: (error) => {
@@ -60,12 +62,12 @@ function AddProduct({ product }) {
     )
 
     const imageMutation = useMutation(async ({ images, productId }) => {
-        console.log("Inside image mutation");
-        const formDataArray = Array.from(images); // Convert FileList to array
+        console.log("Inside image mutation")
+        const formDataArray = Array.from(images) // Convert FileList to array
         const promises = formDataArray.map(async (img) => {
             try {
-                const formData = new FormData();
-                formData.append("image", img);
+                const formData = new FormData()
+                formData.append("image", img)
                 await axios.post(
                     `http://localhost:8000/auction/customers/${user.id}/products/${productId}/images/`,
                     formData,
@@ -75,16 +77,15 @@ function AddProduct({ product }) {
                             Authorization: `JWT ${accessKey}`,
                         },
                     }
-                );
+                )
                 // console.log("Image uploaded successfully");
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
-        });
-        await Promise.all(promises);
+        })
+        await Promise.all(promises)
         // navigate("/seller/products");
-    });
-    
+    })
 
     const { register, handleSubmit, setValue, control, getValues, watch } =
         useForm({
@@ -99,19 +100,14 @@ function AddProduct({ product }) {
         })
 
     useEffect(() => {
-        const unsubscribe = watch("title", (value) => {
-            setValue("slug", slugTransform(value), {
-                shouldValidate: true,
-            })
+        const subscription = watch((value, { name }) => {
+            if (name === "title") {
+                setValue("slug", slugTransform(value.title), {
+                    shouldValidate: true,
+                })
+            }
         })
-
-        // Ensure that unsubscribe is a function before attempting to call it
-        if (typeof unsubscribe === "function") {
-            return () => unsubscribe()
-        }
-
-        // If unsubscribe is not a function, return a no-op function
-        return () => {}
+        return () => subscription.unsubscribe()
     }, [watch, slugTransform, setValue])
 
     const onSubmit = (data) => {
@@ -125,13 +121,11 @@ function AddProduct({ product }) {
         console.log(`Image Array: ${Array.isArray(data.image)}`)
 
         if (data.image instanceof FileList) {
-            // Check if it's a FileList object
             const imageArray = Array.from(data.image) // Convert FileList to array
             imageArray.forEach((img) => {
                 formData.append("image", img)
             })
         } else if (data.image) {
-            // If it's not a FileList but defined, treat it as a single image
             formData.append("image", data.image)
         }
 
@@ -139,18 +133,21 @@ function AddProduct({ product }) {
     }
 
     return (
-        <form className="flex flex-wrap h-[90vh]" onSubmit={handleSubmit(onSubmit)}>
+        <form
+            className="flex flex-wrap h-[90vh]"
+            onSubmit={handleSubmit(onSubmit)}
+        >
             <div className="w-2/3 px-2">
                 <Input
                     label="Title"
                     placeholder="Title"
-                    className="mb-4 rounded-sm border border-gray-300"
+                    className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
                     {...register("title", { required: true })}
                 />
                 <Input
                     label="Slug"
                     placeholder="Slug"
-                    className="mb-4 border border-gray-300 rounded-sm"
+                    className="mb-4 border border-gray-300 rounded-sm focus:outline-none focus:border-blue-600"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
                         setValue("slug", slugTransform(e.currentTarget.value), {
@@ -163,7 +160,7 @@ function AddProduct({ product }) {
                     label="Price"
                     placeholder="Price"
                     type="number"
-                    className="mb-4 rounded-sm border border-gray-300"
+                    className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
                     {...register("price", { required: true })}
                 />
 
