@@ -17,6 +17,7 @@ export const fetchAddress = createAsyncThunk(
                     Authorization: `JWT ${accessKey}`
                 }
             })
+            console.log("Address data:", response.data);
             return response.data
         } catch (error) {
             console.error("Error fetching address data:", error)
@@ -29,7 +30,7 @@ const addressSlice = createSlice({
     initialState,
     reducers: {
         setAddress: (state, action) => {
-            state.addresses = action.payload
+            state.addresses = action.payload.address
         },
         editAddress: (state, action) => {
             state.addresses = action.payload

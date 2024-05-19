@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form"
 import { useMutation, useQueryClient } from "react-query"
 import axios from "axios"
 import { Input } from "../index"
+import { useDispatch } from "react-redux"
+import { setAddress } from "../../store/common/addressSlice"
 
 const AddressFormModal = ({
     isOpen,
@@ -12,6 +14,7 @@ const AddressFormModal = ({
     accessKey,
 }) => {
     const queryClient = useQueryClient()
+    const dispatch = useDispatch()
 
     const {
         register,
@@ -49,12 +52,14 @@ const AddressFormModal = ({
             return response.data
         },
         {
-            onSuccess: () => {
+            onSuccess: (data) => {
                 queryClient.invalidateQueries([
                     "customer",
                     customerId,
                     "address",
                 ])
+                console.log(`Address from frontend: ${data}`);
+                dispatch(setAddress({address: data}))
                 onClose()
             },
             onError: (error) => {
@@ -96,7 +101,7 @@ const AddressFormModal = ({
                             label = "Province"
                             id="province"
                             {...register("province", { required: true })}
-                            className="w-full border border-gray-500 rounded-sm px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-500"
+                            className="w-full border border-gray-500 rounded-sm px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-600"
                             placeholder="Gandaki"
                         />
                         {errors.province && (
@@ -110,7 +115,7 @@ const AddressFormModal = ({
                             label = "District"
                             id="district"
                             {...register("district", { required: true })}
-                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-500"
+                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-600"
                             placeholder="Kaski"
                         />
                         {errors.district && (
@@ -124,7 +129,7 @@ const AddressFormModal = ({
                             label = "Municipality"
                             id="municipality"
                             {...register("municipality", { required: true })}
-                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-500"
+                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-600"
                             placeholder="Pokhara"
                         />
                         {errors.municipality && (
@@ -139,7 +144,7 @@ const AddressFormModal = ({
                             type="number"
                             id="ward"
                             {...register("ward", { required: true })}
-                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-500"
+                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-600"
                             placeholder="12"
                         />
                         {errors.ward && (
@@ -153,7 +158,7 @@ const AddressFormModal = ({
                             label = "Tole"
                             id="tole"
                             {...register("tole", { required: true })}
-                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-500"
+                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-600"
                             placeholder="Fulbari"
                         />
                         {errors.tole && (
@@ -168,7 +173,7 @@ const AddressFormModal = ({
                             type="number"
                             id="zip_code"
                             {...register("zip_code", { required: true })}
-                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-500"
+                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-600"
                             placeholder="33700"
                         />
                         {errors.zip_code && (
@@ -182,7 +187,7 @@ const AddressFormModal = ({
                             label = "Street"
                             id="street"
                             {...register("street", { required: true })}
-                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-500"
+                            className="w-full border border-gray-500 rounded-sm mt-1 px-2 py-1 text-sm outline-none focus:border-indigo-500 text-gray-600"
                             placeholder="Near Nepal Telecom office"
                         />
                         {errors.street && (
