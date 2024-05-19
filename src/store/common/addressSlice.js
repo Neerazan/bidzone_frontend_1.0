@@ -31,9 +31,6 @@ const addressSlice = createSlice({
     reducers: {
         setAddress: (state, action) => {
             state.addresses = action.payload.address
-        },
-        editAddress: (state, action) => {
-            state.addresses = action.payload
         }
     },
     extraReducers: (builder) => {
