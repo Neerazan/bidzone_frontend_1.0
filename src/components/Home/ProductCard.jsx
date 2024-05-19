@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FormattedDate } from "../index"
+import parse from 'html-react-parser';
+
+
 function ProductCard({
     id,
     title,
@@ -17,9 +20,9 @@ function ProductCard({
 
     function truncateText(text, maxLength) {
         if (text.length <= maxLength) {
-            return text;
+            return parse(text);
         } else {
-            return text.slice(0, maxLength) + "...";
+            return parse(text.slice(0, maxLength) + "...");
         }
     }
 
@@ -33,16 +36,16 @@ function ProductCard({
                     className="w-full h-full object-cover object-center shadow"
                     src={`http://127.0.0.1:8000/${image}/`}
                     alt="product image"
-                />1
+                />
 
                 <span className={`absolute top-0 left-0 m-2 rounded-full pb-[1.5px] px-2 text-center text-sm font-medium text-white ${auctionStatus === 'A' ? 'bg-green-700' : 'bg-gray-600'}`}>
                     {auctionStatus === 'A' ? 'Active' : 'Upcoming'}
                 </span>
             </Link>
-            <div className="mt-4 px-5 pb-5">
+            <div className="mt-4 px-5 pb-5">    
                 <Link to={`/auction/${slug}`}>
                     <h5 className="text-xl tracking-tight text-slate-900 font-bold h-16 overflow-hidden">
-                        {truncateText(title, MAX_TITLE_LENGTH)}
+                    {truncateText(title, MAX_TITLE_LENGTH)}
                     </h5>
                 </Link>
 
