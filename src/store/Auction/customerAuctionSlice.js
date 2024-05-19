@@ -8,11 +8,11 @@ const initialState = {
 }
 
 export const fetchAuctions = createAsyncThunk(
-    "auction/fetchAuctions",
-    async () => {
+    "customer/fetchAuctions",
+    async ({ customer_id = "" }) => {
         try {
             const response = await axios.get(
-                `http://127.0.0.1:8000/auction/auctions/`
+                `http://127.0.0.1:8000/auction/auctions/?product__customer__id=${customer_id}`
             )
             return response.data
         } catch (error) {
@@ -22,8 +22,8 @@ export const fetchAuctions = createAsyncThunk(
     }
 )
 
-const auctionSlice = createSlice({
-    name: "auction",
+const customerAuctionSlice = createSlice({
+    name: "customerAuction",
     initialState,
     reducers: {
         setAuctions: (state, action) => {
@@ -58,5 +58,5 @@ const auctionSlice = createSlice({
     },
 })
 
-export const { setAuctions, editAuction, deleteAuction } = auctionSlice.actions
-export default auctionSlice.reducer
+export const { setAuctions, editAuction, deleteAuction } = customerAuctionSlice.actions
+export default customerAuctionSlice.reducer

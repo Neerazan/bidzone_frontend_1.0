@@ -7,6 +7,7 @@ import QnASlice from "./Auction/QnASlice";
 import productSlice from "./productSlice";
 import addressSlice from "./common/addressSlice";
 import auctionSlice from "./Auction/auctionSlice";
+import customerAuctionSlice from "./Auction/customerAuctionSlice";
 
 const store = configureStore({
     reducer :{
@@ -18,6 +19,7 @@ const store = configureStore({
         product: productSlice,
         address: addressSlice,
         auction: auctionSlice,
+        customerAuction: customerAuctionSlice,
     },
 })
 

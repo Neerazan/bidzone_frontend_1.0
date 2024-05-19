@@ -14,7 +14,7 @@ function Home() {
     const loading = useSelector((state) => state.auction.loading)
 
     useEffect(() => {
-        dispatch(fetchAuctions({ customer_id: "" }))
+        dispatch(fetchAuctions())
     }, [dispatch])
 
     return (
