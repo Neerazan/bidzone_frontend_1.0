@@ -31,9 +31,9 @@ function ProductCard({
             >
                 <img
                     className="w-full h-full object-cover object-center shadow"
-                    src={image}
+                    src={`http://127.0.0.1:8000/${image}/`}
                     alt="product image"
-                />
+                />1
 
                 <span className={`absolute top-0 left-0 m-2 rounded-full pb-[1.5px] px-2 text-center text-sm font-medium text-white ${auctionStatus === 'A' ? 'bg-green-700' : 'bg-gray-600'}`}>
                     {auctionStatus === 'A' ? 'Active' : 'Upcoming'}
