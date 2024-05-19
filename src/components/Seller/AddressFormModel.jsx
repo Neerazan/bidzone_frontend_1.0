@@ -37,8 +37,8 @@ const AddressFormModal = ({
     const mutation = useMutation(
         async (data) => {
             const url = initialData
-                ? `http://127.0.0.1:8000/auction/customers/${customerId}/address/${customerId}/`
-                : `http://127.0.0.1:8000/auction/customers/${customerId}/address/`
+                ? `http://127.0.0.1:8000/auction/customers/${customerId}/addresses/${customerId}/`
+                : `http://127.0.0.1:8000/auction/customers/${customerId}/addresses/`
             const method = initialData ? "put" : "post"
             const response = await axios[method](url, data, {
                 headers: {
