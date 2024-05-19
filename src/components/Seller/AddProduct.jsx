@@ -214,13 +214,13 @@ function AddProduct() {
                     <Input
                         label="Title"
                         placeholder="Title"
-                        className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
+                        className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600 px-2 py-2 text-sm"
                         {...register("title", { required: true })}
                     />
                     <Input
                         label="Slug"
                         placeholder="Slug"
-                        className="mb-4 border border-gray-300 rounded-sm focus:outline-none focus:border-blue-600"
+                        className="mb-4 border border-gray-300 rounded-sm focus:outline-none focus:border-blue-600 px-2 py-2 text-sm"
                         {...register("slug", { required: true })}
                         onInput={(e) => {
                             setValue(
@@ -236,7 +236,7 @@ function AddProduct() {
                         label="Price"
                         placeholder="Price"
                         type="number"
-                        className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600"
+                        className="mb-4 rounded-sm border border-gray-300 focus:outline-none focus:border-blue-600 px-2 py-2 text-sm" 
                         {...register("price", { required: true })}
                     />
                     <RTE

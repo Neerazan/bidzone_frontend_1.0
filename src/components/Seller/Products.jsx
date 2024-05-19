@@ -8,9 +8,13 @@ import { fetchProducts } from "../../store/productSlice"
 import { deleteProducts } from "../../store/productSlice"
 import { useMutation } from "react-query"
 import axios from "axios"
+import { ConfirmationModal } from "../index"
+import { set } from "react-hook-form"
 
 
 function Products() {
+    const [showModal, setShowModal] = useState(false)
+
     const [selectedItems, setSelectedItems] = useState([])
     const [selectAll, setSelectAll] = useState(false)
     const dispatch = useDispatch()
@@ -120,7 +124,19 @@ function Products() {
                     }
                 )
             }
+            setShowModal(false)
         }
+    }
+
+
+    const handleProductDelete = () => {
+        setShowModal(true)
+    }
+
+    const cancelDeleteProduct = () => {
+        setShowModal(false)
+        setSelectedItems([])
+        setSelectAll(false)
     }
 
 
@@ -303,7 +319,7 @@ function Products() {
                         </select>
                         <button 
                             className="px-1 py-0.5 mx-2 rounded-sm text-sm border border-gray-400 text-gray-500 hover:bg-gray-400 hover:text-white transition duration-300 ease-in-out"
-                            onClick={() => {handleDeleteProducts()}}
+                            onClick={() => {handleProductDelete()}}
                         >
                             Go
                         </button>
@@ -432,6 +448,12 @@ function Products() {
                     </div>
                 </div>
             </div>
+            <ConfirmationModal
+                show={showModal}
+                onConfirm={handleDeleteProducts}
+                onCancel={cancelDeleteProduct}
+                message="Are you Sure that you want to delete selected product(s)?"
+            />
         </>
     )
 }

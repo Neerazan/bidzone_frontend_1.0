@@ -7,19 +7,22 @@ import {
     WishListBtn
 } from "../index"
 import { Link } from "react-router-dom"
+import parse from 'html-react-parser';
 
 function ProductInfo({ data, bidsData }) {
     const MAX_DESCRIPTION_LENGTH = 200
 
     function truncateText(text) {
         if (text.length <= MAX_DESCRIPTION_LENGTH) {
-            return <p className="mb-4">{text}</p>
+            return <p className="mb-4">
+                {parse(text)}
+            </p>
         } else {
             return (
                 <p className="mb-4">
-                    {text.slice(0, MAX_DESCRIPTION_LENGTH) + " ..."}{" "}
-                    <Link className="underline font-semibold">see more</Link>
-                </p>
+                {parse(text.slice(0, MAX_DESCRIPTION_LENGTH) + '....')}
+                <Link className="underline font-semibold">see more</Link>
+            </p>
             )
         }
     }
