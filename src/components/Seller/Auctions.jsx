@@ -8,7 +8,8 @@ import { fetchProducts } from "../../store/productSlice"
 import { deleteProducts } from "../../store/productSlice"
 import { useMutation } from "react-query"
 import axios from "axios"
-
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import "react-lazy-load-image-component/src/effects/blur.css"
 
 function Auctions() {
     const [selectedItems, setSelectedItems] = useState([])
@@ -52,15 +53,17 @@ function Auctions() {
         dispatch(fetchProducts({ accessKey, customer_id }))
     }, [dispatch, accessKey, customer_id])
 
-
     const deleteProductMutation = useMutation(
         async ({ customerId, productId, accessKey }) => {
             try {
-                const response = await axios.delete(`http://127.0.0.1:8000/auction/customers/${customerId}/products/${productId}/`, {
-                    headers: {
-                        Authorization: `JWT ${accessKey}`
+                const response = await axios.delete(
+                    `http://127.0.0.1:8000/auction/customers/${customerId}/products/${productId}/`,
+                    {
+                        headers: {
+                            Authorization: `JWT ${accessKey}`,
+                        },
                     }
-                })
+                )
                 return response.data
             } catch (error) {
                 console.log("Error deleting a product:", error)
@@ -71,13 +74,15 @@ function Auctions() {
     const bulkDeleteProductsMutation = useMutation(
         async ({ customerId, productIds, accessKey }) => {
             try {
-                const response = await axios.post(`http://127.0.0.1:8000/auction/customers/${customerId}/products/bulk-delete/`,
-                { "ids": productIds },
-                {
-                    headers: {
-                        Authorization: `JWT ${accessKey}`
+                const response = await axios.post(
+                    `http://127.0.0.1:8000/auction/customers/${customerId}/products/bulk-delete/`,
+                    { ids: productIds },
+                    {
+                        headers: {
+                            Authorization: `JWT ${accessKey}`,
+                        },
                     }
-                })
+                )
                 return response.data
             } catch (error) {
                 console.log("Error deleting products:", error)
@@ -90,46 +95,49 @@ function Auctions() {
             if (selectedItems.length === 1) {
                 const productId = selectedItems[0]
                 deleteProductMutation.mutate(
-                    { 
-                        customerId: customer_id, 
-                        productId, selectedItems,
-                        accessKey
+                    {
+                        customerId: customer_id,
+                        productId,
+                        selectedItems,
+                        accessKey,
                     },
                     {
                         onSuccess: (data) => {
-                            dispatch(deleteProducts({ productsIds: selectedItems }))
+                            dispatch(
+                                deleteProducts({ productsIds: selectedItems })
+                            )
                             setSelectedItems([])
                             setSelectAll(false)
-                        }
+                        },
                     }
                 )
-
-            } else if(selectedItems.length > 1){
+            } else if (selectedItems.length > 1) {
                 bulkDeleteProductsMutation.mutate(
-                    { 
-                        customerId: customer_id, 
-                        productIds: selectedItems, 
-                        accessKey 
+                    {
+                        customerId: customer_id,
+                        productIds: selectedItems,
+                        accessKey,
                     },
                     {
                         onSuccess: (data) => {
-                            dispatch(deleteProducts({ productsIds: selectedItems }))
+                            dispatch(
+                                deleteProducts({ productsIds: selectedItems })
+                            )
                             setSelectedItems([])
                             setSelectAll(false)
-                        }
+                        },
                     }
                 )
             }
         }
     }
 
-
     return (
         <>
             <div className="bg-white h-auto w-auto flex items-center rounded-md mt-4 px-8">
                 <div>
                     <h4 className="text-xl text-gray-600 font-bold">
-                        Products
+                        Auctions
                     </h4>
                 </div>
                 <form className="max-w-[200px] w-full px-4 ml-auto">
@@ -284,11 +292,11 @@ function Auctions() {
                     className="flex px-4 py-1 rounded-md cursor-pointer ml-3 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition duration-300 ease-in-out"
                     to="/user/add-product"
                 >
-                    <span>Add New Products</span>
+                    <span>Add New Auctions</span>
                 </Link>
             </div>
-            <div className="overflow-x-scroll h-[90vh] mt-2 bg-white px-6 py-4 rounded-md shadow-md">
-                <div className="flex h-auto">
+            <div className="overflow-y-scroll h-[90vh] mt-2 bg-white py-4 px-4 rounded-md shadow-md">
+                <div className="flex h-auto bg-sky-100 text-gray-600 px-4 py-2 rounded-sm mb-4">
                     <span className="font-semibold text-gray-600">
                         Actions:
                     </span>
@@ -299,11 +307,15 @@ function Auctions() {
                             ref={auctionDropdownRef}
                         >
                             <option value="">------------------------</option>
-                            <option value="delete">Delete selected products</option>
+                            <option value="delete">
+                                Delete selected products
+                            </option>
                         </select>
-                        <button 
+                        <button
                             className="px-1 py-0.5 mx-2 rounded-sm text-sm border border-gray-400 text-gray-500 hover:bg-gray-400 hover:text-white transition duration-300 ease-in-out"
-                            onClick={() => {handleDeleteProducts()}}
+                            onClick={() => {
+                                handleDeleteProducts()
+                            }}
                         >
                             Go
                         </button>
@@ -312,44 +324,74 @@ function Auctions() {
                     <span className="text-gray-700 mt-0.5">
                         {selectedItems.length} of {products?.count} selected
                     </span>
+
+                    <div className="ml-auto flex items-center gap-2 mr-4">
+                        <input
+                            type="checkbox"
+                            className="form-checkbox h-4 w-4 text-blue-600 mx-auto"
+                            checked={selectAll}
+                            onChange={handleSelectAll}
+                        />
+                        <span className="text-gray-600">Select All</span>
+                    </div>
                 </div>
 
-                {/* Product List Begin Here */}
-                <div className="mt-4">
-                    <table className="w-full">
-                        <thead>
-                            <tr
-                                className="bg-sky-100 text-gray-600"
-                                style={{ textAlign: "left" }}
-                            >
-                                <th className="px-2 py-2">
-                                    <input
-                                        type="checkbox"
-                                        className="form-checkbox h-4 w-4 text-blue-600 mx-auto"
-                                        checked={selectAll}
-                                        onChange={handleSelectAll}
+                {products?.results?.map((product, index) => (
+                    <div
+                        key={product.id} // Added key for better React performance
+                        className={`flex w-full px-2 py-2 rounded-sm mb-1 ${
+                            isSelected(product.id)
+                                ? "bg-sky-200"
+                                : index % 2 === 0
+                                ? "bg-gray-50"
+                                : "bg-sky-100"
+                        }`}
+                    >
+                        <div className="grid grid-cols-6 gap-4 w-full">
+                            <div className="col-span-1 flex px-2 gap-4">
+                                <input
+                                    type="checkbox"
+                                    className="form-checkbox text-blue-600"
+                                    checked={isSelected(product.id)}
+                                    onChange={() =>
+                                        handleSelectItem(product.id)
+                                    }
+                                />
+                                <div className="rounded-md overflow-hidden h-full w-full">
+                                    <LazyLoadImage
+                                        alt="image"
+                                        className="object-cover w-full h-full"
+                                        effect="blur"
                                     />
-                                </th>
-                                <th className="px-4 py-2 font-semibold">
-                                    Image
-                                </th>
-                                <th className="px-4 py-2 font-semibold">
-                                    Title
-                                </th>
-                                <th className="px-4 py-2 font-semibold">
-                                    Price
-                                </th>
-                                <th className="px-4 py-2 font-semibold">
-                                    Collection
-                                </th>
-                                <th className="px-4 py-2 font-semibold">
-                                    InAuction
-                                </th>
-                                <th className="px-4 py-2 font-semibold">
-                                    Action
-                                </th>
-                            </tr>
-                        </thead>
+                                </div>
+                            </div>
+                            <div className="col-span-2 flex flex-col justify-center">
+                                    {/* Starging, Ending price and Title of the product */}
+                            </div>
+                            <div className="col-span-2 flex justify-center items-center">
+                                <h1 className="mx-auto">Empty</h1>
+                            </div>
+                            <div className="col-span-1 flex flex-col items-center justify-center gap-4">
+                                <button
+                                    className="px-3 py-2 rounded-md border border-red-500 hover:bg-red-500 text-red-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
+                                    // onClick={() => removeFromWishlist(item.id)}
+                                >
+                                    Remove
+                                </button>
+                                <Link
+                                    className="px-3 py-2 rounded-md border border-green-600 hover:bg-green-600 text-green-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
+                                    // to={`/auction/${item?.auction?.product?.slug}`}
+                                >
+                                    Place Bid
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+
+                {/* Product List Begin Here */}
+                {/* <div className="mt-4">
+                    <table className="w-full">
                         <tbody className="">
                             {products?.results?.map((product, index) => (
                                 <tr
@@ -383,7 +425,7 @@ function Auctions() {
                                         </div>
                                     </td>
                                     <td className="px-4 py-2">
-                                        <Link 
+                                        <Link
                                             className="cursor-pointer hover:underline text-[#264b5d] hover:text-[#377792]"
                                             to={`/user/update-product/${product.slug}`}
                                         >
@@ -398,7 +440,11 @@ function Auctions() {
                                     </td>
                                     <td className="px-4 py-2">
                                         <span
-                                            className={`${product.in_auction ? "text-green-600" : "text-red-600"}`}
+                                            className={`${
+                                                product.in_auction
+                                                    ? "text-green-600"
+                                                    : "text-red-600"
+                                            }`}
                                         >
                                             <IconContext.Provider
                                                 value={{
@@ -430,7 +476,7 @@ function Auctions() {
                     <div className="border border-x-0 border-y-1 border-gray-400 py-1 px-3 mt-4 text-gray-500">
                         {products?.count} Products
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     )

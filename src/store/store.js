@@ -6,6 +6,7 @@ import BalanceReducer from "./common/BalanceSlice";
 import QnASlice from "./Auction/QnASlice";
 import productSlice from "./productSlice";
 import addressSlice from "./common/addressSlice";
+import auctionSlice from "./Auction/auctionSlice";
 
 const store = configureStore({
     reducer :{
@@ -16,6 +17,7 @@ const store = configureStore({
         qna: QnASlice,
         product: productSlice,
         address: addressSlice,
+        auction: auctionSlice,
     },
 })
 
