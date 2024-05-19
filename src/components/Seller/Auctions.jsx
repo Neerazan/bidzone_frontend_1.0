@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { fetchProducts } from "../../store/productSlice"
 import { deleteProducts } from "../../store/productSlice"
 import { useMutation } from "react-query"
 import axios from "axios"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
 import { fetchAuctions } from "../../store/Auction/customerAuctionSlice"
+import { FormattedDate } from "../index"
+
+import { FaEye } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 function Auctions() {
     const [selectedItems, setSelectedItems] = useState([])
@@ -19,9 +22,17 @@ function Auctions() {
     const customer_id = useSelector((state) => state.auth.userData.id)
     const auctions = useSelector((state) => state.customerAuction.auctions)
 
+    const MAX_TITLE_LENGTH = 60
+
     useEffect(() => {
         dispatch(fetchAuctions({ customer_id: customer_id }))
     }, [dispatch, customer_id])
+
+    const truncateText = useCallback((text = "", maxLength) => {
+        return text.length <= maxLength
+            ? text
+            : `${text.slice(0, maxLength)}...`
+    }, [])
 
     // Function to handle selecting items
     const handleSelectItem = (id) => {
@@ -337,12 +348,12 @@ function Auctions() {
                 {auctions?.map((auction, index) => (
                     <div
                         key={auction.id} // Added key for better React performance
-                        className={`flex w-full px-2 py-2 rounded-sm mb-1 ${
+                        className={`flex w-full px-2 py-4 rounded-sm mb-1 ${
                             isSelected(auction.id)
                                 ? "bg-sky-200"
                                 : index % 2 === 0
-                                ? "bg-sky-100"
-                                : "bg-sky-100"
+                                ? "bg-sky-50"
+                                : "bg-sky-50"
                         }`}
                     >
                         <div className="grid grid-cols-6 gap-4 w-full">
@@ -355,7 +366,7 @@ function Auctions() {
                                         handleSelectItem(auction.id)
                                     }
                                 />
-                                <div className="rounded-md overflow-hidden h-full w-full relative">
+                                <div className="rounded-md h-full w-full flex justify-center items-center border border-gray-300">
                                     {/* Added relative positioning */}
                                     <LazyLoadImage
                                         src={`http://127.0.0.1:8000/${auction?.product?.images[0]?.image}`}
@@ -366,117 +377,96 @@ function Auctions() {
                                 </div>
                             </div>
                             <div className="col-span-2 flex flex-col justify-center">
-                                {/* Starging, Ending price and Title of the product */}
+                                <div className="h-12 mb-2">
+                                    <p className="font-semibold hover:underline text-gray-600 cursor-pointer">
+                                        {truncateText(
+                                            auction?.product?.title,
+                                            MAX_TITLE_LENGTH
+                                        )}
+                                    </p>
+                                </div>
+                                <div className="font-semibold text-green-600">
+                                    Current Bid: {auction?.current_price}
+                                </div>
+
+                                <div className="font-semibold text-rose-600">
+                                    Starting Price: RS.{" "}
+                                    {auction?.starting_price}
+                                </div>
                             </div>
-                            <div className="col-span-2 flex justify-center items-center">
-                                <h1 className="mx-auto">Empty</h1>
+                            <div className="col-span-2 border-l border-l-gray-400">
+                                <div className="w-full flex">
+                                    {auction?.auction_status === "A" && (
+                                        <span className="rounded-full bg-green-700 font-semibold text-white px-3 text-xs pb-[1px] ml-auto">
+                                            Active
+                                        </span>
+                                    )}
+
+                                    {auction?.auction_status === "S" && (
+                                        <span className="rounded-full bg-gray-700 font-semibold text-white px-3 text-xs pb-[1px] ml-auto">
+                                            Upcoming
+                                        </span>
+                                    )}
+
+                                    {auction?.auction_status === "C" && (
+                                        <span className="rounded-full bg-red-700 font-semibold text-white px-3 text-xs pb-[1px] ml-auto">
+                                            Ended
+                                        </span>
+                                    )}
+                                </div>
+
+                                <div className="flex flex-col justify-end ps-4 mt-3">
+                                    <div className="h-6 font-semibold text-green-600">
+                                        Starting Date:{" "}
+                                        {
+                                            <FormattedDate
+                                                date={auction.starting_time}
+                                            />
+                                        }
+                                    </div>
+                                    <div className="h-6 text-red-500 font-semibold">
+                                        Ending Date:{" "}
+                                        <FormattedDate
+                                            date={auction.ending_time}
+                                        />
+                                    </div>
+
+                                    <div className="text-teal-500 font-semibold">
+                                        Total Bids: {auction.bids_count}
+                                    </div>
+                                </div>
+
+                                {/* <div className="flex items-center justify-end mt-2">
+                                    <span className="mr-2 ml-3 rounded bg-teal-600 text-white px-2.5 pb-0.5 text-xs font-semibold">
+                                        { auction.bids_count } Bid(s)
+                                    </span>
+                                </div> */}
                             </div>
-                            <div className="col-span-1 flex flex-col items-center justify-center gap-2">
-                                <button
-                                    className="px-3 py-2 rounded-md border border-red-500 hover:bg-red-500 text-red-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
-                                    // onClick={() => removeFromWishlist(item.id)}
-                                >
-                                    Remove
-                                </button>
-                                <Link
-                                    className="px-3 py-2 rounded-md border border-green-600 hover:bg-green-600 text-green-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
+                            <div className="col-span-1 flex flex-col items-center justify-center gap-2 border-l border-l-gray-400">
+                            <Link
+                                    className="px-2 font-semibold py-1 rounded-md border border-green-600 hover:bg-green-600 text-green-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
                                     // to={`/auction/${item?.auction?.product?.slug}`}
                                 >
-                                    Place Bid
+                                    view
+                                    <span className="ml-2">
+                                        <FaEye className="inline-block" />
+                                    </span>
                                 </Link>
+
+                                
+                                <button
+                                    className="px-2 font-semibold py-1 rounded-md border border-red-500 hover:bg-red-500 text-red-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
+                                    // onClick={() => removeFromWishlist(item.id)}
+                                >
+                                    Delete
+                                    <span className="ml-2">
+                                        <MdDeleteForever className="inline-block" />
+                                    </span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 ))}
-
-                {/* Product List Begin Here */}
-                {/* <div className="mt-4">
-                    <table className="w-full">
-                        <tbody className="">
-                            {products?.results?.map((product, index) => (
-                                <tr
-                                    key={product.id}
-                                    className={`${
-                                        isSelected(product.id)
-                                            ? "bg-sky-200"
-                                            : index % 2 === 0
-                                            ? "bg-white"
-                                            : "bg-sky-100"
-                                    } text-sm text-gray-700`}
-                                    // onClick={() => handleSelectItem(product.id)}
-                                >
-                                    <td className="px-2 py-2">
-                                        <input
-                                            type="checkbox"
-                                            className="form-checkbox h-4 w-4 text-blue-600"
-                                            checked={isSelected(product.id)}
-                                            onChange={() =>
-                                                handleSelectItem(product.id)
-                                            }
-                                        />
-                                    </td>
-                                    <td className="px-2 py-2">
-                                        <div className="flex justify-center items-center mx-auto">
-                                            <img
-                                                src={`http://127.0.0.1:8000/${product.images[0]?.image}`}
-                                                alt="product image"
-                                                className="w-14 h-14 object-cover rounded-md border border-gray-300"
-                                            />
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        <Link
-                                            className="cursor-pointer hover:underline text-[#264b5d] hover:text-[#377792]"
-                                            to={`/user/update-product/${product.slug}`}
-                                        >
-                                            {product.title}
-                                        </Link>
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        {product.price}
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        {product.collection.title}
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        <span
-                                            className={`${
-                                                product.in_auction
-                                                    ? "text-green-600"
-                                                    : "text-red-600"
-                                            }`}
-                                        >
-                                            <IconContext.Provider
-                                                value={{
-                                                    size: "1.2em",
-                                                    className:
-                                                        "mx-auto my-auto",
-                                                }}
-                                            >
-                                                {product.in_auction ? (
-                                                    <MdCheckCircle />
-                                                ) : (
-                                                    <MdCancel />
-                                                )}
-                                            </IconContext.Provider>
-                                        </span>
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        <button className="flex px-2 py-1 font-semibold bg-blue-600 text-white rounded-sm border border-blue-600 hover:bg-white hover:text-blue-600 transition duration-300 ease-in-out">
-                                            auction
-                                            <span className="ml-1 mt-1 font-semibold">
-                                                <IoMdAdd />
-                                            </span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className="border border-x-0 border-y-1 border-gray-400 py-1 px-3 mt-4 text-gray-500">
-                        {products?.count} Products
-                    </div>
-                </div> */}
             </div>
         </>
     )
