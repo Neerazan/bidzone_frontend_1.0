@@ -1,8 +1,9 @@
 import React, { forwardRef, useId } from "react"
 
 const Select = forwardRef(
-    ({ options, label, className = "", ...props }, ref) => {
+    ({ options, label, value, onChange, className = "" }, ref) => {
         const id = useId()
+
         return (
             <div className="w-full">
                 {label && (
@@ -11,9 +12,10 @@ const Select = forwardRef(
                     </label>
                 )}
                 <select
-                    {...props}
                     id={id}
                     ref={ref}
+                    value={value}
+                    onChange={onChange}
                     className={`px-3 py-1 rounded-sm bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-300 w-full ${className}`}
                 >
                     <option value="">Select a Category</option>

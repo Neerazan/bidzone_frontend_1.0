@@ -5,6 +5,7 @@ import { IconContext } from "react-icons"
 import { useQuery } from "react-query"
 import axios from "axios"
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 function Address() {
     const user_id = useSelector((state) => state.auth.userData.id)
@@ -36,16 +37,23 @@ function Address() {
 
     return (
         <div className="px-6 py-4 bg-white border border-gray-200 rounded-lg shadow col-span-1 w-full address-card">
-            {/* {data?.length === 0 && (
+            {!data && (
                 <div className="text-center">
-                    <h5 className="text-2xl font-semibold text-gray-700">
+                    <h5 className="text-2xl font-semibold text-gray-700 mt-auto">
                         No Address Found
                     </h5>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 mb-auto">
                         Please add your address to continue shopping.
                     </p>
+                    <button
+                        href="#"
+                        className="inline-flex font-medium items-center text-blue-600 hover:underline"
+                    >
+                        Add Your Address
+                        <FaRegEdit className="ml-2 mt-0.5" />
+                    </button>
                 </div>
-            )} */}
+            )}
 
             {data && (
                 <div className="grid grid-cols-3">
@@ -63,17 +71,19 @@ function Address() {
                             </h5>
                         </a>
                         <p className="mb-3 text-gray-600 font-semibold">
-                            {data.province}, {data.district} ({data.zip_code}) <br />
-                            {data.municipality} - {data.ward}, {data.tole} <br />
+                            {data.province}, {data.district} ({data.zip_code}){" "}
+                            <br />
+                            {data.municipality} - {data.ward}, {data.tole}{" "}
+                            <br />
                             {data.street}
                         </p>
-                        <a
+                        <button
                             href="#"
                             className="inline-flex font-medium items-center text-blue-600 hover:underline"
                         >
                             Edit Your Address
                             <FaRegEdit className="ml-2 mt-0.5" />
-                        </a>
+                        </button>
                     </div>
                 </div>
             )}

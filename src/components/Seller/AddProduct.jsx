@@ -9,7 +9,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import { RxCross2 } from "react-icons/rx"
 import { editProducts } from "../../store/productSlice"
 
-
 function AddProduct() {
     const [showModal, setShowModal] = useState(false)
     const [imageIdToDelete, setImageIdToDelete] = useState(null)
@@ -135,8 +134,8 @@ function AddProduct() {
             description: product?.description || "",
             slug: product?.slug || "",
             price: product?.price || "",
-            collection: product?.collection.id || "",
-            images: product?.images || [],
+            collection_id: product?.collection.id || "",
+            image: product?.images || [],
         },
     })
 
@@ -152,7 +151,7 @@ function AddProduct() {
     }, [watch, slugTransform, setValue])
 
     const onSubmit = (data) => {
-        console.log(`Inside on submit function`)
+        console.log("Submitting form with data:", data)
         const formData = new FormData()
         formData.append("title", data.title)
         formData.append("description", data.description)
@@ -285,13 +284,22 @@ function AddProduct() {
                         </div>
                     )}
                     <Select
-                        value={product ? product.collection.id : ""}
+                        value={getValues("collection_id") || ""}
                         options={collections}
                         label="Category"
                         className="mb-4"
                         {...register("collection_id", { required: true })}
+                        onChange={(e) => {
+                            setValue("collection_id", e.target.value, {
+                                shouldValidate: true,
+                            })
+                        }}
                     />
-                    <Button className="w-full rounded-sm py-1 font-semibold hover:bg-green-700 bg-green-600">
+
+                    <Button
+                        type="submit"
+                        className="w-full rounded-sm py-1 font-semibold hover:bg-green-700 bg-green-600"
+                    >
                         {product ? "Update" : "Save"}
                     </Button>
                 </div>
