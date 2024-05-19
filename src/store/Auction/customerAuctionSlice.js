@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchAuctions = createAsyncThunk(
     "customer/fetchAuctions",
-    async ({ customer_id = "" }) => {
+    async ({ customer_id }) => {
         try {
             const response = await axios.get(
                 `http://127.0.0.1:8000/auction/auctions/?product__customer__id=${customer_id}`

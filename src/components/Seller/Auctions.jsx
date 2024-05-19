@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
-import { IoMdAdd } from "react-icons/io"
-import { MdCancel, MdCheckCircle } from "react-icons/md"
-import { IconContext } from "react-icons"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchProducts } from "../../store/productSlice"
 import { deleteProducts } from "../../store/productSlice"
@@ -10,16 +7,21 @@ import { useMutation } from "react-query"
 import axios from "axios"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
+import { fetchAuctions } from "../../store/Auction/customerAuctionSlice"
 
 function Auctions() {
     const [selectedItems, setSelectedItems] = useState([])
     const [selectAll, setSelectAll] = useState(false)
     const dispatch = useDispatch()
-    const auctionDropdownRef = useRef(null)
+    const actionDropdownRef = useRef(null)
 
     const accessKey = useSelector((state) => state.auth.accessKey)
     const customer_id = useSelector((state) => state.auth.userData.id)
-    const products = useSelector((state) => state.product.products)
+    const auctions = useSelector((state) => state.customerAuction.auctions)
+
+    useEffect(() => {
+        dispatch(fetchAuctions({ customer_id: customer_id }))
+    }, [dispatch, customer_id])
 
     // Function to handle selecting items
     const handleSelectItem = (id) => {
@@ -33,7 +35,7 @@ function Auctions() {
         }
 
         setSelectedItems(newSelected)
-        setSelectAll(newSelected.length === products.results.length)
+        setSelectAll(newSelected.length === auctions.length)
     }
 
     // Function to check if item is selected
@@ -44,14 +46,10 @@ function Auctions() {
         if (selectAll) {
             setSelectedItems([])
         } else {
-            setSelectedItems(products.results.map((product) => product.id))
+            setSelectedItems(auctions?.map((auction) => auction.id))
         }
         setSelectAll(!selectAll)
     }
-
-    useEffect(() => {
-        dispatch(fetchProducts({ accessKey, customer_id }))
-    }, [dispatch, accessKey, customer_id])
 
     const deleteProductMutation = useMutation(
         async ({ customerId, productId, accessKey }) => {
@@ -91,7 +89,7 @@ function Auctions() {
     )
 
     const handleDeleteProducts = () => {
-        if (auctionDropdownRef.current.value === "delete") {
+        if (actionDropdownRef.current.value === "delete") {
             if (selectedItems.length === 1) {
                 const productId = selectedItems[0]
                 deleteProductMutation.mutate(
@@ -304,11 +302,11 @@ function Auctions() {
                         <select
                             id="countries"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm py-0.5 px-1 rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full"
-                            ref={auctionDropdownRef}
+                            ref={actionDropdownRef}
                         >
                             <option value="">------------------------</option>
                             <option value="delete">
-                                Delete selected products
+                                Delete selected auctions
                             </option>
                         </select>
                         <button
@@ -322,7 +320,7 @@ function Auctions() {
                     </div>
 
                     <span className="text-gray-700 mt-0.5">
-                        {selectedItems.length} of {products?.count} selected
+                        {selectedItems.length} of {auctions?.length} selected
                     </span>
 
                     <div className="ml-auto flex items-center gap-2 mr-4">
@@ -336,14 +334,14 @@ function Auctions() {
                     </div>
                 </div>
 
-                {products?.results?.map((product, index) => (
+                {auctions?.map((auction, index) => (
                     <div
-                        key={product.id} // Added key for better React performance
+                        key={auction.id} // Added key for better React performance
                         className={`flex w-full px-2 py-2 rounded-sm mb-1 ${
-                            isSelected(product.id)
+                            isSelected(auction.id)
                                 ? "bg-sky-200"
                                 : index % 2 === 0
-                                ? "bg-gray-50"
+                                ? "bg-sky-100"
                                 : "bg-sky-100"
                         }`}
                     >
@@ -352,26 +350,28 @@ function Auctions() {
                                 <input
                                     type="checkbox"
                                     className="form-checkbox text-blue-600"
-                                    checked={isSelected(product.id)}
+                                    checked={isSelected(auction.id)}
                                     onChange={() =>
-                                        handleSelectItem(product.id)
+                                        handleSelectItem(auction.id)
                                     }
                                 />
-                                <div className="rounded-md overflow-hidden h-full w-full">
+                                <div className="rounded-md overflow-hidden h-full w-full relative">
+                                    {/* Added relative positioning */}
                                     <LazyLoadImage
+                                        src={`http://127.0.0.1:8000/${auction?.product?.images[0]?.image}`}
                                         alt="image"
-                                        className="object-cover w-full h-full"
+                                        className="w-full h-full object-cover bg-white" // Adjusted to absolute positioning and added object-cover
                                         effect="blur"
                                     />
                                 </div>
                             </div>
                             <div className="col-span-2 flex flex-col justify-center">
-                                    {/* Starging, Ending price and Title of the product */}
+                                {/* Starging, Ending price and Title of the product */}
                             </div>
                             <div className="col-span-2 flex justify-center items-center">
                                 <h1 className="mx-auto">Empty</h1>
                             </div>
-                            <div className="col-span-1 flex flex-col items-center justify-center gap-4">
+                            <div className="col-span-1 flex flex-col items-center justify-center gap-2">
                                 <button
                                     className="px-3 py-2 rounded-md border border-red-500 hover:bg-red-500 text-red-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
                                     // onClick={() => removeFromWishlist(item.id)}
