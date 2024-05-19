@@ -1,36 +1,28 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { FaRegEdit } from "react-icons/fa"
 import { IoLocationOutline } from "react-icons/io5"
 import { IconContext } from "react-icons"
-import { useQuery } from "react-query"
-import axios from "axios"
-import { useSelector } from "react-redux"
+import { useSelector,useDispatch } from "react-redux"
 import { AddressFormModal } from "../index"
+import { fetchAddress } from "../../store/common/addressSlice"
+
+
 
 function Address() {
     const user_id = useSelector((state) => state.auth.userData.id)
-    const accessKey = useSelector((state) => state.auth.accessKey) // Ensure accessKey is fetched correctly
+    const accessKey = useSelector((state) => state.auth.accessKey)
+    const data = useSelector((state) => state.address.addresses)
+    const dispatch = useDispatch()
+
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [initialData, setInitialData] = useState(null)
 
-    const { data, isLoading, isError, error } = useQuery(
-        "address",
-        async () => {
-            try {
-                const response = await axios.get(
-                    `http://127.0.0.1:8000/auction/customers/${user_id}/addresses/${user_id}/`
-                )
-                return response.data
-            } catch (error) {
-                console.log("Error fetching address:", error)
-                throw error
-            }
-        },
-        {
-            enabled: !!user_id,
-        }
-    )
+
+    useEffect(() => {
+        dispatch(fetchAddress({ user_id, accessKey }))
+    }, [dispatch, user_id, accessKey])
+
 
     const handleEditClick = () => {
         setInitialData(data)
@@ -42,13 +34,6 @@ function Address() {
         setIsModalOpen(true)
     }
 
-    // if (isLoading) {
-    //     return <div>Loading...</div>
-    // }
-
-    // if (isError) {
-    //     return <div>Error: {error.message}</div>
-    // }
 
     return (
         <div className="px-6 py-4 bg-white border border-gray-200 rounded-lg shadow col-span-1 w-full address-card">
