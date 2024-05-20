@@ -96,7 +96,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                     <div className="mb-4">
                         <label
                             htmlFor="product"
-                            className="block text-sm font-medium text-gray-700"
+                            className="block text-sm text-gray-700 font-semibold"
                         >
                             Product
                         </label>
@@ -104,7 +104,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             id="product"
                             {...register("product", { required: true })}
                             defaultValue={ initialData ? initialData.product : productId}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 block w-full rounded-sm px-2 py-1 bg-white border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         >
                             <option value="">Select a product</option>
                             {products?.results?.map((product) => (
@@ -122,7 +122,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                     <div className="mb-4">
                         <label
                             htmlFor="starting_price"
-                            className="block text-sm font-medium text-gray-700"
+                            className="block text-sm font-semibold text-gray-600"
                         >
                             Starting Price
                         </label>
@@ -131,7 +131,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             type="number"
                             step="0.01"
                             {...register("starting_price", { required: true })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 block w-full rounded-sm px-2 py-1 outline-none border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         />
                         {errors.starting_price && (
                             <span className="text-red-500 text-sm">
@@ -139,10 +139,12 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             </span>
                         )}
                     </div>
+                    
+
                     <div className="mb-4">
                         <label
                             htmlFor="starting_time"
-                            className="block text-sm font-medium text-gray-700"
+                            className="block text-sm font-semibold text-gray-700"
                         >
                             Starting Time
                         </label>
@@ -150,7 +152,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             id="starting_time"
                             type="datetime-local"
                             {...register("starting_time", { required: true })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 block w-full rounded-sm px-2 py-1 outline-none border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         />
                         {errors.starting_time && (
                             <span className="text-red-500 text-sm">
@@ -158,6 +160,8 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             </span>
                         )}
                     </div>
+
+
                     <div className="mb-4">
                         <label
                             htmlFor="ending_time"
@@ -169,7 +173,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             id="ending_time"
                             type="datetime-local"
                             {...register("ending_time", { required: true })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 block w-full rounded-sm px-2 py-1 outline-none border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         />
                         {errors.ending_time && (
                             <span className="text-red-500 text-sm">
@@ -187,13 +191,10 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                         <select
                             id="auction_status"
                             {...register("auction_status", { required: true })}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            className="mt-1 block w-full rounded-sm px-2 py-1 outline-none border bg-white border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         >
                             <option value="A">Active</option>
-                            <option value="C">Completed</option>
-                            <option value="X">Cancelled</option>
                             <option value="S">Schedule</option>
-                            <option value="D">Deleted</option>
                         </select>
                         {errors.auction_status && (
                             <span className="text-red-500 text-sm">
