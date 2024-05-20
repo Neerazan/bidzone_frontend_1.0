@@ -36,7 +36,7 @@ function Product() {
         },
         { enabled: !!auctionDetails } // Ensure the query is only enabled when auctionDetails is available
     )
-    
+
 
 
     if (auctionLoading || bidsLoading) {
