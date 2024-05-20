@@ -45,6 +45,7 @@ import ConfirmationModal from "./ConfirmationModal"
 import AddressFormModal from "./Seller/AddressFormModel"
 import AuctionFormModal from "./Seller/AuctionFormModal"
 import InputConfirmationModal from "./InputConfirmationModal"
+import ProductDescription from "./Product/ProductDescription"
 
 
 export {
@@ -95,4 +96,5 @@ export {
     AddressFormModal,
     AuctionFormModal,
     InputConfirmationModal,
+    ProductDescription,
 }
