@@ -144,7 +144,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
                             id="starting_price"
                             type="number"
                             step="0.01"
-                            {...register("starting_price"), { required: true }}
+                            {...register("starting_price", { required: true })}
                             className="mt-1 block w-full rounded-sm px-2 py-1 outline-none border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         />
                         {errors.starting_price && (
