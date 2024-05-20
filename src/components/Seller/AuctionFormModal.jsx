@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { editAuction } from "../../store/Auction/customerAuctionSlice";
 
 import { fetchProducts } from "../../store/productSlice";
 
@@ -74,6 +75,10 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
         {
             onSuccess: (data) => {
                 queryClient.invalidateQueries("auctions");
+                if (initialData) {
+                    dispatch(editAuction({ auction: data }));
+                }
+
                 onClose();
                 navigate("/user/auctions");
             },

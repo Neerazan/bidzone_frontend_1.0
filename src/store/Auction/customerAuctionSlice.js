@@ -31,15 +31,18 @@ const customerAuctionSlice = createSlice({
         },
 
         editAuction: (state, action) => {
-            const updatedAuction = action.payload.auction
+            let updatedAuction = action.payload.auction
+            updatedAuction.product.images[0].image = `http://127.0.0.1:8000/${updatedAuction.product.images[0].image}`
             state.auctions = state.auctions.map((auction) =>
                 auction.id === updatedAuction.id ? updatedAuction : auction
             )
         },
 
-        addAuction: (state, action) => {
-            state.auctions.push(action.payload.auction)
-        },
+        // addAuction: (state, action) => {
+        //     console.log(`Adding auction: ${action.payload.auction}`);
+        //     state.auctions.push(action.payload.auction)
+        // },
+
 
         deleteAuction: (state, action) => {
             const auctionIdToDelete = action.payload.auctionId
@@ -61,5 +64,5 @@ const customerAuctionSlice = createSlice({
     },
 })
 
-export const { setAuctions, editAuction, deleteAuction, addAuction } = customerAuctionSlice.actions
+export const { setAuctions, editAuction, deleteAuction } = customerAuctionSlice.actions
 export default customerAuctionSlice.reducer
