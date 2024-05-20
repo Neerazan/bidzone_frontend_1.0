@@ -30,7 +30,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId = "" }) => {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            product: initialData?.product.id || "",
+            product: initialData?.product.id || productId || "",
             starting_price: initialData?.starting_price || "",
             current_price: initialData?.current_price || "",
             starting_time: initialData ? formatDateTimeLocal(initialData.starting_time) : "",

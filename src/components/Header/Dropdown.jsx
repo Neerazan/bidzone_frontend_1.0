@@ -106,7 +106,7 @@ function Dropdown() {
                             </li>
                             <li className="px-4 hover:bg-gray-100">
                                 <Link
-                                    to="#"
+                                    to="/user/auctions"
                                     className="block py-2 text-sm text-gray-700"
                                     role="menuitem"
                                     onClick={toggleDropdown}

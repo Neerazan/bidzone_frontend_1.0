@@ -440,7 +440,7 @@ function Auctions() {
                             <div className="col-span-1 flex flex-col items-center justify-center gap-2 border-l border-l-gray-400">
                                 <Link
                                     className="px-2 font-semibold py-1 rounded-md border border-green-600 hover:bg-green-600 text-green-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
-                                    // to={`/auction/${item?.auction?.product?.slug}`}
+                                    to={`/auction/${auction?.product?.slug}`}
                                 >
                                     view
                                     <span className="ml-2">
