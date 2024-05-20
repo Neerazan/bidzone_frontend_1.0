@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
@@ -12,6 +12,8 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
     const accessKey = useSelector((state) => state.auth.accessKey);
     const userId = useSelector((state) => state.auth.userData.id);
     const products = useSelector((state) => state.product.products);
+
+    const selectedProductRef = useRef(null);
 
     useEffect(() => {
         dispatch(fetchProducts({ accessKey, customer_id: userId }));
@@ -31,9 +33,9 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            product: initialData ? initialData.product.id : (productId || ""),
+            product_id: initialData ? initialData.product.id : (productId || ""),
             starting_price: initialData?.starting_price || "",
-            current_price: initialData?.current_price || "",
+            current_price: initialData?.current_price || selectedProductRef.current?.value || "",
             starting_time: initialData ? formatDateTimeLocal(initialData.starting_time) : "",
             ending_time: initialData ? formatDateTimeLocal(initialData.ending_time) : "",
             auction_status: initialData?.auction_status || "A",
@@ -42,7 +44,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
 
     useEffect(() => {
         reset({
-            product: initialData ? initialData.product.id : (productId || ""),
+            product_id: initialData ? initialData.product.id : (productId || ""),
             starting_price: initialData?.starting_price || "",
             current_price: initialData?.current_price || "",
             starting_time: initialData ? formatDateTimeLocal(initialData.starting_time) : "",
@@ -60,6 +62,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
             const response = await axios[method](url, data, {
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `JWT ${accessKey}`,
                 },
             });
             return response.data;
@@ -112,8 +115,9 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
                             Product
                         </label>
                         <select
+                            ref={selectedProductRef}
                             id="product"
-                            {...register("product", { required: true })}
+                            {...register("product_id", { required: true })}
                             className="mt-1 block w-full rounded-sm px-2 py-1 bg-white border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         >
                             <option value="">Select a product</option>
@@ -140,7 +144,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
                             id="starting_price"
                             type="number"
                             step="0.01"
-                            {...register("starting_price", { required: true })}
+                            {...register("starting_price"), { required: true }}
                             className="mt-1 block w-full rounded-sm px-2 py-1 outline-none border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         />
                         {errors.starting_price && (

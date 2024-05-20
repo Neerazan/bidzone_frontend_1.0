@@ -313,7 +313,7 @@ function Auctions() {
                             </option>
                         </select>
                         <button
-                            className="px-1 py-0.5 mx-2 rounded-sm text-sm border border-gray-400 text-gray-500 hover:bg-gray-400 hover:text-white transition duration-300 ease-in-out"
+                            className="px-1 py-0.5 mx-2 rounded-sm text-sm border bg-white border-gray-400 text-gray-500 hover:bg-gray-400 hover:text-white transition duration-300 ease-in-out"
                             onClick={() => {
                                 handleAuctionDelete()
                             }}
