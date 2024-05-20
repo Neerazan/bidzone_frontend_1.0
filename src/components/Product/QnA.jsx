@@ -207,7 +207,7 @@ function QnA({ auctionId, seller }) {
 
 
     return (
-        <div className="col-span-4 pb-4">
+        <div className="pb-4">
             <div className="bg-white h-auto w-auto flex flex-col md:flex-row items-center rounded-md mt-4 px-8 mb-4">
                 <div className="mr-auto">
                     <h4 className="text-xl text-gray-600 font-bold">

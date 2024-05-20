@@ -30,9 +30,20 @@ function Product() {
                 <ProductInfo data={auctionDetails} />
                 <BidHistory auctionId={auctionDetails.id} />
             </section>
-            <section className="grid grid-cols-1 lg:grid-cols-5 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
+            {/* <section className="grid grid-cols-1 lg:grid-cols-5 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
                 <QnA auctionId={auctionDetails.id} seller={auctionDetails.product.customer} />
                 <div className='flex justify-center mt-4'>Related Products</div>
+            </section> */}
+
+            <section className="grid grid-cols-1 lg:grid-cols-5 gap-3 \">
+                <div className='col-span-4 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0'>
+                    <QnA auctionId={auctionDetails.id} seller={auctionDetails.product.customer} />
+                </div>
+
+                {/* Related Products */}
+                <div className='text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md'>
+                    <div className='flex justify-center mt-4'>Related Products</div>
+                </div>
             </section>
         </Container>
     );
