@@ -1,81 +1,91 @@
-import React, { useEffect } from "react"
-import { useForm } from "react-hook-form"
-import { useMutation, useQueryClient } from "react-query"
-import axios from "axios"
-import { useDispatch, useSelector } from "react-redux"
-import { fetchProducts } from "../../store/productSlice"
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../store/productSlice";
 
-const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
-    const queryClient = useQueryClient()
-    const dispatch = useDispatch()
-    const accessKey = useSelector((state) => state.auth.accessKey)
-    const userId = useSelector((state) => state.auth.userData.id)
-    const products = useSelector((state) => state.product.products)
-
+const AuctionFormModal = ({ isOpen, onClose, initialData, productId = "" }) => {
+    const queryClient = useQueryClient();
+    const dispatch = useDispatch();
+    const accessKey = useSelector((state) => state.auth.accessKey);
+    const userId = useSelector((state) => state.auth.userData.id);
+    const products = useSelector((state) => state.product.products);
 
     useEffect(() => {
-        dispatch(fetchProducts({ accessKey, customer_id:userId }))
-    }, [dispatch, accessKey, userId])
+        dispatch(fetchProducts({ accessKey, customer_id: userId }));
+    }, [dispatch, accessKey, userId]);
 
+    const formatDateTimeLocal = (dateTime) => {
+        const date = new Date(dateTime);
+        const offset = date.getTimezoneOffset();
+        const localDate = new Date(date.getTime() - offset * 60 * 1000);
+        return localDate.toISOString().slice(0, 16);
+    };
 
     const {
         register,
         handleSubmit,
         reset,
-        watch,
         formState: { errors },
     } = useForm({
-        defaultValues: initialData || {
-            product: "",
-            starting_price: "",
-            current_price: "",
-            starting_time: "",
-            ending_time: "",
-            auction_status: "A",
+        defaultValues: {
+            product: initialData?.product.id || "",
+            starting_price: initialData?.starting_price || "",
+            current_price: initialData?.current_price || "",
+            starting_time: initialData ? formatDateTimeLocal(initialData.starting_time) : "",
+            ending_time: initialData ? formatDateTimeLocal(initialData.ending_time) : "",
+            auction_status: initialData?.auction_status || "A",
         },
-    })
-
+    });
 
     useEffect(() => {
-        reset(initialData)
-    }, [initialData, reset])
+        reset({
+            product: initialData?.product.id || "",
+            starting_price: initialData?.starting_price || "",
+            current_price: initialData?.current_price || "",
+            starting_time: initialData ? formatDateTimeLocal(initialData.starting_time) : "",
+            ending_time: initialData ? formatDateTimeLocal(initialData.ending_time) : "",
+            auction_status: initialData?.auction_status || "A",
+        });
+    }, [initialData, reset]);
 
     const mutation = useMutation(
         async (data) => {
             const url = initialData
                 ? `http://127.0.0.1:8000/auction/auctions/${initialData.id}/`
-                : `http://127.0.0.1:8000/auction/auctions/`
-            const method = initialData ? "put" : "post"
+                : `http://127.0.0.1:8000/auction/auctions/`;
+            const method = initialData ? "put" : "post";
             const response = await axios[method](url, data, {
                 headers: {
                     "Content-Type": "application/json",
                 },
-            })
-            return response.data
+            });
+            return response.data;
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries("auctions")
-                onClose()
+                queryClient.invalidateQueries("auctions");
+                onClose();
             },
             onError: (error) => {
-                console.error(error)
+                console.error(error);
             },
         }
-    )
+    );
 
     const onSubmit = (data) => {
-        data.current_price = data.starting_price
-        mutation.mutate(data)
-    }
+        data.current_price = data.starting_price;
+        mutation.mutate(data);
+    };
 
     const handleOverlayClick = (e) => {
         if (e.target === e.currentTarget) {
-            onClose()
+            onClose();
         }
-    }
+    };
 
-    if (!isOpen) return null
+    if (!isOpen) return null;
 
     return (
         <div
@@ -103,7 +113,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                         <select
                             id="product"
                             {...register("product", { required: true })}
-                            defaultValue={ initialData ? initialData.product : productId}
+                            defaultValue={initialData ? initialData.product.id : productId}
                             className="mt-1 block w-full rounded-sm px-2 py-1 bg-white border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         >
                             <option value="">Select a product</option>
@@ -139,7 +149,6 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             </span>
                         )}
                     </div>
-                    
 
                     <div className="mb-4">
                         <label
@@ -160,7 +169,6 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             </span>
                         )}
                     </div>
-
 
                     <div className="mb-4">
                         <label
@@ -211,7 +219,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AuctionFormModal
+export default AuctionFormModal;

@@ -128,6 +128,11 @@ function Auctions() {
         setIsModalOpen(true)
     }
 
+    const handelEditClick = (auction) => {
+        setInitialData(auction)
+        setIsModalOpen(true)
+    }
+
     return (
         <>
             <div className="bg-white h-auto w-auto flex items-center rounded-md mt-4 px-8">
@@ -365,12 +370,15 @@ function Auctions() {
                             </div>
                             <div className="col-span-2 flex flex-col justify-center">
                                 <div className="h-12 mb-2">
-                                    <p className="font-semibold hover:underline text-gray-600 cursor-pointer">
+                                    <button 
+                                        className="font-semibold hover:underline text-gray-600 cursor-buttonointer text-start"
+                                        onClick={() => handelEditClick(auction)}
+                                    >
                                         {truncateText(
                                             auction?.product?.title,
                                             MAX_TITLE_LENGTH
                                         )}
-                                    </p>
+                                    </button>
                                 </div>
                                 <div className="font-semibold text-green-600">
                                     Current Bid: {auction?.current_price}
