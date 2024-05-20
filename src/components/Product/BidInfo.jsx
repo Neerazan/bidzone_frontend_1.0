@@ -6,27 +6,31 @@ import { fetchBids } from "../../store/Auction/bidsSlice"
 import { useForm } from "react-hook-form"
 
 import { InputConfirmationModal } from "../index"
-
+import { ErrorMessage } from "@hookform/error-message"
 
 function BidInfo({ data }) {
-
     const bidInput = useRef(null)
     const [showModal, setShowModal] = useState(false)
     const [bidAmount, setBidAmount] = useState(null)
 
-
-
     const accessToken = useSelector((state) => state.auth.accessKey)
     const authStatus = useSelector((state) => state.auth.status)
     const userData = useSelector((state) => state.auth.userData)
-    const user_balance = useSelector((state) => state.auth.userData.user_balance)
+    const user_balance = useSelector(
+        (state) => state.auth.userData.user_balance
+    )
 
     const bidsData = useSelector((state) => state.bid.bids)
 
     const dispatch = useDispatch()
     const queryClient = useQueryClient()
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm()
 
     useEffect(() => {
         if (data) {
@@ -36,31 +40,28 @@ function BidInfo({ data }) {
 
     const customer_id = authStatus ? userData.id : null
 
-
     const myBid = useMemo(() => {
         const bid = bidsData.find((bid) => bid.bidder.id === customer_id)
         return bid
     }, [bidsData, customer_id])
 
-    const bidMutation = useMutation(
-        async (newBid) => {
-            const url = myBid
-                ? `http://127.0.0.1:8000/auction/auctions/${data.id}/bids/${myBid.id}/`
-                : `http://127.0.0.1:8000/auction/auctions/${data.id}/bids/`
+    const bidMutation = useMutation(async (newBid) => {
+        const url = myBid
+            ? `http://127.0.0.1:8000/auction/auctions/${data.id}/bids/${myBid.id}/`
+            : `http://127.0.0.1:8000/auction/auctions/${data.id}/bids/`
 
-            const method = myBid ? "put" : "post"
+        const method = myBid ? "put" : "post"
 
-            await axios[method](url, newBid, {
-                headers: { Authorization: `JWT ${accessToken}` },
-            })
-        }
-    )
+        await axios[method](url, newBid, {
+            headers: { Authorization: `JWT ${accessToken}` },
+        })
+    })
 
     const submitBid = () => {
         setShowModal(false)
         bidMutation.mutate(
-            { 
-                amount: bidAmount 
+            {
+                amount: bidAmount,
             },
             {
                 onSuccess: () => {
@@ -70,18 +71,15 @@ function BidInfo({ data }) {
         )
     }
 
-
     const handleSubmitBid = (data) => {
         setBidAmount(data)
         setShowModal(true)
     }
 
     const cancelSubmitModal = () => {
-        setShowModal(false) 
+        setShowModal(false)
         setBidAmount(null)
     }
-
-
 
     return (
         <>
@@ -112,17 +110,27 @@ function BidInfo({ data }) {
                     ref={bidInput}
                     type="number"
                     placeholder="Enter your bid"
-                    className="w-full bg-gray-200 rounded-md p-2 outline-1 focus:outline focus:outline-sky-500"
+                    className={`w-full bg-gray-200 rounded-md p-2 outline-1 focus:outline  ${errors.amount ? "focus:outline-red-500" : "focus:outline-sky-500"}`}
                     {...register("amount", {
                         required: "This field is required",
                         min: {
                             value: data.current_price + 1,
-                            message: "Bid amount should be greater than current price",
+                            message:
+                                "Bid amount should be greater than current price",
                         },
                     })}
                 />
 
-                
+                <div className="h-3 my-1 px-4">
+                    <ErrorMessage
+                        errors={errors}
+                        name="amount"
+                        render={({ message }) => (
+                            <p className="text-sm text-red-600">{message}</p>
+                        )}
+                    />
+                </div>
+
                 <button
                     className="w-full border border-green-700 text-green-700 rounded-md p-2 mt-2 font-semibold hover:bg-green-700 hover:text-white transition-all duration-500 ease-in-out transform hover:scale-105"
                     type="submit"
@@ -130,11 +138,11 @@ function BidInfo({ data }) {
                     {myBid ? "Update Bid" : "Submit Bid"}
                 </button>
             </form>
-            <InputConfirmationModal 
+            <InputConfirmationModal
                 show={showModal}
                 onConfirm={submitBid}
                 onCancel={cancelSubmitModal}
-                message = {`Are you sure you want to bid ?`}
+                message={`Are you sure you want to bid ?`}
             />
         </>
     )
