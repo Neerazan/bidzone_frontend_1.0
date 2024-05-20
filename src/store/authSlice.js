@@ -49,6 +49,10 @@ const authSlice = createSlice({
             state.accessKey = null
             state.error = null
         },
+
+        updateUserBalance: (state, action) => {
+            state.userData.user_balance = action.payload
+        }
     },
 
     extraReducers: (builder) => {
@@ -71,5 +75,5 @@ const authSlice = createSlice({
     },
 })
 
-export const { login, logout } = authSlice.actions
+export const { login, logout, updateUserBalance } = authSlice.actions
 export default authSlice.reducer
