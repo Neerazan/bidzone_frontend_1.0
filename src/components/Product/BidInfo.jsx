@@ -69,14 +69,11 @@ function BidInfo({ data }) {
             },
             {
                 onSuccess: (data) => {
-                    console.log(`Inside addBid onSuccess Data : ${data}`);
                     queryClient.invalidateQueries("bids")
                     if(myBid) {
-                        console.log(`Inside addBid If condition`);
                         dispatch(updateBid({ updatedBid:data }))
                         reset()
                     }else {
-                        console.log(`Inside addBid Else condition`);
                         dispatch(addBid({ bidData:data }))
                         reset()
                     }

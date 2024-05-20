@@ -33,7 +33,7 @@ const bidsSlice = createSlice({
         },
 
         updateBid: (state, action) => {
-            const updatedBid = action.payload
+            const updatedBid = action.payload.updatedBid
             state.bids = state.bids.map((bid) => bid.id === updatedBid.id ? updatedBid : bid)
         },
     },
