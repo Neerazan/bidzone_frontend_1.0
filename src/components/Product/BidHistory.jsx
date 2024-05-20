@@ -18,7 +18,7 @@ const BidHistory = ({ auctionId }) => {
     }, [dispatch, auctionId]);
 
     const renderBidHistory = () => {
-        return bidsData.map((bid) => (
+        return bidsData?.map((bid) => (
             <div
                 className={`flex rounded-full ${customer_id === bid.bidder.id ? "bg-green-200" : "bg-sky-100"} px-2 py-1 items-center mb-2`}
                 key={bid.id}

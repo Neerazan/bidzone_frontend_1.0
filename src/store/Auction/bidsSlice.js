@@ -29,7 +29,7 @@ const bidsSlice = createSlice({
     initialState,
     reducers: {
         addBid: (state, action) => {
-            state.bids.push(action.payload)
+            state.bids.push(action.payload.bidData)
         },
 
         updateBid: (state, action) => {

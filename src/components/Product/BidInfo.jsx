@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form"
 import { InputConfirmationModal } from "../index"
 import { ErrorMessage } from "@hookform/error-message"
 
+import { updateBid, addBid } from "../../store/Auction/bidsSlice"
+
 function BidInfo({ data }) {
     const bidInput = useRef(null)
     const [showModal, setShowModal] = useState(false)
@@ -52,9 +54,11 @@ function BidInfo({ data }) {
 
         const method = myBid ? "put" : "post"
 
-        await axios[method](url, newBid, {
+        const response = await axios[method](url, newBid, {
             headers: { Authorization: `JWT ${accessToken}` },
         })
+
+        return response.data
     })
 
     const submitBid = () => {
@@ -64,15 +68,25 @@ function BidInfo({ data }) {
                 amount: bidAmount,
             },
             {
-                onSuccess: () => {
+                onSuccess: (data) => {
+                    console.log(`Inside addBid onSuccess Data : ${data}`);
                     queryClient.invalidateQueries("bids")
+                    if(myBid) {
+                        console.log(`Inside addBid If condition`);
+                        dispatch(updateBid({ updatedBid:data }))
+                        reset()
+                    }else {
+                        console.log(`Inside addBid Else condition`);
+                        dispatch(addBid({ bidData:data }))
+                        reset()
+                    }
                 },
             }
         )
     }
 
     const handleSubmitBid = (data) => {
-        setBidAmount(data)
+        setBidAmount(data.amount)
         setShowModal(true)
     }
 
