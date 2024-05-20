@@ -7,14 +7,17 @@ import axios from "axios"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
 import { fetchAuctions } from "../../store/Auction/customerAuctionSlice"
-import { FormattedDate } from "../index"
+import { FormattedDate, ConfirmationModal } from "../index"
 
-import { FaEye } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+import { FaEye } from "react-icons/fa"
+import { MdDeleteForever } from "react-icons/md"
 
 function Auctions() {
     const [selectedItems, setSelectedItems] = useState([])
     const [selectAll, setSelectAll] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [deleteByButton, setDeleteByButton] = useState(false)
+
     const dispatch = useDispatch()
     const actionDropdownRef = useRef(null)
 
@@ -62,11 +65,11 @@ function Auctions() {
         setSelectAll(!selectAll)
     }
 
-    const deleteProductMutation = useMutation(
-        async ({ customerId, productId, accessKey }) => {
+    const deleteAuctionMutation = useMutation(
+        async ({ auctionId, accessKey }) => {
             try {
                 const response = await axios.delete(
-                    `http://127.0.0.1:8000/auction/customers/${customerId}/products/${productId}/`,
+                    `http://127.0.0.1:8000/auction/auctions/${auctionId}/`,
                     {
                         headers: {
                             Authorization: `JWT ${accessKey}`,
@@ -80,66 +83,44 @@ function Auctions() {
         }
     )
 
-    const bulkDeleteProductsMutation = useMutation(
-        async ({ customerId, productIds, accessKey }) => {
-            try {
-                const response = await axios.post(
-                    `http://127.0.0.1:8000/auction/customers/${customerId}/products/bulk-delete/`,
-                    { ids: productIds },
-                    {
-                        headers: {
-                            Authorization: `JWT ${accessKey}`,
-                        },
-                    }
-                )
-                return response.data
-            } catch (error) {
-                console.log("Error deleting products:", error)
-            }
-        }
-    )
-
-    const handleDeleteProducts = () => {
-        if (actionDropdownRef.current.value === "delete") {
-            if (selectedItems.length === 1) {
-                const productId = selectedItems[0]
-                deleteProductMutation.mutate(
-                    {
-                        customerId: customer_id,
-                        productId,
-                        selectedItems,
-                        accessKey,
+    const handleDeleteAuction = () => {
+        if (actionDropdownRef.current.value === "delete" || deleteByButton) {
+            const auctionId = selectedItems[0]
+            deleteAuctionMutation.mutate(
+                {
+                    auctionId: auctionId,
+                    accessKey: accessKey,
+                },
+                {
+                    onSuccess: (data) => {
+                        setSelectedItems([])
+                        setSelectAll(false)
+                        setDeleteByButton(false)
                     },
-                    {
-                        onSuccess: (data) => {
-                            dispatch(
-                                deleteProducts({ productsIds: selectedItems })
-                            )
-                            setSelectedItems([])
-                            setSelectAll(false)
-                        },
-                    }
-                )
-            } else if (selectedItems.length > 1) {
-                bulkDeleteProductsMutation.mutate(
-                    {
-                        customerId: customer_id,
-                        productIds: selectedItems,
-                        accessKey,
-                    },
-                    {
-                        onSuccess: (data) => {
-                            dispatch(
-                                deleteProducts({ productsIds: selectedItems })
-                            )
-                            setSelectedItems([])
-                            setSelectAll(false)
-                        },
-                    }
-                )
-            }
+                }
+            )
+            setShowModal(false)
+            setDeleteByButton(false)
         }
     }
+
+
+    const handleAuctionDelete = async (id="") => {
+        if(id) {
+            handleSelectItem(id)
+            setDeleteByButton(true)
+        }
+
+        setShowModal(true)
+    }
+
+
+    const cancleAuctionDelete = () => {
+        setShowModal(false)
+        setSelectedItems([])
+        setSelectAll(false)
+    }
+
 
     return (
         <>
@@ -323,7 +304,7 @@ function Auctions() {
                         <button
                             className="px-1 py-0.5 mx-2 rounded-sm text-sm border border-gray-400 text-gray-500 hover:bg-gray-400 hover:text-white transition duration-300 ease-in-out"
                             onClick={() => {
-                                handleDeleteProducts()
+                                handleAuctionDelete()
                             }}
                         >
                             Go
@@ -366,10 +347,10 @@ function Auctions() {
                                         handleSelectItem(auction.id)
                                     }
                                 />
-                                <div className="rounded-md h-full w-full flex justify-center items-center border border-gray-300">
+                                <div className="rounded-md h-full w-full flex bg-white justify-center items-center">
                                     {/* Added relative positioning */}
                                     <LazyLoadImage
-                                        src={`http://127.0.0.1:8000/${auction?.product?.images[0]?.image}`}
+                                        src={`${auction?.product?.images[0]?.image}`}
                                         alt="image"
                                         className="w-full h-full object-cover bg-white" // Adjusted to absolute positioning and added object-cover
                                         effect="blur"
@@ -389,7 +370,7 @@ function Auctions() {
                                     Current Bid: {auction?.current_price}
                                 </div>
 
-                                <div className="font-semibold text-rose-600">
+                                <div className="font-semibold text-sky-600">
                                     Starting Price: RS.{" "}
                                     {auction?.starting_price}
                                 </div>
@@ -416,7 +397,7 @@ function Auctions() {
                                 </div>
 
                                 <div className="flex flex-col justify-end ps-4 mt-3">
-                                    <div className="h-6 font-semibold text-green-600">
+                                    <div className="h-6 text-green-600">
                                         Starting Date:{" "}
                                         {
                                             <FormattedDate
@@ -424,7 +405,7 @@ function Auctions() {
                                             />
                                         }
                                     </div>
-                                    <div className="h-6 text-red-500 font-semibold">
+                                    <div className="h-6 text-red-500">
                                         Ending Date:{" "}
                                         <FormattedDate
                                             date={auction.ending_time}
@@ -443,7 +424,7 @@ function Auctions() {
                                 </div> */}
                             </div>
                             <div className="col-span-1 flex flex-col items-center justify-center gap-2 border-l border-l-gray-400">
-                            <Link
+                                <Link
                                     className="px-2 font-semibold py-1 rounded-md border border-green-600 hover:bg-green-600 text-green-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
                                     // to={`/auction/${item?.auction?.product?.slug}`}
                                 >
@@ -453,10 +434,11 @@ function Auctions() {
                                     </span>
                                 </Link>
 
-                                
                                 <button
                                     className="px-2 font-semibold py-1 rounded-md border border-red-500 hover:bg-red-500 text-red-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
-                                    // onClick={() => removeFromWishlist(item.id)}
+                                    onClick={() => (
+                                        handleAuctionDelete(auction.id)
+                                    )}
                                 >
                                     Delete
                                     <span className="ml-2">
@@ -468,6 +450,12 @@ function Auctions() {
                     </div>
                 ))}
             </div>
+            <ConfirmationModal 
+                show={showModal}
+                onCancel={cancleAuctionDelete}
+                onConfirm={handleDeleteAuction}
+                message={"Are you sure you want to delete selected auction(s)?"}
+            />
         </>
     )
 }

@@ -34,7 +34,7 @@ function ProductCard({
             >
                 <img
                     className="w-full h-full object-cover object-center shadow"
-                    src={`http://127.0.0.1:8000/${image}/`}
+                    src={`${image}/`}
                     alt="product image"
                 />
 
