@@ -29,6 +29,7 @@ const customerAuctionSlice = createSlice({
         setAuctions: (state, action) => {
             state.auctions = action.payload
         },
+        
         editAuction: (state, action) => {
             const updatedAuction = action.payload
             const index = state.auctions.findIndex(
@@ -38,10 +39,11 @@ const customerAuctionSlice = createSlice({
                 state.auctions[index] = updatedAuction
             }
         },
+
         deleteAuction: (state, action) => {
-            const auctionIdsToDelete = action.payload.auctionIds
+            const auctionIdToDelete = action.payload.auctionId
             state.auctions = state.auctions.filter(
-                (auction) => !auctionIdsToDelete.includes(auction.id)
+                (auction) => auction.id !== auctionIdToDelete
             )
         },
     },

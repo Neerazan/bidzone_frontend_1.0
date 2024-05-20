@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from "react"
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { deleteProducts } from "../../store/productSlice"
 import { useMutation } from "react-query"
 import axios from "axios"
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import "react-lazy-load-image-component/src/effects/blur.css"
 import { fetchAuctions } from "../../store/Auction/customerAuctionSlice"
+import { deleteAuction } from "../../store/Auction/customerAuctionSlice"
+
 import { FormattedDate, ConfirmationModal } from "../index"
 
 import { FaEye } from "react-icons/fa"
@@ -93,6 +94,7 @@ function Auctions() {
                 },
                 {
                     onSuccess: (data) => {
+                        dispatch(deleteAuction({ auctionId: auctionId }))
                         setSelectedItems([])
                         setSelectAll(false)
                         setDeleteByButton(false)
