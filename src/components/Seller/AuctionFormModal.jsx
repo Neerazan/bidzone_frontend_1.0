@@ -14,7 +14,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
 
 
     useEffect(() => {
-        dispatch(fetchProducts({ accessKey, userId }))
+        dispatch(fetchProducts({ accessKey, customer_id:userId }))
     }, [dispatch, accessKey, userId])
 
 
@@ -107,7 +107,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId="" }) => {
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         >
                             <option value="">Select a product</option>
-                            {products.map((product) => (
+                            {products?.results?.map((product) => (
                                 <option key={product.id} value={product.id}>
                                     {product.title}
                                 </option>

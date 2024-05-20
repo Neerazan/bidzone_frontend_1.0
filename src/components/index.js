@@ -43,6 +43,7 @@ import BalanceDetails from "./Profile/BalanceDetails"
 import UserDetails from "./Profile/UserDetails"
 import ConfirmationModal from "./ConfirmationModal"
 import AddressFormModal from "./Seller/AddressFormModel"
+import AuctionFormModal from "./Seller/AuctionFormModal"
 
 
 export {
@@ -91,4 +92,5 @@ export {
     BalanceDetails,
     ConfirmationModal,
     AddressFormModal,
+    AuctionFormModal
 }

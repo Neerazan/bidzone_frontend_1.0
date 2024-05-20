@@ -8,7 +8,7 @@ import "react-lazy-load-image-component/src/effects/blur.css"
 import { fetchAuctions } from "../../store/Auction/customerAuctionSlice"
 import { deleteAuction } from "../../store/Auction/customerAuctionSlice"
 
-import { FormattedDate, ConfirmationModal } from "../index"
+import { FormattedDate, ConfirmationModal, AuctionFormModal } from "../index"
 
 import { FaEye } from "react-icons/fa"
 import { MdDeleteForever } from "react-icons/md"
@@ -18,6 +18,8 @@ function Auctions() {
     const [selectAll, setSelectAll] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [deleteByButton, setDeleteByButton] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [initialData, setInitialData] = useState(null)
 
     const dispatch = useDispatch()
     const actionDropdownRef = useRef(null)
@@ -106,9 +108,8 @@ function Auctions() {
         }
     }
 
-
-    const handleAuctionDelete = async (id="") => {
-        if(id) {
+    const handleAuctionDelete = async (id = "") => {
+        if (id) {
             handleSelectItem(id)
             setDeleteByButton(true)
         }
@@ -116,13 +117,16 @@ function Auctions() {
         setShowModal(true)
     }
 
-
     const cancleAuctionDelete = () => {
         setShowModal(false)
         setSelectedItems([])
         setSelectAll(false)
     }
 
+    const handleAddClick = () => {
+        setInitialData(null)
+        setIsModalOpen(true)
+    }
 
     return (
         <>
@@ -280,12 +284,12 @@ function Auctions() {
                         </g>
                     </svg>
                 </div>
-                <Link
+                <button
                     className="flex px-4 py-1 rounded-md cursor-pointer ml-3 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition duration-300 ease-in-out"
-                    to="/user/add-product"
+                    onClick={handleAddClick}
                 >
                     <span>Add New Auctions</span>
-                </Link>
+                </button>
             </div>
             <div className="overflow-y-scroll h-[90vh] mt-2 bg-white py-4 px-4 rounded-md shadow-md">
                 <div className="flex h-auto bg-sky-100 text-gray-600 px-4 py-2 rounded-sm mb-4">
@@ -438,9 +442,9 @@ function Auctions() {
 
                                 <button
                                     className="px-2 font-semibold py-1 rounded-md border border-red-500 hover:bg-red-500 text-red-600 hover:text-white w-28 text-center transition ease-in-out duration-300"
-                                    onClick={() => (
+                                    onClick={() =>
                                         handleAuctionDelete(auction.id)
-                                    )}
+                                    }
                                 >
                                     Delete
                                     <span className="ml-2">
@@ -452,11 +456,19 @@ function Auctions() {
                     </div>
                 ))}
             </div>
-            <ConfirmationModal 
+            <ConfirmationModal
                 show={showModal}
                 onCancel={cancleAuctionDelete}
                 onConfirm={handleDeleteAuction}
                 message={"Are you sure you want to delete selected auction(s)?"}
+            />
+            {
+                
+            }
+            <AuctionFormModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                initialData={initialData}
             />
         </>
     )
