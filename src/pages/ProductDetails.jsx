@@ -22,33 +22,14 @@ function Product() {
         getAuctionDetails
     )
 
-    const { data: bids, isError: bidsError, isLoading: bidsLoading } = useQuery(
-        ["auctionBids", auctionDetails?.id], // Include auctionDetails.id in the query key
-        async () => {
-            if (auctionDetails) {
-                try {
-                    const response = await axiosInstance.get(`/auction/auctions/${auctionDetails.id}/bids/`)
-                    return response.data
-                } catch (error) {
-                    throw error
-                }
-            }
-        },
-        { enabled: !!auctionDetails } // Ensure the query is only enabled when auctionDetails is available
-    )
 
 
-
-    if (auctionLoading || bidsLoading) {
+    if (auctionLoading) {
         return <div>Loading...</div>
     }
 
     if (auctionError) {
         return <div>Error loading product details: {auctionError.message}</div>
-    }
-
-    if (bidsError) {
-        return <div>Error loading auction bids: {bidsError.message}</div>
     }
     
 
@@ -56,8 +37,8 @@ function Product() {
         <Container>
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
                 <ProductImages data={auctionDetails} />
-                <ProductInfo data={auctionDetails} bidsData={bids}/>
-                <BidHistory data={bids} isLoading={bidsLoading}/>
+                <ProductInfo data={auctionDetails} />
+                <BidHistory auctionId={auctionDetails.id}/>
             </section>
             <section className="grid grid-cols-1 lg:grid-cols-5 gap-3 text-gray-700 body-font overflow-hidden bg-white mt-4 rounded-md shadow-md mr-0">
                 <QnA auctionId={auctionDetails.id} seller={auctionDetails.product.customer}/>

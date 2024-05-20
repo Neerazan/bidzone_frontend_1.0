@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
     bids: [],
@@ -10,14 +11,10 @@ const initialState = {
 
 export const fetchBids = createAsyncThunk(
     "auction/fetchBids",
-    async ({ auctionId, accessKey }) => {
+    async ({ auctionId }) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/${auctionId}/bids/`, {
-                headers: {
-                    Authorization: `JWT ${accessKey}`,
-                },
-            })
-
+            const response = await axios.get(`http://127.0.0.1:8000/auction/auctions/${auctionId}/bids/`)
+            
             return response.data
         } catch (error) {
             console.log("Error fetching bids:", error)

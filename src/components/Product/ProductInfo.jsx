@@ -14,15 +14,15 @@ function ProductInfo({ data, bidsData }) {
 
     function truncateText(text) {
         if (text.length <= MAX_DESCRIPTION_LENGTH) {
-            return <p className="mb-4">
+            return <span className="mb-4">
                 {parse(text)}
-            </p>
+            </span>
         } else {
             return (
-                <p className="mb-4">
+                <span className="mb-4">
                 {parse(text.slice(0, MAX_DESCRIPTION_LENGTH) + '....')}
                 <Link className="underline font-semibold">see more</Link>
-            </p>
+            </span>
             )
         }
     }
