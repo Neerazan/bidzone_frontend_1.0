@@ -8,12 +8,15 @@ import { fetchProducts } from "../../store/productSlice"
 import { deleteProducts } from "../../store/productSlice"
 import { useMutation } from "react-query"
 import axios from "axios"
-import { ConfirmationModal } from "../index"
-import { set } from "react-hook-form"
+import { ConfirmationModal, AuctionFormModal } from "../index"
+
 
 
 function Products() {
     const [showModal, setShowModal] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [initialData, setInitialData] = useState(null)
+
 
     const [selectedItems, setSelectedItems] = useState([])
     const [selectAll, setSelectAll] = useState(false)
@@ -139,6 +142,11 @@ function Products() {
         setSelectAll(false)
     }
 
+
+    const handelAuctionAddClick = (productId) => {
+        setInitialData(productId)
+        setIsModalOpen(true)
+    }
 
     return (
         <>
@@ -432,7 +440,10 @@ function Products() {
                                         </span>
                                     </td>
                                     <td className="px-4 py-2">
-                                        <button className="flex px-2 py-1 font-semibold bg-blue-600 text-white rounded-sm border border-blue-600 hover:bg-white hover:text-blue-600 transition duration-300 ease-in-out">
+                                        <button 
+                                            className="flex px-2 py-1 font-semibold bg-blue-600 text-white rounded-sm border border-blue-600 hover:bg-white hover:text-blue-600 transition duration-300 ease-in-out"
+                                            onClick={() => handelAuctionAddClick(product.id)}
+                                        >
                                             auction
                                             <span className="ml-1 mt-1 font-semibold">
                                                 <IoMdAdd />
@@ -453,6 +464,12 @@ function Products() {
                 onConfirm={handleDeleteProducts}
                 onCancel={cancelDeleteProduct}
                 message="Are you Sure that you want to delete selected product(s)?"
+            />
+
+            <AuctionFormModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                productId={initialData}
             />
         </>
     )

@@ -5,7 +5,8 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../store/productSlice";
 
-const AuctionFormModal = ({ isOpen, onClose, initialData, productId = "" }) => {
+const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
+
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
     const accessKey = useSelector((state) => state.auth.accessKey);
@@ -30,7 +31,7 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId = "" }) => {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            product: initialData?.product.id || productId || "",
+            product: initialData ? initialData.product.id : (productId || ""),
             starting_price: initialData?.starting_price || "",
             current_price: initialData?.current_price || "",
             starting_time: initialData ? formatDateTimeLocal(initialData.starting_time) : "",
@@ -41,14 +42,14 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId = "" }) => {
 
     useEffect(() => {
         reset({
-            product: initialData?.product.id || "",
+            product: initialData ? initialData.product.id : (productId || ""),
             starting_price: initialData?.starting_price || "",
             current_price: initialData?.current_price || "",
             starting_time: initialData ? formatDateTimeLocal(initialData.starting_time) : "",
             ending_time: initialData ? formatDateTimeLocal(initialData.ending_time) : "",
             auction_status: initialData?.auction_status || "A",
         });
-    }, [initialData, reset]);
+    }, [initialData, reset, productId]);
 
     const mutation = useMutation(
         async (data) => {
@@ -113,7 +114,6 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId = "" }) => {
                         <select
                             id="product"
                             {...register("product", { required: true })}
-                            defaultValue={initialData ? initialData.product.id : productId}
                             className="mt-1 block w-full rounded-sm px-2 py-1 bg-white border border-gray-300 focus:border-blue-400 cursor-pointer shadow-sm"
                         >
                             <option value="">Select a product</option>
