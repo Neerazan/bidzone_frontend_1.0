@@ -3,12 +3,16 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { fetchProducts } from "../../store/productSlice";
+
 
 const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
 
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const accessKey = useSelector((state) => state.auth.accessKey);
     const userId = useSelector((state) => state.auth.userData.id);
     const products = useSelector((state) => state.product.products);
@@ -68,9 +72,10 @@ const AuctionFormModal = ({ isOpen, onClose, initialData, productId }) => {
             return response.data;
         },
         {
-            onSuccess: () => {
+            onSuccess: (data) => {
                 queryClient.invalidateQueries("auctions");
                 onClose();
+                navigate("/user/auctions");
             },
             onError: (error) => {
                 console.error(error);

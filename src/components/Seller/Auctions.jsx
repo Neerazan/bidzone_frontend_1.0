@@ -411,7 +411,7 @@ function Auctions() {
                                 </div>
 
                                 <div className="flex flex-col justify-end ps-4 mt-3">
-                                    <div className="h-6 text-green-600">
+                                    <div className="h-6 text-gray-600 font-semibold">
                                         Starting Date:{" "}
                                         {
                                             <FormattedDate
@@ -419,23 +419,17 @@ function Auctions() {
                                             />
                                         }
                                     </div>
-                                    <div className="h-6 text-red-500">
+                                    <div className="h-6 text-gray-600 font-semibold">
                                         Ending Date:{" "}
                                         <FormattedDate
                                             date={auction.ending_time}
                                         />
                                     </div>
 
-                                    <div className="text-teal-500 font-semibold">
+                                    <div className="text-green-500 font-semibold">
                                         Total Bids: {auction.bids_count}
                                     </div>
                                 </div>
-
-                                {/* <div className="flex items-center justify-end mt-2">
-                                    <span className="mr-2 ml-3 rounded bg-teal-600 text-white px-2.5 pb-0.5 text-xs font-semibold">
-                                        { auction.bids_count } Bid(s)
-                                    </span>
-                                </div> */}
                             </div>
                             <div className="col-span-1 flex flex-col items-center justify-center gap-2 border-l border-l-gray-400">
                                 <Link

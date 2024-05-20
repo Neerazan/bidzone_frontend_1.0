@@ -29,15 +29,16 @@ const customerAuctionSlice = createSlice({
         setAuctions: (state, action) => {
             state.auctions = action.payload
         },
-        
+
         editAuction: (state, action) => {
-            const updatedAuction = action.payload
-            const index = state.auctions.findIndex(
-                (auction) => auction.id === updatedAuction.id
+            const updatedAuction = action.payload.auction
+            state.auctions = state.auctions.map((auction) =>
+                auction.id === updatedAuction.id ? updatedAuction : auction
             )
-            if (index !== -1) {
-                state.auctions[index] = updatedAuction
-            }
+        },
+
+        addAuction: (state, action) => {
+            state.auctions.push(action.payload.auction)
         },
 
         deleteAuction: (state, action) => {
@@ -60,5 +61,5 @@ const customerAuctionSlice = createSlice({
     },
 })
 
-export const { setAuctions, editAuction, deleteAuction } = customerAuctionSlice.actions
+export const { setAuctions, editAuction, deleteAuction, addAuction } = customerAuctionSlice.actions
 export default customerAuctionSlice.reducer
