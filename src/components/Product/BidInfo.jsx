@@ -9,6 +9,7 @@ import { InputConfirmationModal } from "../index"
 import { ErrorMessage } from "@hookform/error-message"
 
 import { updateBid, addBid } from "../../store/Auction/bidsSlice"
+import { updateCurrentPrice, updateBidsCount } from "../../store/Auction/indAuctionSlice"
 
 function BidInfo({ data }) {
     const bidInput = useRef(null)
@@ -72,9 +73,12 @@ function BidInfo({ data }) {
                     queryClient.invalidateQueries("bids")
                     if(myBid) {
                         dispatch(updateBid({ updatedBid:data }))
+                        dispatch(updateCurrentPrice({ current_price:data.amount }))
                         reset()
                     }else {
                         dispatch(addBid({ bidData:data }))
+                        dispatch(updateBidsCount())
+                        dispatch(updateCurrentPrice({ current_price:data.amount }))
                         reset()
                     }
                 },

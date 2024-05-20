@@ -9,6 +9,7 @@ import addressSlice from "./common/addressSlice";
 import auctionSlice from "./Auction/auctionSlice";
 import customerAuctionSlice from "./Auction/customerAuctionSlice";
 import bidsSlice from "./Auction/bidsSlice";
+import indAuctionSlice from "./Auction/indAuctionSlice";
 
 const store = configureStore({
     reducer :{
@@ -22,6 +23,7 @@ const store = configureStore({
         auction: auctionSlice,
         customerAuction: customerAuctionSlice,
         bid: bidsSlice,
+        indAuction: indAuctionSlice,
     },
 })
 

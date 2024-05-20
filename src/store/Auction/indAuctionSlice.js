@@ -7,7 +7,7 @@ const initialState = {
     error: null,
 };
 
-export const fetchAuctions = createAsyncThunk(
+export const fetchIndAuctions = createAsyncThunk(
     "auction/fetchIndAuctions",
     async ({ slug }) => {
         try {
@@ -20,32 +20,36 @@ export const fetchAuctions = createAsyncThunk(
     }
 )
 
-const auctionsSlice = createSlice({
+const indAuctionSlice = createSlice({
     name: "indAuction",
     initialState,
     reducers: {
-        addBidsCount: (state, action) => {
-            console.log("");
+        updateBidsCount: (state, action) => {
+            state.auction.bids_count += 1
+        },
+
+        updateCurrentPrice: (state, action) => {
+            state.auction.current_price = action.payload.current_price
         }
     },
 
     extraReducers: (builder) => {
         builder
-            .addCase(fetchAuctions.pending, (state) => {
+            .addCase(fetchIndAuctions.pending, (state) => {
                 state.loading = true
                 state.error = null
             })
-            .addCase(fetchAuctions.fulfilled, (state, action) => {
+            .addCase(fetchIndAuctions.fulfilled, (state, action) => {
                 state.auction = action.payload
                 state.loading = false
                 state.error = null
             })
-            .addCase(fetchAuctions.rejected, (state, action) => {
+            .addCase(fetchIndAuctions.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message
             })
     },
 })
 
-export const { updateAuction } = auctionsSlice.actions
-export default auctionsSlice.reducer
+export const { updateAuction, updateBidsCount, updateCurrentPrice } = indAuctionSlice.actions
+export default indAuctionSlice.reducer

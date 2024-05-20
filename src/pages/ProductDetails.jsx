@@ -1,40 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import axiosInstance from '../components/Product/AxiosInstance';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchIndAuctions } from '../store/Auction/indAuctionSlice';
 import { Container, ProductImages, ProductInfo, BidHistory, QnA } from '../components';
 
 function Product() {
     const { slug } = useParams();
+    const dispatch = useDispatch();
+    const auctionDetails = useSelector((state) => state.indAuction.auction);
 
-    const getAuctionDetails = async () => {
-        try {
-            const response = await axiosInstance.get(`/auction/auctions/${slug}`);
-            return response.data;
-        } catch (error) {
-            throw error;
+    useEffect(() => {
+        if (slug) {
+            dispatch(fetchIndAuctions({ slug }));
         }
-    };
+    }, [dispatch, slug]);
 
-    const {
-        data: auctionDetails,
-        isError: auctionError,
-        isLoading: auctionLoading,
-    } = useQuery(
-        ["auctionDetails", slug], // Use slug as part of the query key to ensure caching is scoped to each auction
-        getAuctionDetails,
-        {
-            staleTime: 1000 * 60 * 5, // 5 minutes
-            cacheTime: 1000 * 60 * 30, // 30 minutes
-        }
-    );
-
-    if (auctionLoading) {
+    if (!auctionDetails) {
         return <div>Loading...</div>;
     }
 
-    if (auctionError) {
-        return <div>Error loading product details: {auctionError.message}</div>;
+    if (!auctionDetails.product) {
+        return <div>Error loading product details: Product data is missing.</div>;
     }
 
     return (
