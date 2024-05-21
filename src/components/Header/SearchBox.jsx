@@ -11,7 +11,6 @@ function SearchBox() {
         event.preventDefault();
         if (input.length > 1) {
             navigate(`/auctions/${input}`)
-            setInput("")
         }
     }
 

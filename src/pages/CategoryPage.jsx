@@ -18,7 +18,7 @@ const CategoryPage = () => {
     const [auctions, setAuctions] = useState([])
     const [submitPriceFilter, setSubmitPriceFilter] = useState(false)
     const [submitBidFilter, setSubmitBidFilter] = useState(false)
-    const [selectedOption, setSelectedOption] = useState("A")
+    const [selectedOption, setSelectedOption] = useState("")
     const [orderBy, setOrderBy] = useState("")
     const [collectionId, setCollectionId] = useState("")
     const [searchText, setSearchText] = useState("")
@@ -38,7 +38,7 @@ const CategoryPage = () => {
         setMinPriceInputValue("")
         setMaxBidInputValue("")
         setMinBidInputValue("")
-        setSelectedOption("A")
+        setSelectedOption("")
         setSubmitPriceFilter(!submitPriceFilter)
         setSubmitBidFilter(!submitBidFilter)
         setOrderBy("")
@@ -235,9 +235,42 @@ const CategoryPage = () => {
                                         <input
                                             id="list-radio-license"
                                             type="radio"
+                                            value=""
+                                            name="list-radio"
+
+                                            {...(selectedOption === "" && {
+                                                checked: true,
+                                                })
+                                            }
+
+                                            onChange={(e) =>
+                                                setSelectedOption(
+                                                    e.target.value
+                                                )
+                                            }
+                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                                        />
+                                        <label
+                                            htmlFor="list-radio-license"
+                                            className="w-full py-3 ms-2 text-sm font-medium text-gray-700"
+                                        >
+                                            All
+                                        </label>
+                                    </div>
+                                </li>
+                                <li className="w-full border-b border-gray-200">
+                                    <div className="flex items-center ps-3">
+                                        <input
+                                            id="list-radio-license"
+                                            type="radio"
                                             value="A"
                                             name="list-radio"
-                                            defaultChecked
+
+                                            {...(selectedOption === "A" && {
+                                                checked: true,
+                                                })
+                                            }
+
                                             onChange={(e) =>
                                                 setSelectedOption(
                                                     e.target.value
@@ -260,6 +293,12 @@ const CategoryPage = () => {
                                             type="radio"
                                             value="S"
                                             name="list-radio"
+
+                                            {...(selectedOption === "S" && {
+                                                checked: true,
+                                                })
+                                            }
+
                                             onChange={(e) =>
                                                 setSelectedOption(
                                                     e.target.value
