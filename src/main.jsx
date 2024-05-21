@@ -114,7 +114,7 @@ const router = createBrowserRouter([
                 ],
             },
             {
-                path: "/auctions/:collection_id",
+                path: "/auctions/:filter",
                 element: <CategoryPage />,
             },
         ],

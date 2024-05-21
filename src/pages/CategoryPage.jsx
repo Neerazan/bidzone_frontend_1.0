@@ -10,7 +10,6 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 
-
 const CategoryPage = () => {
     const [maxPriceInputValue, setMaxPriceInputValue] = useState("")
     const [minPriceInputValue, setMinPriceInputValue] = useState("")
@@ -21,7 +20,18 @@ const CategoryPage = () => {
     const [submitBidFilter, setSubmitBidFilter] = useState(false)
     const [selectedOption, setSelectedOption] = useState("A")
     const [orderBy, setOrderBy] = useState("")
-    const { collection_id } = useParams()
+    const [collectionId, setCollectionId] = useState("")
+    const [searchText, setSearchText] = useState("")
+
+    const { filter } = useParams()
+
+    useEffect(() => {
+        if (filter == parseInt(filter)) {
+            setCollectionId(filter)
+        } else {
+            setSearchText(filter)
+        }
+    }, [filter])
 
     const onClickReset = () => {
         setMaxPriceInputValue("")
@@ -36,21 +46,24 @@ const CategoryPage = () => {
 
     useEffect(() => {
         const fetchAuctions = async () => {
-            try {
-                const response = await axios.get(
-                    `http://127.0.0.1:8000/auction/auctions/?product__collection=${collection_id}&auction_status=${selectedOption}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}&ordering=${orderBy}`
-                )
-                if (response.data) {
-                    setAuctions(response.data)
+            if (collectionId || searchText) {
+                try {
+                    const response = await axios.get(
+                        `http://127.0.0.1:8000/auction/auctions/?search=${searchText}&product__collection=${collectionId}&auction_status=${selectedOption}&current_price__gt=${minPriceInputValue}&current_price__lt=${maxPriceInputValue}&min_bids_count=${minBidInputValue}&max_bids_count=${maxBidInputValue}&ordering=${orderBy}`
+                    )
+                    if (response.data) {
+                        setAuctions(response.data)
+                    }
+                } catch (error) {
+                    console.error(error)
                 }
-            } catch (error) {
-                console.error(error)
             }
         }
 
         fetchAuctions()
     }, [
-        collection_id,
+        collectionId,
+        searchText,
         submitPriceFilter,
         submitBidFilter,
         selectedOption,
@@ -276,7 +289,7 @@ const CategoryPage = () => {
                     <div className="col-span-3">
                         <div className="flex items-center border-b border-b-gray-300 pb-4">
                             <div className="text-gray-500">
-                                { auctions.length } Items Found for{" "}
+                                {auctions.length} Items Found for{" "}
                                 <span className="text-rose-500 font-semibold">
                                     "Category Name"
                                 </span>
