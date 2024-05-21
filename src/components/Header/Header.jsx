@@ -12,7 +12,7 @@ function Header() {
                 <div className="container flex items-center">
                     <Logo />
                     <SearchBox />
-                    <nav className="">
+                    <nav className="ml-5 md:ml-10">
                         <ul className="xl:w-auto flex gap-6 items-center justify-center">
                             {!authStatus && <LoginRegisterBtn />}
                             {authStatus && <Notification />}

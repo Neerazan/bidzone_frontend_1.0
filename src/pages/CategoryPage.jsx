@@ -291,7 +291,7 @@ const CategoryPage = () => {
                             <div className="text-gray-500">
                                 {auctions.length} Items Found for{" "}
                                 <span className="text-rose-500 font-semibold">
-                                    "Category Name"
+                                    {filter}
                                 </span>
                             </div>
                             <div className="ml-auto mr-4 text-gray-600 flex">
