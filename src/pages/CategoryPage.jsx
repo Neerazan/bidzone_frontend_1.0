@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { useParams } from "react-router-dom"
-import { set } from "react-hook-form"
+
 
 const CategoryPage = () => {
     const [maxPriceInputValue, setMaxPriceInputValue] = useState("")
@@ -276,7 +276,7 @@ const CategoryPage = () => {
                     <div className="col-span-3">
                         <div className="flex items-center border-b border-b-gray-300 pb-4">
                             <div className="text-gray-500">
-                                123 Items Found for{" "}
+                                { auctions.length } Items Found for{" "}
                                 <span className="text-rose-500 font-semibold">
                                     "Category Name"
                                 </span>

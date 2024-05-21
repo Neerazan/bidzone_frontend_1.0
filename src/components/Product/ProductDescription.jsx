@@ -17,9 +17,9 @@ function ProductDescription({ data }) {
                 {data?.product?.description && (
                     <div className="w-full flex flex-col">
                         <h2 className="text-xl font-semibold text-gray-800 mb-3 mx-auto">Product Description of {data.product.title}</h2>
-                        <p className='text-start'>
+                        <span className='text-start'>
                             {returnDescription(data.product.description)}
-                        </p>
+                        </span>
                     </div>
                 )}
             </div>
