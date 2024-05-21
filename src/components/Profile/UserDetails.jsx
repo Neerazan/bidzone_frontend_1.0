@@ -1,13 +1,17 @@
 import React, { useEffect } from "react"
 import { Input } from "../index"
 import { useForm } from "react-hook-form"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useMutation } from "react-query"
 import axios from "axios"
+
+import { updateCustomerInfo } from "../../store/authSlice"
+import { updateUserInfo } from "../../store/authSlice"
 
 function UserDetails() {
     const userData = useSelector((state) => state.auth.userData)
     const accessKey = useSelector((state) => state.auth.accessKey)
+    const dispatch = useDispatch()
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
@@ -79,6 +83,7 @@ function UserDetails() {
                 {
                     onSuccess: (data) => {
                         console.log("Customer data updated successfully:", data)
+                        dispatch(updateCustomerInfo({ customerInfo: data }))
                     }
                 }
             )
@@ -90,6 +95,7 @@ function UserDetails() {
                 {
                     onSuccess: (data) => {
                         console.log("User data updated successfully:", data)
+                        dispatch(updateUserInfo({ userInfo: data }))
                     }
                 }
             )

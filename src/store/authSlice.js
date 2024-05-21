@@ -17,8 +17,10 @@ export const signup = createAsyncThunk(
 
             return { access, refresh }
         } catch (error) {
-            console.log(`Error: ${error}`);
-            return rejectWithValue("Unauthorized: Incorrect username or password.");
+            console.log(`Error: ${error}`)
+            return rejectWithValue(
+                "Unauthorized: Incorrect username or password."
+            )
         }
     }
 )
@@ -52,7 +54,22 @@ const authSlice = createSlice({
 
         updateUserBalance: (state, action) => {
             state.userData.user_balance = action.payload
-        }
+        },
+
+        updateUserInfo: (state, action) => {
+            if (state.userData.id === action.payload.userInfo.id) {
+                state.userData.first_name = action.payload.userInfo.first_name
+                state.userData.last_name = action.payload.userInfo.last_name
+                state.userData.email = action.payload.userInfo.email
+            }
+        },
+
+        updateCustomerInfo: (state, action) => {
+            if (state.userData.id === action.payload.customerInfo.id) {
+                state.userData.phone = action.payload.customerInfo.phone
+                state.userData.birth_date = action.payload.customerInfo.birth_date
+            }
+        },
     },
 
     extraReducers: (builder) => {
@@ -67,13 +84,15 @@ const authSlice = createSlice({
                 state.loading = true
             })
             .addCase(signup.rejected, (state, action) => {
-                state.loading = false;
-                state.status = false;
-                state.accessKey = null;
-                state.error = action.payload ? action.payload : "Incorrect username or password.";
+                state.loading = false
+                state.status = false
+                state.accessKey = null
+                state.error = action.payload
+                    ? action.payload
+                    : "Incorrect username or password."
             })
     },
 })
 
-export const { login, logout, updateUserBalance } = authSlice.actions
+export const { login, logout, updateUserBalance, updateCustomerInfo, updateUserInfo } = authSlice.actions
 export default authSlice.reducer
