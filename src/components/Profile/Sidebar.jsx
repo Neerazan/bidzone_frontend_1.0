@@ -2,12 +2,12 @@ import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { BsBoxSeam, BsBagHeart, BsPerson } from "react-icons/bs"
+import { RiHistoryFill } from "react-icons/ri";
 import { IconContext } from "react-icons"
 
 const Sidebar = () => {
     const user = useSelector((state) => state.auth.userData)
     const balance = useSelector((state) => state.auth.userData?.user_balance)
-
 
     return (
         <div className="flex flex-row min-h-[90vh] h-full">
@@ -202,8 +202,20 @@ const Sidebar = () => {
                             </IconContext.Provider>
                             <span className="ml-2">Wishlist</span>
                         </NavLink>
-                        
-                        {/* Add more navigation links as needed */}
+
+                        <NavLink
+                            to="/user/auction_history"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100 flex items-center"
+                                    : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
+                            }
+                        >
+                            <IconContext.Provider value={{ size: "1.3em" }}>
+                                <RiHistoryFill />
+                            </IconContext.Provider>
+                            <span className="ml-2">Auction History</span>
+                        </NavLink>
                     </div>
                 </div>
             </div>

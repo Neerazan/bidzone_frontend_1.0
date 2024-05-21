@@ -20,6 +20,7 @@ import {
     AddUpdateProduct,
     Product,
     Auctions,
+    AuctionHistory,
 } from "./pages/index.js"
 
 const router = createBrowserRouter([
@@ -109,6 +110,12 @@ const router = createBrowserRouter([
                             <Protected authentication={true}>
                                 <AddUpdateProduct />
                             </Protected>
+                        ),
+                    },
+                    {
+                        path: "/user/auction_history",
+                        element: (
+                            <AuctionHistory />
                         ),
                     },
                 ],
