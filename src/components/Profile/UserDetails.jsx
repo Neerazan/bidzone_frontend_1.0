@@ -29,7 +29,7 @@ function UserDetails() {
                 data,
                 {
                     headers: {
-                        Authorization: `Bearer ${accessKey}`,
+                        Authorization: `JWT ${accessKey}`,
                     },
                 }
             )
@@ -49,10 +49,12 @@ function UserDetails() {
                 data,
                 {
                     headers: {
-                        Authorization: `Bearer ${accessKey}`,
+                        Authorization: `JWT ${accessKey}`,
                     },
                 }
             )
+
+            return response.data
         } catch (error) {
             console.log("Error updating customer data:", error)
         }
@@ -71,23 +73,27 @@ function UserDetails() {
             birth_date: data.dob,
         }
 
-        updateUserInformationMutation.mutate(
-            userInformation,
-            {
-                onSuccess: (data) => {
-                    console.log("User data updated successfully:", data)
+        if (userData.phone != data.phone || userData.birth_date != data.dob) {
+            updateCustomerInformationMutation.mutate(
+                customerInformation,
+                {
+                    onSuccess: (data) => {
+                        console.log("Customer data updated successfully:", data)
+                    }
                 }
-            }
-        )
+            )
+        }
 
-        updateCustomerInformationMutation.mutate(
-            customerInformation,
-            {
-                onSuccess: (data) => {
-                    console.log("Customer data updated successfully:", data)
+        if (userData.first_name != data.firstName || userData.last_name != data.lastName || userData.email != data.email) {
+            updateUserInformationMutation.mutate(
+                userInformation,
+                {
+                    onSuccess: (data) => {
+                        console.log("User data updated successfully:", data)
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
 

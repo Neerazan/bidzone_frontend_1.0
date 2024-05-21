@@ -17,7 +17,6 @@ export const fetchAddress = createAsyncThunk(
                     Authorization: `JWT ${accessKey}`
                 }
             })
-            console.log("Address data:", response.data);
             return response.data
         } catch (error) {
             console.error("Error fetching address data:", error)
