@@ -82,7 +82,6 @@ function UserDetails() {
                 customerInformation,
                 {
                     onSuccess: (data) => {
-                        console.log("Customer data updated successfully:", data)
                         dispatch(updateCustomerInfo({ customerInfo: data }))
                     }
                 }
@@ -94,7 +93,6 @@ function UserDetails() {
                 userInformation,
                 {
                     onSuccess: (data) => {
-                        console.log("User data updated successfully:", data)
                         dispatch(updateUserInfo({ userInfo: data }))
                     }
                 }
