@@ -3,10 +3,11 @@ import { Input } from "../index"
 import { useForm } from "react-hook-form"
 import { useSelector } from "react-redux"
 import { useMutation } from "react-query"
+import axios from "axios"
 
 function UserDetails() {
-    
     const userData = useSelector((state) => state.auth.userData)
+    const accessKey = useSelector((state) => state.auth.accessKey)
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
@@ -19,23 +20,83 @@ function UserDetails() {
         },
     })
 
-    const updateUserMutation = useMutation(async (data) => {
-        console.log("Updating user data:", data)
-        }
-    )
 
-    const updateUser = async (data) => {
+
+    const updateUserInformationMutation = useMutation(async (data) => {
         try {
-            await updateUserMutation.mutateAsync(data)
+            const response = await axios.put(
+                `http://127.0.0.1:8000/auth/users/me/`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessKey}`,
+                    },
+                }
+            )
+
+            return response.data
         } catch (error) {
             console.log("Error updating user data:", error)
         }
+    })
+
+
+
+    const updateCustomerInformationMutation = useMutation(async (data) => {
+        try {
+            const response = await axios.put(
+                `http://127.0.0.1:8000/auction/customers/me/`,
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessKey}`,
+                    },
+                }
+            )
+        } catch (error) {
+            console.log("Error updating customer data:", error)
+        }
+    })
+
+
+    const updateUser = async (data) => {
+        const userInformation = {
+            first_name: data.firstName,
+            last_name: data.lastName,
+            email: data.email,
+        }
+
+        const customerInformation = {
+            phone: data.phone,
+            birth_date: data.dob,
+        }
+
+        updateUserInformationMutation.mutate(
+            userInformation,
+            {
+                onSuccess: (data) => {
+                    console.log("User data updated successfully:", data)
+                }
+            }
+        )
+
+        updateCustomerInformationMutation.mutate(
+            customerInformation,
+            {
+                onSuccess: (data) => {
+                    console.log("Customer data updated successfully:", data)
+                }
+            }
+        )
     }
 
 
     return (
         <>
-            <form className="items-center mt-8 sm:mt-14 text-[#202142]" onSubmit={handleSubmit(updateUser)}>
+            <form
+                className="items-center mt-8 sm:mt-14 text-[#202142]"
+                onSubmit={handleSubmit(updateUser)}
+            >
                 <div className="flex flex-col items-center w-full mb-2 space-x-0 space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:mb-6">
                     <div className="w-full">
                         <Input
@@ -106,14 +167,15 @@ function UserDetails() {
                 </div>
             </form>
 
-
             {/* Change Password */}
             <h4 className="text-lg font-bold text-blue-600 mb-2 mt-6">
                 Change Password
             </h4>
             <div className="border-t-2 border-gray-400"></div>
             <div>
-                <p className="text-gray-600 font-semibold">The Password Change Link will be Send to your Gmail Account</p>
+                <p className="text-gray-600 font-semibold">
+                    The Password Change Link will be Send to your Gmail Account
+                </p>
                 <button className="text-blue-500 px-4 py-2 rounded-sm border mt-2 border-blue-500 hover:bg-blue-500 hover:text-white font-semibold transition ease-in-out duration-300">
                     Change Password
                 </button>
@@ -127,7 +189,10 @@ function UserDetails() {
             {/* Danger Zone */}
             <div className="mt-1">
                 <div className="">
-                    <p className="font-semibold text-gray-600">Once you delete your account, there is no going back. Please be certain.</p>
+                    <p className="font-semibold text-gray-600">
+                        Once you delete your account, there is no going back.
+                        Please be certain.
+                    </p>
                     <button className="text-red-500 px-4 py-2 rounded-sm border mt-2 border-red-500 hover:bg-red-500 hover:text-white font-semibold transition ease-in-out duration-300">
                         Delete Account
                     </button>

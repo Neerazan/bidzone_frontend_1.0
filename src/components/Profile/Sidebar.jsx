@@ -6,7 +6,7 @@ import { IconContext } from "react-icons"
 
 const Sidebar = () => {
     const user = useSelector((state) => state.auth.userData)
-    const balance = useSelector((state) => state.auth.userData.user_balance)
+    const balance = useSelector((state) => state.auth.userData?.user_balance)
 
 
     return (
