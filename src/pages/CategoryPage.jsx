@@ -339,25 +339,79 @@ const CategoryPage = () => {
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5"
                                     onChange={(e) => setOrderBy(e.target.value)}
                                 >
-                                    <option defaultValue={true}>
+                                    <option 
+                                        value=""
+                                        {...(orderBy === "" && {
+                                            selected: true,
+                                            })
+                                        }
+                                    >
                                         Best Match
                                     </option>
-                                    <option value="-starting_time">
+
+
+                                    <option 
+                                        value="-starting_time"
+                                        {...(orderBy === "-starting_time" && {
+                                            selected: true,
+                                            })
+                                        }
+                                    >
                                         Newest
                                     </option>
-                                    <option value="starting_time">
+
+
+                                    <option 
+                                        value="starting_time"
+                                        {...(orderBy === "starting_time" && {
+                                            selected: true,
+                                            })
+                                        }
+                                    >
                                         Oldest
                                     </option>
-                                    <option value="-current_price">
+
+
+                                    <option 
+                                        value="-current_price"
+                                        {...(orderBy === "-current_price" && {
+                                            selected: true,
+                                            })
+                                        }
+                                    >
                                         Price High to Low
                                     </option>
-                                    <option value="current_price">
+
+
+                                    <option 
+                                        value="current_price"
+                                        {...(orderBy === "current_price" && {
+                                            selected: true,
+                                            })
+                                        }
+                                    >
                                         Price Low to High
                                     </option>
-                                    <option value="-bids_count">
+
+
+                                    <option 
+                                        value="-bids_count"
+                                        {...(orderBy === "-bids_count" && {
+                                            selected: true,
+                                            })
+                                        }
+                                    >
                                         Bids High to Low
                                     </option>
-                                    <option value="bids_count">
+
+
+                                    <option 
+                                        value="bids_count"
+                                        {...(orderBy === "bids_count" && {
+                                            selected: true,
+                                            })
+                                        }
+                                    >
                                         Bids Low to High
                                     </option>
                                 </select>
