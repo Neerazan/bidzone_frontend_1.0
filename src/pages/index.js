@@ -8,6 +8,7 @@ import SignUp from "./SignUp";
 import AddUpdateProduct from "./User/AddUpdateProduct";
 import Auctions from "./User/Auctions";
 import Product from "./User/Product";
+import AuctionHistory from "./User/AuctionHistory";
 
 export {
     Login,
@@ -19,5 +20,6 @@ export {
     SignUp,
     AddUpdateProduct,
     Auctions,
-    Product
+    Product,
+    AuctionHistory
 }

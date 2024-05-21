@@ -46,6 +46,7 @@ import AddressFormModal from "./Seller/AddressFormModel"
 import AuctionFormModal from "./Seller/AuctionFormModal"
 import InputConfirmationModal from "./InputConfirmationModal"
 import ProductDescription from "./Product/ProductDescription"
+import AuctionHistory from "./Profile/AuctionHistory"
 
 
 export {
@@ -97,4 +98,5 @@ export {
     AuctionFormModal,
     InputConfirmationModal,
     ProductDescription,
+    AuctionHistory,
 }
