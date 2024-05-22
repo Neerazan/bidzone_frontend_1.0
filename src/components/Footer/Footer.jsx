@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import bidzoneLogo from "../../assets/logo.png"
 
 const Footer = () => {
     return (
@@ -12,9 +13,9 @@ const Footer = () => {
                             className="flex items-center"
                         >
                             <img
-                                src="https://flowbite.com/docs/images/logo.svg"
+                                src={bidzoneLogo}
                                 className="h-8 me-3"
-                                alt="FlowBite Logo"
+                                alt="BidZone Logo"
                             />
                             <span className="self-center text-2xl font-semibold whitespace-nowrap text-slate-700">
                                 BidZone

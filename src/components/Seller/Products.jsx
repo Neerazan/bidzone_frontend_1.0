@@ -24,6 +24,7 @@ function Products() {
     const auctionDropdownRef = useRef(null)
 
     const accessKey = useSelector((state) => state.auth.accessKey)
+    const user = useSelector((state) => state.auth.userData)
     const customer_id = useSelector((state) => state.auth.userData.id)
     const products = useSelector((state) => state.product.products)
 

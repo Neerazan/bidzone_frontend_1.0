@@ -42,9 +42,9 @@ function Carousel() {
     if (isError) return <div>Error fetching data</div>;
 
     return (
-        <div id="default-carousel" className="relative mt-5 col-span-4" data-carousel="slide">
+        <div id="default-carousel" className="relative mt-5 col-span-5 md:col-span-4" data-carousel="slide">
             {/* Carousel wrapper */}
-            <div className="relative h-56 overflow-hidden rounded-lg md:h-[350px]">
+            <div className="relative h-40 w-full overflow-hidden rounded-lg md:h-[350px]">
                 {data.map((item, index) => (
                     <div key={index} className={`duration-700 ease-in-out absolute top-0 left-0 w-full h-full transition-opacity ${index === activeSlide ? '' : 'opacity-0'}`} data-carousel-item>
                         <img src={item.image} className="absolute top-0 left-0 w-full h-full" alt={`Slide ${index + 1}`} />

@@ -5,6 +5,7 @@ import { ErrorMessage } from "@hookform/error-message"
 import { authenticateUser } from "../AuthService"
 import { signup } from "../../store/authSlice"
 import { Link } from "react-router-dom"
+import bidZoneLogo from "../../assets/logo.png"
 
 import { Input } from "../index"
 import { useEffect } from "react"
@@ -52,8 +53,9 @@ function Login() {
                     className="flex items-center mb-6 text-2xl font-semibold text-gray-900"
                 >
                     <img
-                        className="w-8 h-8 mr-2"
-                        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+                        className="h-20 w-auto"
+                        // src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+                        src={bidZoneLogo}
                         alt="logo"
                     />
                     BidZone
