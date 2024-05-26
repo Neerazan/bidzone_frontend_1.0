@@ -18,7 +18,7 @@ function AuctionHistory() {
                                 Auction Won on
                             </dt>
                             <dd className="mt-1 text-gray-500">
-                                <time datetime="2021-07-06">Jul 6, 2021</time>
+                                <time datetime="2021-07-06">Jul 6, 2024</time>
                             </dd>
                         </div>
                         <div>

@@ -1,7 +1,7 @@
 import React from "react"
 import { useSelector } from "react-redux"
 
-import { LoginRegisterBtn, Logo, SearchBox, Wishlist, Balance, Dropdown, Container, Notification } from "../index"
+import { LoginRegisterBtn, Logo, SearchBox, Wishlist, Dropdown, Container, Notification } from "../index"
 
 function Header() {
     const authStatus = useSelector((state) => state.auth.status)
@@ -18,7 +18,6 @@ function Header() {
                             {authStatus && <Notification />}
                             <Wishlist />
                             {authStatus && <Dropdown />}
-                            {/* {authStatus && <Balance />} */}
                         </ul>
                     </nav>
                 </div>

@@ -283,18 +283,19 @@ function AddProduct() {
                             ))}
                         </div>
                     )}
-                    <Select
-                        value={getValues("collection_id") || ""}
-                        options={collections}
-                        label="Category"
-                        className="mb-4"
+                    <select 
+                        name="" 
+                        id=""
+                        className="px-3 py-1 rounded-sm bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-300 w-full mb-3"
                         {...register("collection_id", { required: true })}
-                        onChange={(e) => {
-                            setValue("collection_id", e.target.value, {
-                                shouldValidate: true,
-                            })
-                        }}
-                    />
+                    >
+                        <option value="">Select a Category</option>
+                        {collections.map((option) => (
+                            <option key={option.id} value={option.id}>
+                                {option.title}
+                            </option>
+                        ))}
+                    </select>
 
                     <Button
                         type="submit"

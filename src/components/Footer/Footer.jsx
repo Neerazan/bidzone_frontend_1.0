@@ -33,7 +33,7 @@ const Footer = () => {
                                         to="https://flowbite.com/"
                                         className="hover:underline"
                                     >
-                                        Flowbite
+                                        About Us
                                     </Link>
                                 </li>
                                 <li>
@@ -41,7 +41,7 @@ const Footer = () => {
                                         to="https://tailwindcss.com/"
                                         className="hover:underline"
                                     >
-                                        Tailwind CSS
+                                        Contact Us
                                     </Link>
                                 </li>
                             </ul>
