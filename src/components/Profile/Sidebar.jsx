@@ -11,7 +11,7 @@ const Sidebar = () => {
     const balance = useSelector((state) => state.auth.userData?.user_balance)
 
     return (
-        <div className="flex flex-row min-h-[90vh] h-full">
+        <div className="flex-row min-h-[90vh] h-full hidden md:flex">
             <div
                 id="sidebar"
                 className={`bg-white md:block shadow-md px-3 w-30 md:w-60 lg:w-60  rounded-md transition-transform duration-300 ease-in-out py-2 mt-4`}

@@ -6,10 +6,10 @@ function User() {
     return (
         <Container>
             <div className='grid grid-cols-5 gap-5'>
-                <div className='col-span-1'>
+                <div className='md:col-span-1'>
                     <Sidebar />
                 </div>
-                <div className='col-span-4'>
+                <div className='col-span-5 md:col-span-4'>
                     <Outlet />
                 </div>
             </div>

@@ -12,7 +12,7 @@ function BalanceDetails() {
     const userData = useSelector((state) => state.auth.userData)
 
     return (
-        <div className="rounded-md shadow border border-gray-200 px-10 py-6 w-full grid gap-4 wallet-info">
+        <div className="rounded-md shadow border border-gray-200 px-10 py-6 w-full grid gap-4 wallet-info col-span-2 md:col-span-1">
             {userData && (
                 <>
                     <div className="flex items-center">

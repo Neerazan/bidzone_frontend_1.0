@@ -36,7 +36,7 @@ function Address() {
 
 
     return (
-        <div className="px-6 py-4 bg-white border border-gray-200 rounded-lg shadow col-span-1 w-full address-card">
+        <div className="px-6 py-4 bg-white border border-gray-200 rounded-lg shadow col-span-2 md:col-span-1 w-full address-card">
             {!data && (
                 <div className="text-center">
                     <h5 className="text-2xl font-semibold text-gray-700 mt-auto">
