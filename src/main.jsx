@@ -21,6 +21,7 @@ import {
     Product,
     Auctions,
     AuctionHistory,
+    TransactionHistory
 } from "./pages/index.js"
 
 const router = createBrowserRouter([
@@ -118,6 +119,12 @@ const router = createBrowserRouter([
                             <AuctionHistory />
                         ),
                     },
+                    {
+                        path: "/user/transaction-history",
+                        element: (
+                            <TransactionHistory />
+                        ),
+                    }
                 ],
             },
             {

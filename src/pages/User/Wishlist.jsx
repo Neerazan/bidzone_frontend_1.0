@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useMutation } from "react-query"
 import { removeFromWishlist as removeItemFromStore } from "../../store/common/wishlistSlice"
 import axios from "axios"
+import parse from 'html-react-parser';
 
 const Wishlist = () => {
     const data = useSelector((state) => state.wishlist.wishlists)
@@ -18,8 +19,8 @@ const Wishlist = () => {
 
     const truncateText = useCallback((text = "", maxLength) => {
         return text.length <= maxLength
-            ? text
-            : `${text.slice(0, maxLength)}...`
+            ? parse(text)
+            : parse(`${text.slice(0, maxLength)}...`)
     }, [])
 
     const removeFromWishlistMutation = useMutation(async ({ wishlistId }) => {

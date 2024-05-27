@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { BsBoxSeam, BsBagHeart, BsPerson } from "react-icons/bs"
+import { AiOutlineTransaction } from "react-icons/ai";
 import { RiHistoryFill } from "react-icons/ri";
 import { IconContext } from "react-icons"
 
@@ -215,6 +216,20 @@ const Sidebar = () => {
                                 <RiHistoryFill />
                             </IconContext.Provider>
                             <span className="ml-2">Auction History</span>
+                        </NavLink>
+
+                        <NavLink
+                            to="/user/transaction-history"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "text-sky-700 bg-sky-100 text-sm py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-blue-100 flex items-center"
+                                    : "text-gray-700 text-sm font-medium py-2 px-3 rounded-md transition duration-150 ease-in-out hover:bg-sky-100 hover:text-sky-700 flex items-center"
+                            }
+                        >
+                            <IconContext.Provider value={{ size: "1.3em" }}>
+                                <AiOutlineTransaction />
+                            </IconContext.Provider>
+                            <span className="ml-2">Transaction History</span>
                         </NavLink>
                     </div>
                 </div>

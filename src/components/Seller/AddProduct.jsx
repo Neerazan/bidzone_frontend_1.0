@@ -53,10 +53,11 @@ function AddProduct() {
             return response.data
         },
         {
-            onSuccess: (response, { formData, isUpdate }) => {
+            onSuccess: async (response, { formData, isUpdate }) => {
                 if (formData.get("image")) {
+                    console.log(`Inside Add Image}`)
                     const productId = response.id
-                    imageMutation.mutate(
+                    await imageMutation.mutate(
                         {
                             images: formData.getAll("image"),
                             productId,
@@ -101,6 +102,7 @@ function AddProduct() {
         const formDataArray = Array.from(images) // Convert FileList to array
         const promises = formDataArray.map(async (img) => {
             try {
+                console.log(`Inside Image Mutation try statement: ${productId}`)
                 const formData = new FormData()
                 formData.append("image", img)
                 await axios.post(

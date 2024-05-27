@@ -9,6 +9,7 @@ import AddUpdateProduct from "./User/AddUpdateProduct";
 import Auctions from "./User/Auctions";
 import Product from "./User/Product";
 import AuctionHistory from "./User/AuctionHistory";
+import TransactionHistory from "./User/TransactionHistory";
 
 export {
     Login,
@@ -21,5 +22,6 @@ export {
     AddUpdateProduct,
     Auctions,
     Product,
-    AuctionHistory
+    AuctionHistory,
+    TransactionHistory
 }
