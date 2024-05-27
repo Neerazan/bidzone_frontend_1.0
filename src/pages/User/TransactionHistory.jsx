@@ -3,9 +3,8 @@ import React from 'react'
 function TransactionHistory() {
     return (
         <>
-            <div className="w-screen">
-
-                <div className="mx-auto mt-8 max-w-screen-lg px-2">
+            <div className="w-full">
+                <div className="mx-auto mt-4 py-4 max-w-screen-lg px-4 bg-white rounded-md">
                     <div className="sm:flex sm:items-center sm:justify-between flex-col sm:flex-row">
                         <p className="flex-1 text-base font-bold text-gray-900">Latest Payments</p>
 
