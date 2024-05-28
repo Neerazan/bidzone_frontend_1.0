@@ -136,15 +136,14 @@ function TransactionHistory() {
                                             className="border-b lg:table-row-group text-sm"
                                         >
                                             <tr className="">
-
                                                 <td className="whitespace-normal py-4 sm:px-6">
                                                     {index + 1}
                                                 </td>
 
                                                 <td className="whitespace-normal py-4 sm:px-6">
-                                                    {
-                                                        truncateText(transaction.invoice)
-                                                    }
+                                                    {truncateText(
+                                                        transaction.invoice
+                                                    )}
                                                 </td>
 
                                                 <td className="whitespace-normal py-4 sm:px-6">
@@ -159,8 +158,8 @@ function TransactionHistory() {
                                                     {transaction.transaction_type ===
                                                     "B"
                                                         ? "Bid"
-                                                        : transaction.type ===
-                                                        "D"
+                                                        : transaction.transaction_type ===
+                                                          "D"
                                                         ? "Deposit"
                                                         : "Refunded"}
                                                 </td>
@@ -178,7 +177,7 @@ function TransactionHistory() {
                                                                     Pending
                                                                 </span>
                                                             ) : transaction.transaction_status ===
-                                                            "C" ? (
+                                                              "C" ? (
                                                                 <span className="px-4 py-1 text-xs font-semibold text-white bg-green-700 rounded-full">
                                                                     Completed
                                                                 </span>
