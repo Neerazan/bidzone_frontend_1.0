@@ -1,15 +1,26 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import { asyncThunkCreator } from '@reduxjs/toolkit'
 
 
 function TransactionHistory() {
+
+    const getTransactions = async ({ customer_id }) =>{
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/auction/customers/${customer_id}/transactions/`)
+            return response.data
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <>
             <div className="w-full">
                 <div className="mx-auto mt-4 py-4 max-w-screen-lg px-4 bg-white rounded-md">
                     <div className="sm:flex sm:items-center sm:justify-between flex-col sm:flex-row">
-                        <p className="flex-1 text-base font-bold text-gray-900">Latest Payments</p>
+                        <p className="flex-1 text-base font-bold text-gray-900">Transactions</p>
 
                         <div className="mt-4 sm:mt-0">
                             <div className="flex items-center justify-start sm:justify-end">
@@ -34,29 +45,31 @@ function TransactionHistory() {
                         <table className="min-w-full border-separate border-spacing-y-2 border-spacing-x-2">
                             <thead className="hidden border-b lg:table-header-group">
                                 <tr className="">
-                                    <td width="50%" className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">Invoice</td>
+                                    <td width="30%" className="whitespace-normal py-4 font-semibold text-gray-700 sm:px-6">Invoice</td>
 
-                                    <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">Date</td>
+                                    <td width="30%" className="whitespace-normal py-4 font-semibold text-gray-700 sm:px-6">Date</td>
 
-                                    <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">Type</td>
+                                    <td className="whitespace-normal py-4 font-semibold text-gray-700 sm:px-6">Type</td>
 
-                                    <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">Amount</td>
+                                    <td className="whitespace-normal py-4 font-semibold text-gray-700 sm:px-6">Amount</td>
 
-                                    <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-6">Status</td>
+                                    <td className="whitespace-normal py-4 font-semibold text-gray-700 sm:px-6">Status</td>
                                 </tr>
                             </thead>
 
                             <tbody className="lg:border-gray-300">
                                 <tr className="">
-                                    <td width="50%" className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6">
+                                    <td width="30%" className="whitespace-no-wrap py-4 text-sm font-bold text-gray-900 sm:px-6">
+                                        <button>
                                         Standard Plan - Feb 2022
+                                        </button>
                                         <div className="mt-1 lg:hidden">
                                             <p className="font-normal text-gray-500">07 February, 2022</p>
                                         </div>
                                     </td>
 
 
-                                    <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">07 February, 2022</td>
+                                    <td width="30%" className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">07 February, 2022</td>
 
                                     <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:table-cell">Deposite</td>
 
