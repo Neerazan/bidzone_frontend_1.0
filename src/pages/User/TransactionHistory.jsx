@@ -3,6 +3,7 @@ import { useQuery } from "react-query"
 import axios from "axios"
 import { useSelector } from "react-redux"
 import { FormattedDate } from "../../components/index"
+import { FaSearch } from "react-icons/fa"
 
 function TransactionHistory() {
     const [transactionStatus, setTransactionStatus] = useState("")
@@ -41,7 +42,7 @@ function TransactionHistory() {
     return (
         <>
             <div className="w-full">
-                <div className="mx-auto mt-4 py-4 max-w-screen-lg px-4 bg-white rounded-md">
+                <div className="mx-auto mt-4 py-4 max-w-screen-lg px-4 bg-white rounded-md h-[90vh  ]">
                     <div className="sm:flex sm:items-center sm:justify-between flex-col sm:flex-row">
                         <p className="flex-1 text-base font-bold text-gray-600">
                             Transactions History
@@ -49,24 +50,6 @@ function TransactionHistory() {
 
                         <div className="mt-4 sm:mt-0">
                             <div className="flex items-center justify-start sm:justify-end">
-                                <div className="flex items-center">
-                                    <label
-                                        for=""
-                                        className="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"
-                                    >
-                                        {" "}
-                                        Sort by:{" "}
-                                    </label>
-                                    <select
-                                        name=""
-                                        className="sm: mr-4 block w-full whitespace-pre rounded-lg border p-1 pr-10 text-base outline-none focus:shadow sm:text-sm"
-                                    >
-                                        <option className="whitespace-no-wrap text-sm">
-                                            Recent
-                                        </option>
-                                    </select>
-                                </div>
-
                                 <button
                                     type="button"
                                     className="inline-flex cursor-pointer items-center rounded-lg border border-gray-400 bg-white py-2 px-3 text-center text-sm font-medium text-gray-800 shadow hover:bg-gray-100 focus:shadow"
@@ -89,6 +72,101 @@ function TransactionHistory() {
                                     Export to CSV
                                 </button>
                             </div>
+                        </div>
+                    </div>
+
+                    <div className="sm:flex sm:items-center sm:justify-between flex-col sm:flex-row">
+                        <div className="items-center">
+                            <label
+                                for=""
+                                className="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"
+                            >
+                                Date
+                            </label>
+                            <input
+                                className="sm:mr-4 block w-full whitespace-pre rounded-md border border-gray-300 bg-white px-3 pr-5 text-base outline-none focus:shadow sm:text-sm my-1"
+                                type="date"
+                            />
+                        </div>
+
+                        <div className="items-center">
+                            <label
+                                for=""
+                                className="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"
+                            >
+                                Sort by
+                            </label>
+                            <select className="sm:mr-4 block w-full whitespace-pre rounded-md border border-gray-300 bg-white py-3 px-3 pr-5 text-base outline-none focus:shadow sm:text-sm my-1">
+                                <option className="whitespace-no-wrap text-sm">
+                                    Recent
+                                </option>
+                            </select>
+                        </div>
+
+                        <div className="items-center">
+                            <label
+                                for=""
+                                className="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"
+                            >
+                                Status
+                            </label>
+                            <select className="sm:mr-4 block w-full whitespace-pre rounded-md border border-gray-300 bg-white py-3 px-3 pr-5 text-base outline-none focus:shadow sm:text-sm my-1">
+                                <option className="whitespace-no-wrap text-sm">
+                                    Completed
+                                </option>
+                                <option className="whitespace-no-wrap text-sm">
+                                    Pending
+                                </option>
+                                <option className="whitespace-no-wrap text-sm">
+                                    Cancelled
+                                </option>
+                            </select>
+                        </div>
+
+                        <div className="items-center">
+                            <label
+                                for=""
+                                className="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"
+                            >
+                                Type
+                            </label>
+                            <select className="sm:mr-4 block w-full whitespace-pre rounded-md border border-gray-300 bg-white py-3 px-3 pr-5 text-base outline-none focus:shadow sm:text-sm my-1">
+                                <option className="whitespace-no-wrap text-sm">
+                                    Deposite
+                                </option>
+                                <option className="whitespace-no-wrap text-sm">
+                                    Bid
+                                </option>
+                                <option className="whitespace-no-wrap text-sm">
+                                    Refund
+                                </option>
+                            </select>
+                        </div>
+
+                        <div className="items-center">
+                            <label
+                                for=""
+                                className="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"
+                            >
+                                Search by amount or tags
+                            </label>
+                            <input
+                                className="sm:mr-4 block w-full whitespace-pre rounded-md border border-gray-300 bg-white py-3 px-3 pr-5 text-base outline-none focus:shadow sm:text-sm my-1"
+                                type="text"
+                                placeholder="Search"
+                            />
+                        </div>
+
+                        <div className="items-center">
+                            <label
+                                for=""
+                                className="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"
+                            >
+                                {" "}
+                            </label>
+                            <button className="block whitespace-pre rounded-md bg-green-600 p-4 text-white hover:bg-green-700">
+                                <FaSearch />
+                            </button>
                         </div>
                     </div>
 
@@ -128,7 +206,7 @@ function TransactionHistory() {
                                 </tr>
                             </thead>
 
-                            {data &&
+                            {data ? (
                                 data.map((transaction, index) => (
                                     <>
                                         <tbody
@@ -192,7 +270,14 @@ function TransactionHistory() {
                                             </tr>
                                         </tbody>
                                     </>
-                                ))}
+                                ))
+                            ) : (
+                                <tr>
+                                    <td className="text-center py-4">
+                                        No transactions found
+                                    </td>
+                                </tr>
+                            )}
                         </table>
                     </div>
                 </div>
