@@ -12,6 +12,7 @@ import AuctionHistory from "./User/AuctionHistory";
 import TransactionHistory from "./User/TransactionHistory";
 import ActivateUser from "./User/ActivateUser";
 import ForgotPassword from "./User/ForgotPassword";
+import PasswordReset from "./User/PasswordReset";
 
 export {
     Login,
@@ -27,5 +28,6 @@ export {
     AuctionHistory,
     TransactionHistory,
     ActivateUser,
-    ForgotPassword
+    ForgotPassword,
+    PasswordReset,
 }

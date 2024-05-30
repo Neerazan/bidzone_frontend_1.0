@@ -24,6 +24,7 @@ import {
     TransactionHistory,
     ActivateUser,
     ForgotPassword,
+    PasswordReset,
 } from "./pages/index.js"
 
 const router = createBrowserRouter([
@@ -76,6 +77,14 @@ const router = createBrowserRouter([
                 element: (
                     <Protected authentication={false}>
                         <ForgotPassword />
+                    </Protected>
+                ),
+            },
+            {
+                path: "/reset-password/:uid/:token",
+                element: (
+                    <Protected authentication={false}>
+                        <PasswordReset />
                     </Protected>
                 ),
             },
