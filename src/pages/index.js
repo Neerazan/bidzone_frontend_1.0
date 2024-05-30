@@ -13,6 +13,7 @@ import TransactionHistory from "./User/TransactionHistory";
 import ActivateUser from "./User/ActivateUser";
 import ForgotPassword from "./User/ForgotPassword";
 import PasswordReset from "./User/PasswordReset";
+import SetPassword from "./User/SetPassword";
 
 export {
     Login,
@@ -30,4 +31,5 @@ export {
     ActivateUser,
     ForgotPassword,
     PasswordReset,
+    SetPassword,
 }

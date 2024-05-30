@@ -25,6 +25,7 @@ import {
     ActivateUser,
     ForgotPassword,
     PasswordReset,
+    SetPassword,
 } from "./pages/index.js"
 
 const router = createBrowserRouter([
@@ -85,6 +86,14 @@ const router = createBrowserRouter([
                 element: (
                     <Protected authentication={false}>
                         <PasswordReset />
+                    </Protected>
+                ),
+            },
+            {
+                path: "/set-password",
+                element: (
+                    <Protected authentication={true}>
+                        <SetPassword />
                     </Protected>
                 ),
             },
