@@ -7,6 +7,7 @@ import { signup } from "../../store/authSlice"
 import { Link } from "react-router-dom"
 import bidZoneLogo from "../../assets/logo.png"
 
+
 import { Input } from "../index"
 import { useEffect } from "react"
 
@@ -44,6 +45,7 @@ function Login() {
             console.log("Error: ", error)   
         }
     }
+
 
     return (
         <section className="bg-gray-50">
@@ -164,12 +166,12 @@ function Login() {
                                         </label>
                                     </div>
                                 </div>
-                                <a
-                                    href="#"
+                                <Link
+                                    to="/forgot-password"
                                     className="text-sm font-medium text-gray-700 hover:underline"
                                 >
                                     Forgot password?
-                                </a>
+                                </Link>
                             </div>
                             <button
                                 type="submit"

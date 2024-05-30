@@ -22,7 +22,8 @@ import {
     Auctions,
     AuctionHistory,
     TransactionHistory,
-    ActivateUser
+    ActivateUser,
+    ForgotPassword,
 } from "./pages/index.js"
 
 const router = createBrowserRouter([
@@ -67,6 +68,14 @@ const router = createBrowserRouter([
                 element: (
                     <Protected authentication={false}>
                         <ActivateUser />
+                    </Protected>
+                ),
+            },
+            {
+                path: "/forgot-password",
+                element: (
+                    <Protected authentication={false}>
+                        <ForgotPassword />
                     </Protected>
                 ),
             },

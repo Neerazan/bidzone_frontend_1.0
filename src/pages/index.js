@@ -11,6 +11,7 @@ import Product from "./User/Product";
 import AuctionHistory from "./User/AuctionHistory";
 import TransactionHistory from "./User/TransactionHistory";
 import ActivateUser from "./User/ActivateUser";
+import ForgotPassword from "./User/ForgotPassword";
 
 export {
     Login,
@@ -25,5 +26,6 @@ export {
     Product,
     AuctionHistory,
     TransactionHistory,
-    ActivateUser
+    ActivateUser,
+    ForgotPassword
 }
