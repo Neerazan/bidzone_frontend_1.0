@@ -21,7 +21,8 @@ import {
     Product,
     Auctions,
     AuctionHistory,
-    TransactionHistory
+    TransactionHistory,
+    ActivateUser
 } from "./pages/index.js"
 
 const router = createBrowserRouter([
@@ -58,6 +59,14 @@ const router = createBrowserRouter([
                 element: (
                     <Protected authentication={false}>
                         <ProductDetails />
+                    </Protected>
+                ),
+            },
+            {
+                path: "/activate-user/:uid/:token",
+                element: (
+                    <Protected authentication={false}>
+                        <ActivateUser />
                     </Protected>
                 ),
             },

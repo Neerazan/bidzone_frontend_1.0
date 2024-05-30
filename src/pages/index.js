@@ -10,6 +10,7 @@ import Auctions from "./User/Auctions";
 import Product from "./User/Product";
 import AuctionHistory from "./User/AuctionHistory";
 import TransactionHistory from "./User/TransactionHistory";
+import ActivateUser from "./User/ActivateUser";
 
 export {
     Login,
@@ -23,5 +24,6 @@ export {
     Auctions,
     Product,
     AuctionHistory,
-    TransactionHistory
+    TransactionHistory,
+    ActivateUser
 }
