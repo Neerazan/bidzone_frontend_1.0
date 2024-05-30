@@ -4,11 +4,13 @@ import bidZoneLogo from "../../assets/logo.png"
 import { useMutation } from "react-query"
 import axios from "axios"
 import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 import { Input } from "../../components/index"
 
 function SetPassword() {
-    const accessKey = useSelector((state) => state.auth.userData.accessKey)
+    const accessKey = useSelector((state) => state.auth.accessKey)
+    const navigate = useNavigate()
 
     const {
         register,
@@ -35,6 +37,7 @@ function SetPassword() {
         {
             onSuccess: () => {
                 alert("Password Changed successfully")
+                navigate("/user/profile")
             },
             onError: () => {
                 alert("Failed to Changed password")
@@ -44,6 +47,7 @@ function SetPassword() {
 
     const resetPassword = (data) => {
         if (accessKey) {
+            console.log(`Inside mutation`);
             mutation.mutate({
                 current_password: data.current_password,
                 new_password: data.new_password,

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { useSelector, useDispatch } from "react-redux"
 import { useMutation } from "react-query"
 import axios from "axios"
+import { Link } from "react-router-dom"
 
 import { updateCustomerInfo } from "../../store/authSlice"
 import { updateUserInfo } from "../../store/authSlice"
@@ -186,9 +187,12 @@ function UserDetails() {
                 <p className="text-gray-600 font-semibold">
                     The Password Change Link will be Send to your Gmail Account
                 </p>
-                <button className="text-blue-500 px-4 py-2 rounded-sm border mt-2 border-blue-500 hover:bg-blue-500 hover:text-white font-semibold transition ease-in-out duration-300">
+                <Link 
+                    className="text-blue-500 px-4 py-2 rounded-sm border border-blue-500 hover:bg-blue-500 hover:text-white font-semibold transition ease-in-out duration-300"
+                    to="/set-password"
+                >
                     Change Password
-                </button>
+                </Link>
             </div>
 
             <h4 className="text-lg font-bold text-red-500 mb-2 mt-10">
